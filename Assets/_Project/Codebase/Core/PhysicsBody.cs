@@ -6,12 +6,12 @@ namespace _Project.Codebase.Core
     [RequireComponent(typeof(Collider))]
     public class PhysicsBody : MonoBehaviour
     {
-        private readonly Vector3 Gravity = new Vector3(0f, -9.81f, 0f);
-        private readonly float Gravityf = -9.8f;
+        // private readonly Vector3 Gravity = new Vector3(0f, -9.81f, 0f);
+        // private readonly float Gravityf = -9.8f;
         
         [SerializeField] private float _friction = 0.1f;
         [SerializeField] private float _dampingImpactPercent = 0.1f;
-        [SerializeField] private Transform _groundCheck;
+        //[SerializeField] private Transform _groundCheck;
         [SerializeField] private Vector3 _velocity = new Vector3(0, 0, 3);
         
         private void FixedUpdate()
@@ -34,10 +34,10 @@ namespace _Project.Codebase.Core
 
         private void OnCollisionEnter(Collision collision)
         {
-            var contatcs = new List<ContactPoint>();
-            collision.GetContacts(contatcs);
+            var contacts = new List<ContactPoint>();
+            collision.GetContacts(contacts);
             
-            ContactPoint contact = contatcs[0];
+            ContactPoint contact = contacts[0];
             Vector3 reflectedDirection = Vector3.Reflect(_velocity, contact.normal);
             
             _velocity = reflectedDirection;
