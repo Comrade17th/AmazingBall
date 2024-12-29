@@ -7,46 +7,41 @@ namespace _Project.Codebase.Core
     public class PhysicsBody : MonoBehaviour
     {
         private readonly Vector3 Gravity = new Vector3(0f, -9.81f, 0f);
+        private readonly float Gravityf = -9.8f;
         
-        [SerializeField] private float _friction = 0.1f; // sepparate air friction and ground friction
+        [SerializeField] private float _friction = 0.1f;
         [SerializeField] private float _dampingImpactPercent = 0.1f;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private Vector3 _velocity = new Vector3(0, 0, 3);
         
-        [SerializeField] private Vector3 _velocity = new Vector3(0, 0, 0);
-        [SerializeField] private Vector3 _acceleration = new Vector3(0, 0, 0);
-        
-
         private void FixedUpdate()
         {
-            _velocity += Gravity * Time.fixedDeltaTime;
+            // if(_velocity.y > 0.1f)
+            //     _velocity += Gravity * Time.fixedDeltaTime;
             
             _velocity = new Vector3(
-                Mathf.MoveTowards(_velocity.x, 0, _friction),
+                Mathf.MoveTowards(_velocity.x, 0, _friction * Time.fixedDeltaTime),
                 _velocity.y,
-                Mathf.MoveTowards(_velocity.z, 0, _friction));
+                Mathf.MoveTowards(_velocity.z, 0, _friction * Time.fixedDeltaTime));
             
             transform.Translate(_velocity * Time.fixedDeltaTime);
         }
 
         public void AddVelocity(float velocity, Vector3 direction)
         {
-            
+            _velocity += direction * velocity;
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            // Debug.Log("Points colliding: " + collision.contacts.Length);
-            // Debug.Log("Normal of the first point: " + collision.contacts[0].normal);
-            
             var contatcs = new List<ContactPoint>();
             collision.GetContacts(contatcs);
             
             ContactPoint contact = contatcs[0];
             Vector3 reflectedDirection = Vector3.Reflect(_velocity, contact.normal);
             
-            //bug.Log($"{} {reflectedDirection}");
             _velocity = reflectedDirection;
             _velocity -= _velocity * _dampingImpactPercent;
-            
             
             // foreach (var item in collision.contacts)
             // {
