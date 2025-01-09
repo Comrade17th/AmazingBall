@@ -1,8 +1,6 @@
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.VisualDebug;
-using UnityEditor.Graphs;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Codebase.Core
@@ -30,8 +28,8 @@ namespace _Project.Codebase.Core
             
             if (_inputProvider.GetDetection())
             {
-                Vector3 pointerPosition = _inputProvider.GetPosition();
-                GeometryDebug.DrawSphere(pointerPosition, Color.red);
+                Vector3 pointerPosition = _inputProvider.GetPosition(true);
+                GeometryDebug.DrawSphere(pointerPosition, Color.red, radius: 0.2f, seconds: 0.05f);
                 
                 _lineRenderer.SetPosition(lineEndIndex, pointerPosition);
                 _lineRenderer.SetPosition(lineStartIndex, _ballView.transform.position);

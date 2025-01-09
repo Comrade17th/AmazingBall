@@ -16,7 +16,7 @@ namespace _Project.Codebase.Core.InputProviders
 
         public bool GetDetection()
         {
-            return Input.GetKeyDown(_keyCode);
+            return Input.GetKey(_keyCode);
         }
 
         public Vector3 GetPosition(bool cameraToScreenWorldPoint = false)
