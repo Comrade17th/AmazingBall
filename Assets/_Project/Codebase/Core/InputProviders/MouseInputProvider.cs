@@ -7,6 +7,11 @@ namespace _Project.Codebase.Core.InputProviders
         private Camera _camera;
         private readonly KeyCode _keyCode = KeyCode.Mouse0;
 
+        public MouseInputProvider(Camera camera)
+        {
+            _camera = camera;
+        }
+
         public bool GetDetection()
         {
             return Input.GetKeyDown(_keyCode);
