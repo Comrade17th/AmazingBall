@@ -1,4 +1,4 @@
 {
   "name": "Core",
-  "references":[ "GUID:d50d25292ae44c389bdc062df7620237" ]
+  "references":[ "GUID:d50d25292ae44c389bdc062df7620237", "Debug" ]
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace _Project.Codebase.Infrastucture
@@ -7,15 +8,16 @@ namespace _Project.Codebase.Infrastucture
     {
         private SceneProvider _sceneProvider;
         
-        [Inject]
-        private void Construct(SceneProvider sceneProvider)
-        {
-            _sceneProvider = sceneProvider;
-        }
+        // [Inject]
+        // private void Construct(SceneProvider sceneProvider)
+        // {
+        //     _sceneProvider = sceneProvider;
+        // }
 
         private void Start()
         {
-            _sceneProvider.LoadMainScene();
+            //_sceneProvider.LoadMainScene();
+            SceneManager.LoadScene("Main");
         }
     }
 }

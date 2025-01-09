@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Codebase.Core.InputProviders
 {
@@ -7,6 +8,7 @@ namespace _Project.Codebase.Core.InputProviders
         private Camera _camera;
         private readonly KeyCode _keyCode = KeyCode.Mouse0;
 
+        [Inject]
         public MouseInputProvider(Camera camera)
         {
             _camera = camera;
