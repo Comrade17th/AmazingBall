@@ -7,17 +7,30 @@ namespace _Project.Codebase.Infrastucture
 {
     public class MainInstaller : MonoInstaller
     {
+        [SerializeField] private GameObject _ballPrefab;
         [SerializeField] private Transform _ballSpawnPoint;
-        [SerializeField] private BallView _ballView;
 
         //private MouseInputProvider _inputProvider;
 
         public override void InstallBindings()
         {
-            Debug.Log($"MainInstaller InstallBindings");
-
             Container.BindInstance(Camera.main).AsCached(); // why using AsCached
-            Container.Bind<IInputProvider>().To<MouseInputProvider>().AsSingle(); // add decision to keybord, mouse, phone
+            Container.Bind<IInputProvider>().To<MouseInputProvider>().AsSingle(); // add decision to keybord, mouse, phone, move to project installer?
+
+            CreateBall();
+            
+            Debug.Log($"MainInstaller InstallBindings");
+        }
+
+        private void CreateBall()
+        {
+            BallView ballView = Container
+                .InstantiatePrefabForComponent<BallView>(_ballPrefab, _ballSpawnPoint.position, Quaternion.identity, null); // Zenject gives warning of bad practice
+
+            Container
+                .Bind<BallView>()
+                .FromInstance(ballView)
+                .AsSingle();
         }
     }
 }

@@ -15,10 +15,10 @@ namespace _Project.Codebase.Core
         //private var post = lineRenderer.setpositionCount(0);
 
         [Inject]
-        public void Construct(IInputProvider inputProvider) //BallView ballView,
+        public void Construct(IInputProvider inputProvider, BallView ballView)
         {
             _inputProvider = inputProvider;
-            // _ballView = ballView;
+            _ballView = ballView;
         }
         
         private void Update()
