@@ -8,7 +8,7 @@ namespace _Project.Codebase.Infrastucture
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private GameObject _ballPrefab;
-        [SerializeField] private Transform _ballSpawnPoint;
+        [SerializeField] private BallView _ballView;
 
         //private MouseInputProvider _inputProvider;
 
@@ -24,12 +24,12 @@ namespace _Project.Codebase.Infrastucture
 
         private void CreateBall()
         {
-            BallView ballView = Container
-                .InstantiatePrefabForComponent<BallView>(_ballPrefab, _ballSpawnPoint.position, Quaternion.identity, null); // Zenject gives warning of bad practice
+            //BallView ballView = Container
+            //    .InstantiatePrefabForComponent<BallView>(_ballPrefab, _ballSpawnPoint.position, Quaternion.identity, null); // Zenject gives warning of bad practice
 
             Container
                 .Bind<BallView>()
-                .FromInstance(ballView)
+                .FromInstance(_ballView)
                 .AsSingle();
         }
     }
