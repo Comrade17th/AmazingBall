@@ -7,7 +7,7 @@ namespace _Project.Codebase.Core
     public class PlayerMover : MonoBehaviour
     {
         [SerializeField] private PhysicsBody _physicsBody;
-        [SerializeField] private MouseInputProvider _mouseInputProvider;
+        private IInputProvider _inputProvider;
         
         [SerializeField] private float _maxVelocity = 5f;
         [SerializeField] private float _maxPressTime = 3f;

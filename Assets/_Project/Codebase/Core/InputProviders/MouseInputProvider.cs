@@ -3,7 +3,7 @@ using Zenject;
 
 namespace _Project.Codebase.Core.InputProviders
 {
-    public class MouseInputProvider
+    public class MouseInputProvider : IInputProvider
     {
         private Camera _camera;
         private readonly KeyCode _keyCode = KeyCode.Mouse0;

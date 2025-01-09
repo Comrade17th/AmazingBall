@@ -10,14 +10,14 @@ namespace _Project.Codebase.Infrastucture
         [SerializeField] private Transform _ballSpawnPoint;
         [SerializeField] private BallView _ballView;
 
-        private MouseInputProvider _inputProvider;
+        //private MouseInputProvider _inputProvider;
 
         public override void InstallBindings()
         {
             Debug.Log($"MainInstaller InstallBindings");
 
             Container.BindInstance(Camera.main).AsCached(); // why using AsCached
-            Container.Bind<MouseInputProvider>().AsSingle(); // to interface, add decision to keybord, mouse, phone
+            Container.Bind<IInputProvider>().To<MouseInputProvider>().AsSingle(); // add decision to keybord, mouse, phone
         }
     }
 }

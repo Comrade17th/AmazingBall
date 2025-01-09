@@ -10,12 +10,12 @@ namespace _Project.Codebase.Core
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private BallView _ballView; // to DI
         
-        private MouseInputProvider _inputProvider;
+        private IInputProvider _inputProvider;
         
         //private var post = lineRenderer.setpositionCount(0);
 
         [Inject]
-        public void Construct( MouseInputProvider inputProvider) //BallView ballView,
+        public void Construct(IInputProvider inputProvider) //BallView ballView,
         {
             _inputProvider = inputProvider;
             // _ballView = ballView;
