@@ -20,7 +20,7 @@ namespace _Project.Codebase.Core
             _target = target.transform;
         }
 
-        void Update() // https://stackoverflow.com/questions/10752435/how-do-i-make-a-camera-follow-an-object-in-unity3d-c#answers 
+        void LateUpdate() // https://stackoverflow.com/questions/10752435/how-do-i-make-a-camera-follow-an-object-in-unity3d-c#answers 
         {
             Vector3 wantedPosition;
             

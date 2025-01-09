@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _friction: 0.5
   _dampingImpactPercent: 0.2
-  _velocity: {x: 0, y: 0, z: 3}
+  _velocity: {x: 0, y: 0, z: 10}
 --- !u!54 &459282224653015588
 Rigidbody:
   m_ObjectHideFlags: 0
