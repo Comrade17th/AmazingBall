@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Project.Codebase.Core
+namespace _Project.Codebase.Core.Ball
 {
     [RequireComponent(typeof(Collider))]
     public class PhysicsBody : MonoBehaviour

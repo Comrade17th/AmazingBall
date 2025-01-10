@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Codebase.Core.InputProviders
+namespace _Project.Codebase.Interfaces
 {
     public interface IInputProvider
     {

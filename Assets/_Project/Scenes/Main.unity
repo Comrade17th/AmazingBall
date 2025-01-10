@@ -273,10 +273,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 5033357133496690557, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
-      propertyPath: _velocity.z
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
