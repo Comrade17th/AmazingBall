@@ -11,20 +11,36 @@ namespace _Project.Codebase.Infrastucture
     {
         [SerializeField] private GameObject _ballPrefab;
         [SerializeField] private BallView _ballView;
-
-        //private MouseInputProvider _inputProvider;
-
+        [SerializeField] private PointerHandler _pointerHandler;
+        
         public override void InstallBindings()
         {
             Container.BindInstance(Camera.main).AsCached(); // why using AsCached
-            Container.Bind<IInputProvider>().To<MouseInputProvider>().AsSingle(); // add decision to keybord, mouse, phone, move to project installer?
-
-            CreateBall();
+            
+            BindInputProvider();
+            BindPointerHandler();
+            BindBall();
             
             Debug.Log($"MainInstaller InstallBindings");
         }
 
-        private void CreateBall()
+        private void BindInputProvider()
+        {
+            Container
+                .Bind<IInputProvider>()
+                .To<MouseInputProvider>()
+                .AsSingle(); // add decision to keybord, mouse, phone, move to project installer?
+        }
+
+        private void BindPointerHandler()
+        {
+            Container
+                .Bind<PointerHandler>()
+                .FromInstance(_pointerHandler)
+                .AsSingle();
+        }
+
+        private void BindBall()
         {
             //BallView ballView = Container
             //    .InstantiatePrefabForComponent<BallView>(_ballPrefab, _ballSpawnPoint.position, Quaternion.identity, null); // Zenject gives warning of bad practice

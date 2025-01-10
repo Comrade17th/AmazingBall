@@ -15,6 +15,16 @@ namespace _Project.Codebase.Core.InputProviders
             _camera = camera;
         }
 
+        public bool GetDetectionUp()
+        {
+            return Input.GetKeyUp(_keyCode);
+        }
+
+        public bool GetDetectionDown()
+        {
+            return Input.GetKeyDown(_keyCode);
+        }
+
         public bool GetDetection()
         {
             return Input.GetKey(_keyCode);

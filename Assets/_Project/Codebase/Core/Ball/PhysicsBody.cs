@@ -27,9 +27,9 @@ namespace _Project.Codebase.Core.Ball
             transform.Translate(_velocity * Time.fixedDeltaTime);
         }
 
-        public void AddVelocity(float velocity, Vector3 direction)
+        public void AddVelocity(Vector3 velocity)
         {
-            _velocity += direction * velocity;
+            _velocity += velocity;
         }
 
         private void OnCollisionEnter(Collision collision)
