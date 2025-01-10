@@ -1,67 +1,70 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Codebase.Core.Ball
 {
     [RequireComponent(typeof(Collider))]
     public class PhysicsBody : MonoBehaviour
     {
-        //private readonly Vector3 _gravity = new Vector3(0f, -9.81f, 0f); // to SD
-        private readonly float _groundLevel = 0f; // to another class
+        private readonly float _groundMinDistance = 0.05f;
         private readonly float _heightOffset = 0.5f;
-        
         private readonly float _gravityAcceleration = -9.8f;
         
-        [SerializeField] private float _friction = 0.1f; // to SD
-        [SerializeField] private float _dampingImpactPercent = 0.1f; // to SD
-        //[SerializeField] private Transform _groundCheck;
+        [SerializeField] private Transform _groundTransform;
+        [SerializeField] private float _friction = 0.1f;
+        [SerializeField] private Vector3 _dampening = new Vector3(0f, 1f, 0f);
         [SerializeField] private Vector3 _velocity = new Vector3(0, 0, 3);
-        [SerializeField] private Vector3 _maxVelocityAbs = new Vector3(10, 5, 10); // to static data
+        [SerializeField] private Vector3 _maxVelocityAbs = new Vector3(10, 5, 10);
+        
+        private bool _isGrounded;
         
         private void FixedUpdate()
         {
-            // if(_velocity.y > 0.1f)
-            //     _velocity += Gravity * Time.fixedDeltaTime;
-            
-            var deltaTime = Time.fixedDeltaTime;
+            float deltaTime = Time.fixedDeltaTime;
             var scaledGravity = new Vector3(0, _gravityAcceleration, 0) * deltaTime;
             
-            ApplyFriction(deltaTime);
-
-            float minimumVelocityToZero = 0.2f;
-
-                //if(transform.position.y > _heightOffset)
-            ///_velocity += _gravity * deltaTime;
-            
-            
-            
-            _velocity += scaledGravity;
-            IfGroundedDoNotAddGravity();
-            
-            float downBorder = transform.position.y - _heightOffset;
-            
-            if (downBorder < _groundLevel)
+            if(Physics.Raycast(
+                   _groundTransform.position ,
+                   _groundTransform.TransformDirection(Vector3.down), 
+                   out RaycastHit hit,
+                   Mathf.Infinity))
             {
-                // if (Mathf.Abs(_velocity.y) < minimumVelocityToZero)
-                //     _velocity.y = 0f;
+                Debug.DrawRay(_groundTransform.position, _groundTransform.TransformDirection(Vector3.down) * hit.distance, Color.red);
                 
-                transform.position = new Vector3(
-                    transform.position.x,
-                    _heightOffset,
-                    transform.position.z);
-            } 
+                if (hit.distance < _groundMinDistance)
+                {
+                    Debug.Log($"{hit.distance} true, velocity {_velocity} {_groundTransform.position.y}");
+                    //_velocity.y = 0f;
+                    _isGrounded = true;
+                }
+                else
+                {
+                    Debug.Log($"{hit.distance} false, velocity {_velocity} {_groundTransform.position.y}");
+                    _isGrounded = false;
+                }
                 
+                if(_groundTransform.position.y < 0)
+                    Debug.Log($"penetrated");
+            }
             
-            transform.Translate(_velocity * deltaTime);
+            ApplyFriction(deltaTime);
+            
+            if(_isGrounded == false)
+                _velocity += scaledGravity;
+            
+            transform.position += _velocity * deltaTime;
         }
 
-        private void IfGroundedDoNotAddGravity()
+        private void OnCollisionExit(Collision other)
         {
-            throw new System.NotImplementedException();
         }
 
         private void OnCollisionEnter(Collision collision)
         {
+            Debug.Log($"hit-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            
             var contacts = new List<ContactPoint>();
             collision.GetContacts(contacts);
             
@@ -69,15 +72,12 @@ namespace _Project.Codebase.Core.Ball
             Vector3 reflectedVelocity = Vector3.Reflect(_velocity, contact.normal);
             
             _velocity = reflectedVelocity;
-            _velocity -= _velocity * _dampingImpactPercent;
-            
-            // foreach (var item in collision.contacts)
-            // {
-            //     Debug.DrawRay(item.point, _direction * -100, Color.blue, 10f);
-            //     Debug.DrawRay(item.point, item.normal * 100, Color.cyan, 10f);
-            //     Debug.DrawRay(item.point,  Vector3.Reflect(_direction, item.normal) * 100, Color.magenta, 10f);
-            //     Debug.Log($"origin normal {item.point} normalized: {item.point.normalized}");
-            //}
+            _velocity -= _dampening;
+
+            if (_isGrounded && _velocity.y < 0 && _velocity.y > -1.1f)
+            {
+                _velocity.y = 0f;
+            }
         }
 
         public void SetVelocity(Vector3 velocity)
