@@ -53,7 +53,7 @@ namespace _Project.Codebase.Core.Ball
                 
                 Vector3 lineVelocity = targetPoint - startPoint;
                 velocity = new Vector3(lineVelocity.x, 0f, lineVelocity.z);
-                _physicsBody.AddVelocity(velocity);
+                _physicsBody.SetVelocity(velocity);
             }
         }
     }
