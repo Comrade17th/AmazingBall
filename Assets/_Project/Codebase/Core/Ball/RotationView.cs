@@ -1,7 +1,41 @@
+using System;
+using UnityEngine;
+using Zenject;
+
 namespace _Project.Codebase.Core.Ball
 {
-    public class RotationView
+    public class RotationView : MonoBehaviour
     {
+        private PhysicsBody _physicsBody;
+        [SerializeField] private float _rotationCoefficient = 0.5f;
         
+        [Inject]
+        private void Construct(PhysicsBody physicsBody)
+        {
+            _physicsBody = physicsBody;
+            _physicsBody.VelocityChanged += Rotate;
+            _physicsBody.DirectionChanged += OnDirectionChanged;
+        }
+
+        private void OnDestroy()
+        {
+            _physicsBody.VelocityChanged -= Rotate;
+            _physicsBody.DirectionChanged -= OnDirectionChanged;
+        }
+
+        private void Rotate(Vector3 velocity)
+        {
+            velocity *= _rotationCoefficient;
+            
+            float velocityX = Mathf.Abs(velocity.x);
+            float velocityZ = Mathf.Abs(velocity.z);
+            transform.Rotate(new Vector3(velocityX > velocityZ ? velocityX : velocityZ, 0, 0), Space.Self);
+        }
+
+        private void OnDirectionChanged(Vector3 velocity)
+        {
+            if(velocity.y == 0f)
+                transform.localRotation = Quaternion.LookRotation(new Vector3(velocity.x, transform.rotation.y, velocity.z));
+        }
     }
 }

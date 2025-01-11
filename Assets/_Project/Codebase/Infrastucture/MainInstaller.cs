@@ -19,9 +19,20 @@ namespace _Project.Codebase.Infrastucture
             
             BindInputProvider();
             BindPointerHandler();
-            BindBall();
-            
+            BindBallView();
+            BindPhysicsBody();
+
             Debug.Log($"MainInstaller InstallBindings");
+        }
+
+        private void BindPhysicsBody()
+        {
+            PhysicsBody physicsBody = _ballView.GetComponent<PhysicsBody>();
+
+            Container
+                .Bind<PhysicsBody>()
+                .FromInstance(physicsBody)
+                .AsSingle();
         }
 
         private void BindInputProvider()
@@ -29,7 +40,7 @@ namespace _Project.Codebase.Infrastucture
             Container
                 .Bind<IInputProvider>()
                 .To<MouseInputProvider>()
-                .AsSingle(); // add decision to keybord, mouse, phone, move to project installer?
+                .AsSingle();
         }
 
         private void BindPointerHandler()
@@ -40,11 +51,8 @@ namespace _Project.Codebase.Infrastucture
                 .AsSingle();
         }
 
-        private void BindBall()
+        private void BindBallView()
         {
-            //BallView ballView = Container
-            //    .InstantiatePrefabForComponent<BallView>(_ballPrefab, _ballSpawnPoint.position, Quaternion.identity, null); // Zenject gives warning of bad practice
-
             Container
                 .Bind<BallView>()
                 .FromInstance(_ballView)
