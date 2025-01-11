@@ -23,67 +23,67 @@ namespace _Project.Codebase.Core.Ball
         private void FixedUpdate()
         {
             float deltaTime = Time.fixedDeltaTime;
-            var scaledGravity = new Vector3(0, _gravityAcceleration, 0) * deltaTime;
             
+            CheckIsGrounded();
+            ApplyFriction(deltaTime);
+            ApplyGravity(deltaTime);
+
+            transform.position += _velocity * deltaTime;
+        }
+
+        private void ApplyGravity(float deltaTime)
+        {
+            var scaledGravity = new Vector3(0, _gravityAcceleration, 0) * deltaTime;
+
+            if(_isGrounded == false)
+                _velocity += scaledGravity;
+        }
+
+        private void CheckIsGrounded()
+        {
             if(Physics.Raycast(
                    _groundTransform.position ,
                    _groundTransform.TransformDirection(Vector3.down), 
                    out RaycastHit hit,
                    Mathf.Infinity))
             {
-                Debug.DrawRay(_groundTransform.position, _groundTransform.TransformDirection(Vector3.down) * hit.distance, Color.red);
-                
                 if (hit.distance < _groundMinDistance)
-                {
-                    Debug.Log($"{hit.distance} true, velocity {_velocity} {_groundTransform.position.y}");
-                    //_velocity.y = 0f;
                     _isGrounded = true;
-                }
                 else
-                {
-                    Debug.Log($"{hit.distance} false, velocity {_velocity} {_groundTransform.position.y}");
                     _isGrounded = false;
-                }
-                
-                if(_groundTransform.position.y < 0)
-                    Debug.Log($"penetrated");
             }
-            
-            ApplyFriction(deltaTime);
-            
-            if(_isGrounded == false)
-                _velocity += scaledGravity;
-            
-            transform.position += _velocity * deltaTime;
-        }
-
-        private void OnCollisionExit(Collision other)
-        {
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            Debug.Log($"hit-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            
             var contacts = new List<ContactPoint>();
             collision.GetContacts(contacts);
             
             ContactPoint contact = contacts[0];
-            Vector3 reflectedVelocity = Vector3.Reflect(_velocity, contact.normal);
+            var reflectedVelocity = Vector3.Reflect(_velocity, contact.normal);
             
             _velocity = reflectedVelocity;
             _velocity -= _dampening;
 
-            if (_isGrounded && _velocity.y < 0 && _velocity.y > -1.1f)
-            {
-                _velocity.y = 0f;
-            }
+            CancelVelocityYAccumulation();
         }
 
         public void SetVelocity(Vector3 velocity)
         {
             velocity.y = _velocity.y;
             _velocity = ClampVelocity(velocity);
+        }
+
+        private void CancelVelocityYAccumulation()
+        {
+            float velocityCutBorder = -1.1f;
+
+            if (_isGrounded && 
+                _velocity.y < 0 && 
+                _velocity.y > velocityCutBorder)
+            {
+                _velocity.y = 0f;
+            }
         }
 
         private void ApplyFriction(float deltaTime)
