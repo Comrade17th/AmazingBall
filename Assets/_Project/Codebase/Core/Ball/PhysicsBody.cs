@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Codebase.Core.Ball
 {
@@ -34,6 +33,7 @@ namespace _Project.Codebase.Core.Ball
 
         public event Action<Vector3> VelocityChanged;
         public event Action<Vector3> DirectionChanged;
+        public event Action<Vector3, Vector3, Vector3> ObjectHit;
         
         private void Update()
         {
@@ -80,6 +80,7 @@ namespace _Project.Codebase.Core.Ball
             Velocity = reflectedVelocity;
             Velocity -= _dampening;
             DirectionChanged?.Invoke(Velocity);
+            ObjectHit?.Invoke(contact.point, contact.normal, Velocity);
 
             CancelVelocityYAccumulation();
         }

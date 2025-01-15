@@ -313,9 +313,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball
       objectReference: {fileID: 0}
-    - target: {fileID: 5033357133496690557, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
-      propertyPath: _frictionXZ
-      value: 0.8
+    - target: {fileID: 2992720110976115744, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4863765
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
