@@ -39,6 +39,7 @@ namespace _Project.Codebase.Core.Ball
             if (_cancellationTokenSource != null)
                 _cancellationTokenSource.Cancel();
             
+            Debug.Log("onObjectHit");
             _cancellationTokenSource = new CancellationTokenSource();
             Task compressTask = CompressAsync(_cancellationTokenSource);
         }
@@ -47,34 +48,38 @@ namespace _Project.Codebase.Core.Ball
         {
             float minScaleApproximately = 0.4f;
             float maxScaleApproximately = 0.98f;
-            float lerpDelta = 0.2f;
-            int waitTime = (int) (Time.deltaTime * 1000f);
+            float lerpDelta = 0f;
+            int waitTime = (int) (Time.fixedDeltaTime * 1000f);
             
             while (_meshParent.localScale.z > minScaleApproximately)
             {
-                if (_cancellationTokenSource.IsCancellationRequested)
+                if (tokenSource.IsCancellationRequested)
                 {
                     Debug.Log("Compress cancelled");
                     return;
                 }
                 
                 _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _compressedScale, lerpDelta);
+                lerpDelta += Time.fixedDeltaTime;
                 await Task.Delay(waitTime);
             }
+
+            lerpDelta = 0f;
             
             while (_meshParent.localScale.z < maxScaleApproximately)
             {
-                if (_cancellationTokenSource.IsCancellationRequested)
+                if (tokenSource.IsCancellationRequested)
                 {
                     Debug.Log("DeCompress cancelled");
                     return;
                 }
                 
                 _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _defaultScale, lerpDelta);
+                lerpDelta += Time.fixedDeltaTime;
                 await Task.Delay(waitTime);
             }
             
-            if (_cancellationTokenSource.IsCancellationRequested)
+            if (tokenSource.IsCancellationRequested)
             {
                 Debug.Log("Compress cancelled");
                 return;
