@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using UnityEngine;
 using Zenject;
 
@@ -6,8 +7,10 @@ namespace _Project.Codebase.Core.Ball
 {
     public class RotationView : MonoBehaviour
     {
-        private PhysicsBody _physicsBody;
+        [SerializeField] private Transform _meshParent;
         [SerializeField] private float _rotationCoefficient = 0.5f;
+        
+        private PhysicsBody _physicsBody;
         
         [Inject]
         private void Construct(PhysicsBody physicsBody)

@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +14,7 @@ namespace _Project.Codebase.Core.Ball
 
         private PhysicsBody _physicsBody;
         private Vector3 _defaultScale;
+        private CancellationTokenSource _cancellationTokenSource;
 
         [Inject]
         private void Construct(PhysicsBody physicsBody)
@@ -25,34 +28,58 @@ namespace _Project.Codebase.Core.Ball
             _defaultScale = _meshParent.localScale;
         }
 
-    private void OnObjectHit(Vector3 point, Vector3 normal, Vector3 velocity)
+        private void OnDestroy()
         {
-            Task compressTask = CompressAsync();
+            if(_cancellationTokenSource != null)
+                _cancellationTokenSource.Cancel();
         }
 
-        private async Task CompressAsync()
+        private void OnObjectHit(Vector3 point, Vector3 normal, Vector3 velocity)
+        {
+            if (_cancellationTokenSource != null)
+                _cancellationTokenSource.Cancel();
+            
+            _cancellationTokenSource = new CancellationTokenSource();
+            Task compressTask = CompressAsync(_cancellationTokenSource);
+        }
+
+        private async Task CompressAsync(CancellationTokenSource tokenSource)
         {
             float minScaleApproximately = 0.4f;
             float maxScaleApproximately = 0.98f;
             float lerpDelta = 0.2f;
             int waitTime = (int) (Time.deltaTime * 1000f);
             
-            Debug.Log($"scale {_meshParent.localScale}");
-            
             while (_meshParent.localScale.z > minScaleApproximately)
             {
+                if (_cancellationTokenSource.IsCancellationRequested)
+                {
+                    Debug.Log("Compress cancelled");
+                    return;
+                }
+                
                 _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _compressedScale, lerpDelta);
                 await Task.Delay(waitTime);
             }
             
             while (_meshParent.localScale.z < maxScaleApproximately)
             {
+                if (_cancellationTokenSource.IsCancellationRequested)
+                {
+                    Debug.Log("DeCompress cancelled");
+                    return;
+                }
+                
                 _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _defaultScale, lerpDelta);
                 await Task.Delay(waitTime);
             }
             
+            if (_cancellationTokenSource.IsCancellationRequested)
+            {
+                Debug.Log("Compress cancelled");
+                return;
+            }
             
-
             _meshParent.localScale = _defaultScale;
         }
     }
