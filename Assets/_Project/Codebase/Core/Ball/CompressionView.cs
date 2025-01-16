@@ -54,10 +54,7 @@ namespace _Project.Codebase.Core.Ball
             while (_meshParent.localScale.z > minScaleApproximately)
             {
                 if (tokenSource.IsCancellationRequested)
-                {
-                    Debug.Log("Compress cancelled");
                     return;
-                }
                 
                 _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _compressedScale, lerpDelta);
                 lerpDelta += Time.fixedDeltaTime;
@@ -69,20 +66,11 @@ namespace _Project.Codebase.Core.Ball
             while (_meshParent.localScale.z < maxScaleApproximately)
             {
                 if (tokenSource.IsCancellationRequested)
-                {
-                    Debug.Log("DeCompress cancelled");
                     return;
-                }
                 
                 _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _defaultScale, lerpDelta);
                 lerpDelta += Time.fixedDeltaTime;
                 await Task.Delay(waitTime);
-            }
-            
-            if (tokenSource.IsCancellationRequested)
-            {
-                Debug.Log("Compress cancelled");
-                return;
             }
             
             _meshParent.localScale = _defaultScale;

@@ -32,13 +32,13 @@ namespace _Project.Codebase.Core.Ball
             
             float velocityX = Mathf.Abs(velocity.x);
             float velocityZ = Mathf.Abs(velocity.z);
-            transform.Rotate(new Vector3(velocityX > velocityZ ? velocityX : velocityZ, 0, 0), Space.Self);
+            _meshParent.Rotate(new Vector3(velocityX > velocityZ ? velocityX : velocityZ, 0, 0), Space.Self);
         }
 
         private void OnDirectionChanged(Vector3 velocity)
         {
             if(velocity.y == 0f)
-                transform.localRotation = Quaternion.LookRotation(new Vector3(velocity.x, transform.rotation.y, velocity.z));
+                _meshParent.localRotation = Quaternion.LookRotation(new Vector3(velocity.x, _meshParent.rotation.y, velocity.z));
         }
     }
 }
