@@ -1,19 +1,18 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace _Project.Codebase.Core.Ball
 {
-    public class CompressionView : MonoBehaviour
+    public class BallColorView : MonoBehaviour
     {
-        [SerializeField] private Transform _meshParent;
-        [SerializeField] private Vector3 _compressedScale = new Vector3(1, 1, 0.33f);
-
+        [SerializeField] private float TimeMultiplier = 3f;
+        [SerializeField] Color _compressedColor = Color.red;
+        [SerializeField] MeshRenderer _meshRenderer;
+        
+        private Color _defaultColor;
         private PhysicsBody _physicsBody;
-        private Vector3 _defaultScale;
         private CancellationTokenSource _cancellationTokenSource;
 
         [Inject]
@@ -23,56 +22,52 @@ namespace _Project.Codebase.Core.Ball
             _physicsBody.ObjectHit += OnObjectHit;
         }
 
-        private void Awake()
-        {
-            _defaultScale = _meshParent.localScale;
-        }
-
         private void OnDestroy()
         {
+            _physicsBody.ObjectHit -= OnObjectHit;
+
             AbortTask();
         }
+
+        private void Awake() => 
+            _defaultColor = _meshRenderer.material.color;
 
         private void OnObjectHit(HitInfo _)
         {
             AbortTask();
             
             _cancellationTokenSource = new CancellationTokenSource();
-            Task compressTask = CompressAsync(_cancellationTokenSource);
+            Task compressTask = CompressColorAsync(_cancellationTokenSource);
         }
 
-        private async Task CompressAsync(CancellationTokenSource tokenSource)
+        private async Task CompressColorAsync(CancellationTokenSource tokenSource)
         {
-            float minScaleApproximately = 0.4f;
-            float maxScaleApproximately = 0.98f;
-            float lerpDelta = 0f;
             int waitTime = (int) (Time.fixedDeltaTime * 1000f);
-            
-            while (_meshParent.localScale.z > minScaleApproximately)
+            float lerpDelta = 0f;
+
+            while (_meshRenderer.sharedMaterial.color != _compressedColor)
             {
                 if (tokenSource.IsCancellationRequested)
                     return;
                 
-                _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _compressedScale, lerpDelta);
-                lerpDelta += Time.fixedDeltaTime;
+                _meshRenderer.sharedMaterial.color = Color.Lerp(_defaultColor, _compressedColor, lerpDelta);
+                lerpDelta += Time.deltaTime * TimeMultiplier;
                 await Task.Delay(waitTime);
             }
-
+            
             lerpDelta = 0f;
             
-            while (_meshParent.localScale.z < maxScaleApproximately)
+            while (_meshRenderer.sharedMaterial.color != _defaultColor)
             {
                 if (tokenSource.IsCancellationRequested)
                     return;
                 
-                _meshParent.localScale = Vector3.Lerp(_meshParent.localScale, _defaultScale, lerpDelta);
-                lerpDelta += Time.fixedDeltaTime;
+                _meshRenderer.sharedMaterial.color = Color.Lerp(_compressedColor, _defaultColor, lerpDelta);
+                lerpDelta += Time.deltaTime * TimeMultiplier;
                 await Task.Delay(waitTime);
             }
-            
-            _meshParent.localScale = _defaultScale;
         }
-        
+
         private void AbortTask()
         {
             if (_cancellationTokenSource != null)

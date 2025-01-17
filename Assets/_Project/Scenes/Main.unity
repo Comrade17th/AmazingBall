@@ -322,14 +322,25 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5342263320981212424, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+    - target: {fileID: 4501403511723171130, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
       propertyPath: _meshParent
       value: 
       objectReference: {fileID: 345608998}
+    - target: {fileID: 5342263320981212424, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+      propertyPath: _meshParent
+      value: 
+      objectReference: {fileID: 815989319}
+    - target: {fileID: 7421271133290460255, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1084485846}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7636067470509988164, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1376591990}
   m_SourcePrefab: {fileID: 100100000, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
 --- !u!114 &366827179 stripped
 MonoBehaviour:
@@ -657,6 +668,117 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 683159977}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &815989319 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8178950169378807569, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+  m_PrefabInstance: {fileID: 366827178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!21 &1084485846
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ball (Instance) (Instance) (Instance)
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 27dc5a052ee242243899fe5108257a07, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []
+--- !u!1 &1376591985 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7636067470509988164, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+  m_PrefabInstance: {fileID: 366827178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1376591988 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7421271133290460255, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+  m_PrefabInstance: {fileID: 366827178}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1376591990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376591985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba47fb1d7f3a409f89f64eb9f643aa99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeMultiplier: 20
+  _compressedColor: {r: 1, g: 0, b: 0, a: 1}
+  _meshRenderer: {fileID: 1376591988}
 --- !u!1 &1396619951
 GameObject:
   m_ObjectHideFlags: 0
