@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Codebase.Core.Ball
 {
@@ -9,26 +8,42 @@ namespace _Project.Codebase.Core.Ball
     public class PhysicsBody : MonoBehaviour
     {
         private readonly float _groundMinDistance = 0.05f;
-        private readonly float _heightOffset = 0.5f;
         private readonly float _gravityAcceleration = -9.8f;
         
         [SerializeField] private Transform _groundTransform;
-        [SerializeField] private float _friction = 0.1f;
+        [SerializeField] private float _frictionXZ = 0.1f;
+        [SerializeField] private Vector3 _velocity = Vector3.zero;
         [SerializeField] private Vector3 _dampening = new Vector3(0f, 1f, 0f);
-        [SerializeField] private Vector3 _velocity = new Vector3(0, 0, 3);
         [SerializeField] private Vector3 _maxVelocityAbs = new Vector3(10, 5, 10);
         
         private bool _isGrounded;
-        
-        private void FixedUpdate()
+
+        private Vector3 Velocity
         {
-            float deltaTime = Time.fixedDeltaTime;
+            get { return _velocity; }
+            set
+            {
+                if (_velocity != value)
+                {
+                    _velocity = ClampVelocity(value);
+                    VelocityChanged?.Invoke(_velocity);
+                }
+            }
+        }
+
+        public event Action<Vector3> VelocityChanged;
+        public event Action<Vector3> DirectionChanged;
+        public event Action<HitInfo> ObjectHit;
+        
+        private void Update()
+        {
+            float deltaTime = Time.deltaTime;
             
             CheckIsGrounded();
             ApplyFriction(deltaTime);
             ApplyGravity(deltaTime);
 
-            transform.position += _velocity * deltaTime;
+            transform.position += Velocity * deltaTime;
         }
 
         private void ApplyGravity(float deltaTime)
@@ -36,7 +51,7 @@ namespace _Project.Codebase.Core.Ball
             var scaledGravity = new Vector3(0, _gravityAcceleration, 0) * deltaTime;
 
             if(_isGrounded == false)
-                _velocity += scaledGravity;
+                Velocity += scaledGravity;
         }
 
         private void CheckIsGrounded()
@@ -60,18 +75,21 @@ namespace _Project.Codebase.Core.Ball
             collision.GetContacts(contacts);
             
             ContactPoint contact = contacts[0];
-            var reflectedVelocity = Vector3.Reflect(_velocity, contact.normal);
+            var reflectedVelocity = Vector3.Reflect(Velocity, contact.normal);
             
-            _velocity = reflectedVelocity;
-            _velocity -= _dampening;
+            Velocity = reflectedVelocity;
+            Velocity -= _dampening;
+            DirectionChanged?.Invoke(Velocity);
+            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, Velocity));
 
             CancelVelocityYAccumulation();
         }
 
         public void SetVelocity(Vector3 velocity)
         {
-            velocity.y = _velocity.y;
-            _velocity = ClampVelocity(velocity);
+            velocity.y = Velocity.y;
+            Velocity = ClampVelocity(velocity);
+            DirectionChanged?.Invoke(Velocity);
         }
 
         private void CancelVelocityYAccumulation()
@@ -79,19 +97,19 @@ namespace _Project.Codebase.Core.Ball
             float velocityCutBorder = -1.1f;
 
             if (_isGrounded && 
-                _velocity.y < 0 && 
-                _velocity.y > velocityCutBorder)
+                Velocity.y < 0 && 
+                Velocity.y > velocityCutBorder)
             {
-                _velocity.y = 0f;
+                Velocity = new Vector3(Velocity.x, 0, Velocity.z);
             }
         }
 
         private void ApplyFriction(float deltaTime)
         {
-            _velocity = new Vector3(
-                Mathf.MoveTowards(_velocity.x, 0, _friction * deltaTime),
-                _velocity.y,
-                Mathf.MoveTowards(_velocity.z, 0, _friction * deltaTime));
+            Velocity = new Vector3(
+                Mathf.MoveTowards(Velocity.x, 0, _frictionXZ * deltaTime),
+                Velocity.y,
+                Mathf.MoveTowards(Velocity.z, 0, _frictionXZ * deltaTime));
         }
 
         private Vector3 ClampVelocity(Vector3 velocity)

@@ -28,15 +28,10 @@ namespace _Project.Codebase.Core.Ball
             _pointerHandler.PointerUp -= OnPointerUp;
             _pointerHandler.PointerDown -= OnPointerDown;
         }
-
-        private void Update()
-        {
-            
-        }
-
+        
         private void OnPointerDown()
         {
-            Debug.Log("OnPointerDown");
+            
         }
 
         private void OnPointerUp()
