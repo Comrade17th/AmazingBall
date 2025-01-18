@@ -1,4 +1,16 @@
 {
     "name": "Factories",
-    "references":[ "GUID:d50d25292ae44c389bdc062df7620237", "Interfaces" ]
+    "rootNamespace": "",
+    "references": [
+        "GUID:25f41973fe914fd7b8aba9199db44e90"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
