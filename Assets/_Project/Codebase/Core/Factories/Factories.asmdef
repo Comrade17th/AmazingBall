@@ -1,0 +1,4 @@
+{
+    "name": "Factories",
+    "references":[ "GUID:d50d25292ae44c389bdc062df7620237", "Interfaces" ]
+}
