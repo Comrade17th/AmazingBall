@@ -3,7 +3,9 @@
     "rootNamespace": "",
     "references": [
         "UniRx",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "General",
+        "Coins"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -46,6 +46,22 @@ namespace _Project.Codebase.Core.Ball
             transform.position += Velocity * deltaTime;
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            var contacts = new List<ContactPoint>();
+            collision.GetContacts(contacts);
+            
+            ContactPoint contact = contacts[0];
+            var reflectedVelocity = Vector3.Reflect(Velocity, contact.normal);
+            
+            Velocity = reflectedVelocity;
+            Velocity -= _dampening;
+            DirectionChanged?.Invoke(Velocity);
+            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, Velocity));
+
+            CancelVelocityYAccumulation();
+        }
+        
         private void ApplyGravity(float deltaTime)
         {
             var scaledGravity = new Vector3(0, _gravityAcceleration, 0) * deltaTime;
@@ -67,22 +83,6 @@ namespace _Project.Codebase.Core.Ball
                 else
                     _isGrounded = false;
             }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            var contacts = new List<ContactPoint>();
-            collision.GetContacts(contacts);
-            
-            ContactPoint contact = contacts[0];
-            var reflectedVelocity = Vector3.Reflect(Velocity, contact.normal);
-            
-            Velocity = reflectedVelocity;
-            Velocity -= _dampening;
-            DirectionChanged?.Invoke(Velocity);
-            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, Velocity));
-
-            CancelVelocityYAccumulation();
         }
 
         public void SetVelocity(Vector3 velocity)
