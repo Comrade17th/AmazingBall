@@ -24,6 +24,7 @@ namespace _Project.Codebase.Core.Wallet
             _coinCollector = coinCollector;
 
             _coins = new ReactiveProperty<int>(_walletModel.Coins.Value);
+            _coinsLabel = new ReactiveProperty<string>(_walletModel.CoinsLabel.Value);
             
             BindWalletModel();
             BindCoinCollector();
@@ -58,7 +59,7 @@ namespace _Project.Codebase.Core.Wallet
                 .AddTo(_compositeDisposable);
 
             _walletModel.CoinsLabel
-                .Subscribe(_ => _coinsLabel = _walletModel.CoinsLabel)
+                .Subscribe(_ => _coinsLabel.Value = _walletModel.CoinsLabel.Value)
                 .AddTo(_compositeDisposable);
         }
     }
