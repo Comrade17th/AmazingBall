@@ -9,13 +9,16 @@ namespace _Project.Codebase.Core
     public class LineView : MonoBehaviour
     {
         [SerializeField] private LineRenderer _lineRenderer;
-        [SerializeField] private BallView _ballView;
         
+        private BallView _ballView;
         private IInputProvider _inputProvider;
 
         [Inject]
-        public void Construct(IInputProvider inputProvider) => 
+        public void Construct(IInputProvider inputProvider, BallView ballView)
+        {
             _inputProvider = inputProvider;
+            _ballView = ballView;
+        }
 
         private void Update()
         {

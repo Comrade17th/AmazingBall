@@ -16,6 +16,8 @@ namespace _Project.Codebase.Core.Wallet
 
         private void Awake()
         {
+            Debug.Log($"triggerObserver {_triggerObserver == null} ");
+            
             _triggerObserver.TriggerEntered
                 .Subscribe(collider  => OnTriggerEnetered(collider))
                 .AddTo(_disposable);
@@ -29,6 +31,8 @@ namespace _Project.Codebase.Core.Wallet
 
         private void OnTriggerEnetered(Collider other)
         {
+            Debug.Log($"{other == null}");
+            
             if (other.TryGetComponent(out Coin coin)) 
                 _coinCollected.Value = coin;
         }

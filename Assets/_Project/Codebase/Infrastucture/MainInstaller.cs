@@ -10,7 +10,7 @@ namespace _Project.Codebase.Infrastucture
 {
     public class MainInstaller : MonoInstaller
     {
-        [SerializeField] private GameObject _ballPrefab;
+        //[SerializeField] private GameObject _ballPrefab;
         [SerializeField] private BallView _ballView;
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private PointerHandler _pointerHandler;
@@ -79,7 +79,8 @@ namespace _Project.Codebase.Infrastucture
             Container
                 .Bind<BallView>()
                 .FromInstance(_ballView)
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

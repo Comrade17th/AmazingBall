@@ -1,3 +1,5 @@
+using System;
+using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
 
@@ -12,8 +14,10 @@ namespace _Project.Codebase.Core.General
         public IReadOnlyReactiveProperty<Collider> TriggerEntered => _triggerEntered;
         public IReadOnlyReactiveProperty<Collider> TriggerExited => _triggerExited;
         
-        private void OnTriggerEnter(Collider other) => 
-            _triggerEntered.Value = other;
+        private void OnTriggerEnter([NotNull] Collider other)
+        {
+            _triggerEntered.Value = other ?? throw new ArgumentNullException(nameof(other));
+        }
 
         private void OnTriggerExit(Collider other) => 
             _triggerExited.Value = other;
