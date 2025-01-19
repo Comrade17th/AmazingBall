@@ -1,5 +1,4 @@
 using _Project.Codebase.Core.Ball;
-using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Interfaces;
 using _Project.Codebase.VisualDebug;
 using UnityEngine;
@@ -42,7 +41,5 @@ namespace _Project.Codebase.Core
                 _lineRenderer.SetPosition(lineStartIndex, _ballView.transform.position);
             }
         }
-        
-        
     }
 }

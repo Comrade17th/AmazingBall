@@ -12,7 +12,10 @@ namespace _Project.Codebase.Core.Wallet
         private readonly CoinCollector _coinCollector;
 
         private ReactiveProperty<int> _coins;
+        private ReactiveProperty<string> _coinsLabel;
+        
         public IReadOnlyReactiveProperty<int> Coins => _coins;
+        public IReadOnlyReactiveProperty<string> CoinsLabel => _coinsLabel;
 
         [Inject]
         public WalletViewModel(WalletModel walletModel, CoinCollector coinCollector)
@@ -22,7 +25,7 @@ namespace _Project.Codebase.Core.Wallet
 
             _coins = new ReactiveProperty<int>(_walletModel.Coins.Value);
             
-            BindCoinsModel();
+            BindWalletModel();
             BindCoinCollector();
         }
 
@@ -38,7 +41,7 @@ namespace _Project.Codebase.Core.Wallet
                 throw new ArgumentNullException(nameof(coin));
 
             if (coin.Value > 0) 
-                _coins.Value += coin.Value;
+                _walletModel.Coins.Value += coin.Value;
         }
 
         private void BindCoinCollector()
@@ -48,10 +51,14 @@ namespace _Project.Codebase.Core.Wallet
                 .AddTo(_compositeDisposable);
         }
 
-        private void BindCoinsModel()
+        private void BindWalletModel()
         {
             _walletModel.Coins
                 .Subscribe(_ => _coins.Value = _walletModel.Coins.Value)
+                .AddTo(_compositeDisposable);
+
+            _walletModel.CoinsLabel
+                .Subscribe(_ => _coinsLabel = _walletModel.CoinsLabel)
                 .AddTo(_compositeDisposable);
         }
     }
