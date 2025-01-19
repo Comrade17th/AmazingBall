@@ -30,8 +30,6 @@ namespace _Project.Codebase.Core
         {
             Vector3 wantedPosition;
             
-            Debug.Log($"{_target == null}");
-            
             if(_followBehind)
                 wantedPosition = _target.TransformPoint(0, _height, -_distance);
             else

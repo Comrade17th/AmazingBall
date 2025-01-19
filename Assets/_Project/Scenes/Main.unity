@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1138,6 +1138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballPrefab: {fileID: 243722191756711784, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
   _ballView: {fileID: 366827179}
+  _coinCollector: {fileID: 2122470814}
   _pointerHandler: {fileID: 98389780}
 --- !u!1 &1587866706
 GameObject:
@@ -1569,6 +1570,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1857743584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2122470814 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2625607532638004345, guid: a4500d92d3d7b514da1b454a415dd7e3, type: 3}
+  m_PrefabInstance: {fileID: 366827178}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0bd90c665447dfb70237b3fbcc98fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4490633608842669495
 PrefabInstance:
   m_ObjectHideFlags: 0

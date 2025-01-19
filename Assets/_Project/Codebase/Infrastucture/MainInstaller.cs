@@ -1,6 +1,7 @@
 using _Project.Codebase.Core;
 using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.InputProviders;
+using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
 using Zenject;
@@ -11,18 +12,40 @@ namespace _Project.Codebase.Infrastucture
     {
         [SerializeField] private GameObject _ballPrefab;
         [SerializeField] private BallView _ballView;
+        [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private PointerHandler _pointerHandler;
         
         public override void InstallBindings()
         {
-            Container.BindInstance(Camera.main).AsCached(); // why using AsCached
+            Container.BindInstance(Camera.main).AsCached();
             
             BindInputProvider();
             BindPointerHandler();
             BindBallView();
             BindPhysicsBody();
+            BindCoinCollector();
+            BindWallet();
 
             Debug.Log($"MainInstaller InstallBindings");
+        }
+
+        private void BindCoinCollector()
+        {
+            Container
+                .Bind<CoinCollector>()
+                .FromInstance(_coinCollector)
+                .AsSingle();
+        }
+
+        private void BindWallet()
+        {
+            Container
+                .Bind<WalletModel>()
+                .AsSingle();
+
+            Container
+                .Bind<WalletViewModel>()
+                .AsSingle();
         }
 
         private void BindPhysicsBody()

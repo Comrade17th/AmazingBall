@@ -9,19 +9,14 @@ namespace _Project.Codebase.Core
     public class LineView : MonoBehaviour
     {
         [SerializeField] private LineRenderer _lineRenderer;
-        [SerializeField] private BallView _ballView; // to DI
+        [SerializeField] private BallView _ballView;
         
         private IInputProvider _inputProvider;
-        
-        //private var post = lineRenderer.setpositionCount(0);
 
         [Inject]
-        public void Construct(IInputProvider inputProvider, BallView ballView)
-        {
+        public void Construct(IInputProvider inputProvider) => 
             _inputProvider = inputProvider;
-            _ballView = ballView;
-        }
-        
+
         private void Update()
         {
             int lineEndIndex = 1;
