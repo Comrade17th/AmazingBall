@@ -1,3 +1,4 @@
 {
-  "name": "Wallet"
+  "name": "Wallet",
+  "references":[ "UniRx" ]
 }
