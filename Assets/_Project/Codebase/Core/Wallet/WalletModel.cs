@@ -4,13 +4,13 @@ namespace _Project.Codebase.Core.Wallet
 {
     public class WalletModel
     {
-        public ReactiveProperty<int> Coins = new();
-        public ReactiveProperty<string> CoinsLabel = new();
+        public ReactiveProperty<int> Coins;
+        public ReactiveProperty<string> CoinsLabel;
 
         public WalletModel(int initialCoins = 0, string label = "Coins:")
         {
-            Coins.Value = initialCoins;
-            CoinsLabel.Value = label;
+            Coins = new ReactiveProperty<int>(initialCoins);
+            CoinsLabel = new ReactiveProperty<string>(label);
         }
     }    
 }

@@ -12,7 +12,7 @@ namespace _Project.Codebase.Core.Wallet
         private CompositeDisposable _compositeDisposable = new();
         private WalletViewModel _walletViewModel;
 
-        //[Inject]
+        [Inject]
         private void  Construct(WalletViewModel walletViewModel)
         {
             _walletViewModel = walletViewModel;

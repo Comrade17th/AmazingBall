@@ -9,14 +9,15 @@ namespace _Project.Codebase.Core.Wallet
     {
         [SerializeField] private TriggerObserver _triggerObserver;
         
-        private CompositeDisposable _disposable = new();
-        private ReactiveProperty<Coin> _coinCollected = new();
+        private CompositeDisposable _disposable;
+        private ReactiveProperty<Coin> _coinCollected;
         
         public IReadOnlyReactiveProperty<Coin> CoinCollected => _coinCollected;
 
         private void Awake()
         {
-            Debug.Log($"triggerObserver {_triggerObserver == null} ");
+            _disposable = new CompositeDisposable();
+            _coinCollected = new ReactiveProperty<Coin>();
             
             _triggerObserver.TriggerEntered
                 .Subscribe(collider  => OnTriggerEnetered(collider))
