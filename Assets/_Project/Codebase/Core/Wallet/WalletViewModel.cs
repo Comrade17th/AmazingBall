@@ -36,19 +36,18 @@ namespace _Project.Codebase.Core.Wallet
             _compositeDisposable.Clear();
         }
 
-        private void OnCoinCollected(Coin coin)
+        private void OnCoinCollected(int coins)
         {
-            if (coin == null)
-                throw new ArgumentNullException(nameof(coin));
-
-            if (coin.Value > 0) 
-                _walletModel.Coins.Value += coin.Value;
+            if (coins < 0)
+                throw new ArgumentOutOfRangeException(nameof(coins));
+            
+            _walletModel.Coins.Value += coins;
         }
 
         private void BindCoinCollector()
         {
             _coinCollector.CoinCollected
-                .Subscribe(coin => OnCoinCollected(coin))
+                .Subscribe(coins => OnCoinCollected(coins))
                 .AddTo(_compositeDisposable);
         }
 
