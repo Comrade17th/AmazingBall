@@ -1,5 +1,4 @@
 using _Project.Codebase.Core.Ball;
-using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Interfaces;
 using _Project.Codebase.VisualDebug;
 using UnityEngine;
@@ -10,11 +9,9 @@ namespace _Project.Codebase.Core
     public class LineView : MonoBehaviour
     {
         [SerializeField] private LineRenderer _lineRenderer;
-        [SerializeField] private BallView _ballView; // to DI
         
+        private BallView _ballView;
         private IInputProvider _inputProvider;
-        
-        //private var post = lineRenderer.setpositionCount(0);
 
         [Inject]
         public void Construct(IInputProvider inputProvider, BallView ballView)
@@ -22,7 +19,7 @@ namespace _Project.Codebase.Core
             _inputProvider = inputProvider;
             _ballView = ballView;
         }
-        
+
         private void Update()
         {
             int lineEndIndex = 1;
@@ -42,7 +39,5 @@ namespace _Project.Codebase.Core
                 _lineRenderer.SetPosition(lineStartIndex, _ballView.transform.position);
             }
         }
-        
-        
     }
 }

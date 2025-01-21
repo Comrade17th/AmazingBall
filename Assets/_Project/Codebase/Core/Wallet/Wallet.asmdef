@@ -1,0 +1,19 @@
+{
+    "name": "Wallet",
+    "rootNamespace": "",
+    "references": [
+        "UniRx",
+        "Unity.TextMeshPro",
+        "General",
+        "Coins"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
