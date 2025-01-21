@@ -1136,6 +1136,7 @@ MonoBehaviour:
   _ballView: {fileID: 527819574}
   _coinCollector: {fileID: 527819576}
   _pointerHandler: {fileID: 98389780}
+  _hitVFXPrefab: {fileID: -5233561287256728481, guid: 5cbaa91e04ff9de43b95f0f790f35867, type: 3}
 --- !u!1 &1587866706
 GameObject:
   m_ObjectHideFlags: 0

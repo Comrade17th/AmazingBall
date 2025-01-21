@@ -1,5 +1,7 @@
 using _Project.Codebase.Core;
 using _Project.Codebase.Core.Ball;
+using _Project.Codebase.Core.Entities;
+using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
@@ -15,6 +17,8 @@ namespace _Project.Codebase.Infrastucture
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private PointerHandler _pointerHandler;
         
+        [SerializeField] private HitVFX _hitVFXPrefab;
+        
         public override void InstallBindings()
         {
             Container.BindInstance(Camera.main).AsCached();
@@ -25,8 +29,21 @@ namespace _Project.Codebase.Infrastucture
             BindPhysicsBody();
             BindCoinCollector();
             BindWallet();
+            BindHitVFXFactory();
 
             Debug.Log($"MainInstaller InstallBindings");
+        }
+
+        private void BindHitVFXFactory()
+        {
+            Container
+                .Bind<HitVFX>()
+                .FromInstance(_hitVFXPrefab)
+                .AsSingle();
+            
+            Container
+                .Bind<VFXFactory<HitVFX>>()
+                .AsSingle();
         }
 
         private void BindCoinCollector()

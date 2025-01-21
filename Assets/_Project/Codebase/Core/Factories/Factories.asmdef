@@ -2,7 +2,8 @@
     "name": "Factories",
     "rootNamespace": "",
     "references": [
-        "GUID:25f41973fe914fd7b8aba9199db44e90"
+        "GUID:25f41973fe914fd7b8aba9199db44e90",
+        "Coins"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
