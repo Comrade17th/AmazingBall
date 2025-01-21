@@ -1,23 +1,28 @@
+using System;
 using _Project.Codebase.Core.Ball;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Codebase.Core
 {
     public class CameraFollower : MonoBehaviour
     {
-        private Transform _target;
+        [SerializeField] private float _distance = 3.0f;
+        [SerializeField] private float _height = 3.0f;
+        [SerializeField] private float _damping = 5.0f;
+        [SerializeField] private bool _smoothRotation = true;
+        [SerializeField] private bool _followBehind = true;
+        [SerializeField] private float _rotationDamping = 10.0f;
         
-        public float distance = 3.0f;
-        public float height = 3.0f;
-        public float damping = 5.0f;
-        public bool smoothRotation = true;
-        public bool followBehind = true;
-        public float rotationDamping = 10.0f;
+        private Transform _target;
 
         [Inject]
         private void Construct(BallView target)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+            
             _target = target.transform;
         }
 
@@ -25,17 +30,17 @@ namespace _Project.Codebase.Core
         {
             Vector3 wantedPosition;
             
-            if(followBehind)
-                wantedPosition = _target.TransformPoint(0, height, -distance);
+            if(_followBehind)
+                wantedPosition = _target.TransformPoint(0, _height, -_distance);
             else
-                wantedPosition = _target.TransformPoint(0, height, distance);
+                wantedPosition = _target.TransformPoint(0, _height, _distance);
 
-            transform.position = Vector3.Lerp (transform.position, wantedPosition, Time.deltaTime * damping);
+            transform.position = Vector3.Lerp (transform.position, wantedPosition, Time.deltaTime * _damping);
 
-            if (smoothRotation)
+            if (_smoothRotation)
             {
                 Quaternion wantedRotation = Quaternion.LookRotation(_target.position - transform.position, _target.up);
-                transform.rotation = Quaternion.Slerp (transform.rotation, wantedRotation, Time.deltaTime * rotationDamping);
+                transform.rotation = Quaternion.Slerp (transform.rotation, wantedRotation, Time.deltaTime * _rotationDamping);
             }
             else 
                 transform.LookAt (_target, _target.up);
