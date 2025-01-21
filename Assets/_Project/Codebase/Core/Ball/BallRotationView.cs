@@ -3,7 +3,7 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Ball
 {
-    public class RotationView : MonoBehaviour
+    public class BallRotationView : MonoBehaviour
     {
         [SerializeField] private Transform _meshParent;
         [SerializeField] private float _rotationCoefficient = 0.5f;
