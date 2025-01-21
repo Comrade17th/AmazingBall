@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using _Project.Codebase.Interfaces;
 using UnityEngine;
 using Zenject;
 
 namespace _Project.Codebase.Core.Factories
 {
-    public class Pool<T> where T : MonoBehaviour, IPoolableCustom 
+    public class Pool<T> where T : MonoBehaviour//, IPoolableCustom<>
     {
         private readonly List<T> _templates = new();
         private readonly T _prefab;
@@ -15,7 +16,6 @@ namespace _Project.Codebase.Core.Factories
             foreach (T template in templates)
             {
                 _queue.Enqueue(template);
-                template.ReleaseRequested;
             }
             
         }
@@ -31,7 +31,7 @@ namespace _Project.Codebase.Core.Factories
         {
             if (_queue.TryDequeue(out T template) == false)
             {
-                template = _stack.Pop();
+                template = _queue.Dequeue();
             }
 		    
             return template;
