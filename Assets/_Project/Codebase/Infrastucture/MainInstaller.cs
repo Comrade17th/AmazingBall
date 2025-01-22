@@ -1,8 +1,7 @@
-using _Project.Codebase.Core;
 using _Project.Codebase.Core.Ball;
-using _Project.Codebase.Core.Entities;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.InputProviders;
+using _Project.Codebase.Core.Spawnable;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace _Project.Codebase.Infrastucture
         [SerializeField] private PointerHandler _pointerHandler;
         
         [SerializeField] private HitVFX _hitVFXPrefab;
+        [SerializeField] private CoinVFX _coinVFXPrefab;
         
         public override void InstallBindings()
         {
@@ -29,9 +29,23 @@ namespace _Project.Codebase.Infrastucture
             BindPhysicsBody();
             BindCoinCollector();
             BindWallet();
+            
             BindHitVFXFactory();
+            BindCoinVFXFactory();
 
             Debug.Log($"MainInstaller InstallBindings");
+        }
+        
+        private void BindCoinVFXFactory()
+        {
+            Container
+                .Bind<CoinVFX>()
+                .FromInstance(_coinVFXPrefab)
+                .AsSingle();
+            
+            Container
+                .Bind<CoinCollectEffectFactory>()
+                .AsSingle();
         }
 
         private void BindHitVFXFactory()

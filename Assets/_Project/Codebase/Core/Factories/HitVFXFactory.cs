@@ -1,4 +1,4 @@
-using _Project.Codebase.Core.Entities;
+using _Project.Codebase.Core.Spawnable;
 
 namespace _Project.Codebase.Core.Factories
 {

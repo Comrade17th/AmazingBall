@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace _Project.Codebase.Core.Entities
+namespace _Project.Codebase.Core.Spawnable
 {
-    public class EntityVFX : MonoBehaviour
+    public class EffectBase : MonoBehaviour
     {
         [SerializeField] protected ParticleSystem ParticleSystem;
 

@@ -5,21 +5,21 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Factories
 {
-    public class HitEffectFactory
+    public class CoinCollectEffectFactory
     {
-        private readonly Pool<HitVFX> _pool;
-        private readonly HitVFX _prefab;
+        private readonly Pool<CoinVFX> _pool;
+        private readonly CoinVFX _prefab;
 
         [Inject]
-        public HitEffectFactory(HitVFX prefab, int size = 3)
+        public CoinCollectEffectFactory(CoinVFX prefab, int size = 3)
         {
             _prefab = prefab;
-            _pool = new Pool<HitVFX>(InstantiateEffects(size));
+            _pool = new Pool<CoinVFX>(InstantiateEffects(size));
         }
 
-        public HitVFX Create(Vector3 at)
+        public CoinVFX Create(Vector3 at)
         {
-            HitVFX effect = _pool.Get();
+            CoinVFX effect = _pool.Get();
             effect.transform.position = at;
             effect.gameObject.SetActive(true);
             effect.Restart();
@@ -27,13 +27,13 @@ namespace _Project.Codebase.Core.Factories
             return effect;
         }
 
-        private List<HitVFX> InstantiateEffects(int size)
+        private List<CoinVFX> InstantiateEffects(int size)
         {
-            List<HitVFX> effects = new();
+            List<CoinVFX> effects = new();
 
             for (int i = 0; i < size; i++)
             {
-                HitVFX effect = GameObject.Instantiate(_prefab);
+                CoinVFX effect = GameObject.Instantiate(_prefab);
                 effects.Add(effect);
             }
             

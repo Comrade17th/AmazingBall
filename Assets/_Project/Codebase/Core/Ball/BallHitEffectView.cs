@@ -1,4 +1,3 @@
-using _Project.Codebase.Core.Entities;
 using _Project.Codebase.Core.Factories;
 using UnityEngine;
 using Zenject;
@@ -28,7 +27,6 @@ namespace _Project.Codebase.Core.Ball
         private void OnObjectHit(HitInfo hitInfo)
         {
             _factory.Create(hitInfo.Point);
-            //var hitEffect = Instantiate(_hitEffect, hitInfo.Point, Quaternion.identity);
         }
     }
 }
