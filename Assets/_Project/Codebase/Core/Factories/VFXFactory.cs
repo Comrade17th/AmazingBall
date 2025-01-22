@@ -1,41 +1,47 @@
 using System.Collections.Generic;
+using _Project.Codebase.Core.Spawnable;
 using UnityEngine;
 using Zenject;
 
 namespace _Project.Codebase.Core.Factories
 {
-    public class VFXFactory<T> where T : MonoBehaviour
+    public class VFXFactory : Factory //<EffectBase> where EffectBase : MonoBehaviour
     {
-        private readonly T _prefab;
-        private Pool<T> _pool;
+        private readonly EffectBase _prefab;
+        private Pool<EffectBase> _pool;
         private readonly int _size;
         
         [Inject]
-        public VFXFactory(T prefab, int size)
+        public VFXFactory(EffectBase prefab, int size)
         {
             Init(prefab, size);
         }
 
-        private void Init(T prefab, int size)
+        private void Init(EffectBase prefab, int size)
         {
-            List<T> instances = new List<T>();
+            List<EffectBase> instances = new List<EffectBase>();
 
             for (int i = 0; i < size; i++)
             {
-                T intance = GameObject.Instantiate(prefab);
+                EffectBase intance = GameObject.Instantiate(prefab);
                 intance.gameObject.SetActive(false);
                 instances.Add(intance);
             }
             
-            _pool = new Pool<T>(instances);
+            _pool = new Pool<EffectBase>(instances);
         }
 
-        public T Create(Vector3 at)
+        public EffectBase Create(Vector3 at)
         {
-            T instance = _pool.Get();
+            EffectBase instance = _pool.Get();
             instance.transform.position = at;
             instance.gameObject.SetActive(true);
             return instance;
+        }
+
+        public override MonoBehaviour Create()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
