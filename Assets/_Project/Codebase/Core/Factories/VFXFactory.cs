@@ -5,43 +5,38 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Factories
 {
-    public class VFXFactory : Factory //<EffectBase> where EffectBase : MonoBehaviour
+    public class VFXFactory
     {
+        private readonly Pool<EffectBase> _pool;
         private readonly EffectBase _prefab;
-        private Pool<EffectBase> _pool;
-        private readonly int _size;
-        
-        [Inject]
-        public VFXFactory(EffectBase prefab, int size)
-        {
-            Init(prefab, size);
-        }
 
-        private void Init(EffectBase prefab, int size)
+        protected VFXFactory(EffectBase prefab, int size = 3)
         {
-            List<EffectBase> instances = new List<EffectBase>();
-
-            for (int i = 0; i < size; i++)
-            {
-                EffectBase intance = GameObject.Instantiate(prefab);
-                intance.gameObject.SetActive(false);
-                instances.Add(intance);
-            }
-            
-            _pool = new Pool<EffectBase>(instances);
+            _prefab = prefab;
+            _pool = new Pool<EffectBase>(InstantiateEffects(size));
         }
 
         public EffectBase Create(Vector3 at)
         {
-            EffectBase instance = _pool.Get();
-            instance.transform.position = at;
-            instance.gameObject.SetActive(true);
-            return instance;
+            EffectBase effect = _pool.Get();
+            effect.transform.position = at;
+            effect.gameObject.SetActive(true);
+            effect.Restart();
+            
+            return effect;
         }
 
-        public override MonoBehaviour Create()
+        private List<EffectBase> InstantiateEffects(int size)
         {
-            throw new System.NotImplementedException();
+            List<EffectBase> effects = new();
+
+            for (int i = 0; i < size; i++)
+            {
+                EffectBase effect = GameObject.Instantiate(_prefab);
+                effects.Add(effect);
+            }
+            
+            return effects;
         }
     }
 }
