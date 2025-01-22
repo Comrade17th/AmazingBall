@@ -9,11 +9,11 @@ namespace _Project.Codebase.Core.Ball
     {
         [SerializeField] ParticleSystem _hitEffect;
         
-        private HitVFXFactory _factory;
+        private HitEffectFactory _factory;
         private PhysicsBody _physicsBody;
 
         [Inject]
-        private void Construct(PhysicsBody physicsBody, HitVFXFactory factory)
+        private void Construct(PhysicsBody physicsBody, HitEffectFactory factory)
         {
             _factory = factory;
             _physicsBody = physicsBody;

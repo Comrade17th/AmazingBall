@@ -8,16 +8,11 @@ namespace _Project.Codebase.Core.Factories
     {
         private readonly Queue<T> _queue;
         
-        public Pool(List<T> templates)
-        {
+        public Pool(List<T> templates) => 
             _queue = new Queue<T>(templates);
-            Debug.Log($"init {_queue.Count}");
-        }
 
-        public void Release(T template)
-        {
+        public void Release(T template) => 
             _queue.Enqueue(template);
-        }
 
         public T Get()
         {
