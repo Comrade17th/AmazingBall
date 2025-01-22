@@ -4,7 +4,7 @@ namespace _Project.Codebase.Core.Factories
 {
     public class HitVFXFactory : VFXFactory<HitVFX>
     {
-        public HitVFXFactory(HitVFX prefab, int size) : base(prefab, size)
+        public HitVFXFactory(HitVFX prefab, int size = 3) : base(prefab, size)
         {
         }
     }

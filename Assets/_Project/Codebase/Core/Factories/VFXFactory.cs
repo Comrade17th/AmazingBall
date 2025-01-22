@@ -33,8 +33,8 @@ namespace _Project.Codebase.Core.Factories
         public T Create(Vector3 at)
         {
             T instance = _pool.Get();
-            _pool.Release(instance);
             instance.transform.position = at;
+            instance.gameObject.SetActive(true);
             return instance;
         }
     }

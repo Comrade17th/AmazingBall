@@ -42,7 +42,7 @@ namespace _Project.Codebase.Infrastucture
                 .AsSingle();
             
             Container
-                .Bind<VFXFactory<HitVFX>>()
+                .Bind<HitVFXFactory>()
                 .AsSingle();
         }
 
