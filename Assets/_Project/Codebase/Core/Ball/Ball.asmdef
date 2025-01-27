@@ -1,4 +1,21 @@
 {
-  "name": "Ball",
-  "references":[ "GUID:d50d25292ae44c389bdc062df7620237", "Interfaces", "Factories", "Coins", "Spawnable" ]
+    "name": "Ball",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d50d25292ae44c389bdc062df7620237",
+        "GUID:25f41973fe914fd7b8aba9199db44e90",
+        "GUID:964e6456bdc744829a7785c4e23715f5",
+        "GUID:72a6d4cbcfa74bdeb4cec7384750a287",
+        "GUID:726ecf9dc9e741d3b7547570585467d9",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
