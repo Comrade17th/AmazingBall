@@ -7,7 +7,7 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Ball
 {
-    public class CompressionView : MonoBehaviour
+    public class BallCompressionView : MonoBehaviour
     {
         [SerializeField] private Transform _meshParent;
         [SerializeField] private Vector3 _compressedScale = new Vector3(1, 1, 0.33f);

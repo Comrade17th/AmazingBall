@@ -1,0 +1,17 @@
+{
+    "name": "Factories",
+    "rootNamespace": "",
+    "references": [
+        "GUID:25f41973fe914fd7b8aba9199db44e90",
+        "GUID:726ecf9dc9e741d3b7547570585467d9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
