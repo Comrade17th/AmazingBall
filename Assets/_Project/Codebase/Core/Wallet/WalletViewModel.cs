@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Codebase.Core.Wallet
@@ -13,9 +14,6 @@ namespace _Project.Codebase.Core.Wallet
 
         private ReactiveProperty<int> _coins;
         private ReactiveProperty<string> _coinsLabel;
-        
-        public IReadOnlyReactiveProperty<int> Coins => _coins;
-        public IReadOnlyReactiveProperty<string> CoinsLabel => _coinsLabel;
 
         [Inject]
         public WalletViewModel(
@@ -33,6 +31,13 @@ namespace _Project.Codebase.Core.Wallet
             BindWalletModel();
             BindCoinCollector();
             BindWalletView();
+            Debug.Log($"wallet VM injected");
+        }
+
+        public void Dispose()
+        {
+            _compositeDisposable.Dispose();
+            _compositeDisposable.Clear();
         }
 
         private void BindWalletView()
@@ -44,12 +49,6 @@ namespace _Project.Codebase.Core.Wallet
             _coinsLabel
                 .Subscribe(label => OnViewModelChanged(_coins.Value, label))
                 .AddTo(_compositeDisposable);
-        }
-
-        public void Dispose()
-        {
-            _compositeDisposable.Dispose();
-            _compositeDisposable.Clear();
         }
 
         private void OnViewModelChanged(int coinValue, string coinLabel) => 

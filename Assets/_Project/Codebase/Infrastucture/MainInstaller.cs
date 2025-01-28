@@ -81,7 +81,8 @@ namespace _Project.Codebase.Infrastucture
 
             Container
                 .Bind<WalletViewModel>()
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindPhysicsBody()
