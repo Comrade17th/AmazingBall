@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace _Project.Codebase.Core.Wallet
@@ -8,25 +9,29 @@ namespace _Project.Codebase.Core.Wallet
     {
         private readonly CompositeDisposable _compositeDisposable = new();
         private readonly WalletModel _walletModel;
+        private readonly WalletView _walletView;
         private readonly CoinCollector _coinCollector;
 
         private ReactiveProperty<int> _coins;
         private ReactiveProperty<string> _coinsLabel;
-        
-        public IReadOnlyReactiveProperty<int> Coins => _coins;
-        public IReadOnlyReactiveProperty<string> CoinsLabel => _coinsLabel;
 
         [Inject]
-        public WalletViewModel(WalletModel walletModel, CoinCollector coinCollector)
+        public WalletViewModel(
+            WalletModel walletModel,
+            CoinCollector coinCollector,
+            WalletView walletView)
         {
             _walletModel = walletModel;
             _coinCollector = coinCollector;
+            _walletView = walletView;
 
             _coins = new ReactiveProperty<int>(_walletModel.Coins.Value);
             _coinsLabel = new ReactiveProperty<string>(_walletModel.CoinsLabel.Value);
             
             BindWalletModel();
             BindCoinCollector();
+            BindWalletView();
+            Debug.Log($"wallet VM injected");
         }
 
         public void Dispose()
@@ -34,6 +39,20 @@ namespace _Project.Codebase.Core.Wallet
             _compositeDisposable.Dispose();
             _compositeDisposable.Clear();
         }
+
+        private void BindWalletView()
+        {
+            _coins
+                .Subscribe(count => OnViewModelChanged(count, _coinsLabel.Value))
+                .AddTo(_compositeDisposable);
+
+            _coinsLabel
+                .Subscribe(label => OnViewModelChanged(_coins.Value, label))
+                .AddTo(_compositeDisposable);
+        }
+
+        private void OnViewModelChanged(int coinValue, string coinLabel) => 
+            _walletView.RedrawView(coinValue, coinLabel);
 
         private void OnCoinCollected(int coins)
         {

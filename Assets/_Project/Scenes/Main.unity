@@ -1130,6 +1130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballView: {fileID: 527819574}
   _coinCollector: {fileID: 527819576}
+  _walletView: {fileID: 1587866710}
   _pointerHandler: {fileID: 98389780}
   _hitVFXPrefab: {fileID: -5233561287256728481, guid: 5cbaa91e04ff9de43b95f0f790f35867, type: 3}
   _coinVFXPrefab: {fileID: 8907426468194539573, guid: fae2f5ce9f3888748a8b3ad300d34503, type: 3}
@@ -1169,7 +1170,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: -17}
-  m_SizeDelta: {x: 497.0751, y: 73.3229}
+  m_SizeDelta: {x: 391.1154, y: 73.3229}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1587866708
 MonoBehaviour:
@@ -1191,7 +1192,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'Coins: 100'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
