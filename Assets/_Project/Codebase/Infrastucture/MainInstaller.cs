@@ -14,6 +14,7 @@ namespace _Project.Codebase.Infrastucture
         //[SerializeField] private GameObject _ballPrefab;
         [SerializeField] private BallView _ballView;
         [SerializeField] private CoinCollector _coinCollector;
+        [SerializeField] private WalletView _walletView;
         [SerializeField] private PointerHandler _pointerHandler;
         
         [SerializeField] private HitVFX _hitVFXPrefab;
@@ -70,6 +71,10 @@ namespace _Project.Codebase.Infrastucture
 
         private void BindWallet()
         {
+            Container.Bind<WalletView>()
+                .FromInstance(_walletView)
+                .AsSingle();
+            
             Container
                 .Bind<WalletModel>()
                 .AsSingle();
