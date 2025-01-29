@@ -6,6 +6,7 @@ using _Project.Codebase.Core.Spawnable;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Codebase.Infrastucture
@@ -16,7 +17,6 @@ namespace _Project.Codebase.Infrastucture
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private LineView _lineView;
         [SerializeField] private WalletView _walletView;
-        [SerializeField] private PointerHandler _pointerHandler;
 
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
@@ -146,9 +146,11 @@ namespace _Project.Codebase.Infrastucture
         private void BindPointerHandler()
         {
             Container
-                .Bind<PointerHandler>()
-                .FromInstance(_pointerHandler)
-                .AsSingle();
+                .Bind<IPointerHandler>()
+                .To<MousePointerHandler>()
+                .AsSingle()
+                .NonLazy();
+                
         }
     }
 }

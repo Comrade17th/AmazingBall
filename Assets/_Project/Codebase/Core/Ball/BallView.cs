@@ -9,32 +9,32 @@ namespace _Project.Codebase.Core.Ball
     {
         [SerializeField] private PhysicsBody _physicsBody;
         private IInputProvider _inputProvider;
-        private PointerHandler _pointerHandler;
+        private MousePointerHandler _mousePointerHandler;
         private Camera _camera;
 
         [Inject]
-        private void Construct(IInputProvider inputProvider, PointerHandler pointerHandler, Camera camera)
+        private void Construct(IInputProvider inputProvider, MousePointerHandler mousePointerHandler, Camera camera)
         {
             _inputProvider = inputProvider;
-            _pointerHandler = pointerHandler;
+            _mousePointerHandler = mousePointerHandler;
             _camera = camera;
 
-            _pointerHandler.PointerUp += OnPointerUp;
-            _pointerHandler.PointerDown += OnPointerDown;
+            _mousePointerHandler.PointerUp += OnMousePointerUp;
+            _mousePointerHandler.PointerDown += OnMousePointerDown;
         }
 
         private void OnDestroy()
         {
-            _pointerHandler.PointerUp -= OnPointerUp;
-            _pointerHandler.PointerDown -= OnPointerDown;
+            _mousePointerHandler.PointerUp -= OnMousePointerUp;
+            _mousePointerHandler.PointerDown -= OnMousePointerDown;
         }
         
-        private void OnPointerDown()
+        private void OnMousePointerDown()
         {
             
         }
 
-        private void OnPointerUp()
+        private void OnMousePointerUp()
         {
             Vector3 screenPoint = _inputProvider.GetPosition();
             Ray ray = _camera.ScreenPointToRay(screenPoint);

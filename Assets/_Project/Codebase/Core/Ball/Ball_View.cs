@@ -14,9 +14,8 @@ namespace _Project.Codebase.Core.Ball
         private readonly float _groundMinDistance = 0.05f;
         
         private Vector3 _lastPosition;
-        
-        private ReactiveProperty<bool> _isGrounded = new(false);
         private Vector3 _velocity;
+        private ReactiveProperty<bool> _isGrounded = new(false);
 
         public event Action<Vector3, Vector3> VelocityRequested;
         public IReadOnlyReactiveProperty<bool> IsGrounded => _isGrounded;
@@ -36,7 +35,6 @@ namespace _Project.Codebase.Core.Ball
             {
                 transform.position += _velocity * Time.deltaTime;
                 VelocityRequested?.Invoke(_lastPosition, _groundTransform.position);
-                    
             }
             
         }

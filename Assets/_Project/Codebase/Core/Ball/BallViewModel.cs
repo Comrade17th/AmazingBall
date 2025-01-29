@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using _Project.Codebase.Core.InputProviders;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -12,6 +12,7 @@ namespace _Project.Codebase.Core.Ball
         private readonly IBallModel _ballModel;
         private readonly IBallView _ballView;
         private readonly ICustomVelocity _customVelocity;
+        private readonly IPointerHandler _pointerHandler;
         
         private ReactiveProperty<Vector3> _velocity = new();
 
@@ -21,22 +22,27 @@ namespace _Project.Codebase.Core.Ball
         public BallViewModel(
             IBallModel ballModel,
             IBallView ballView,
-            ICustomVelocity customVelocity)
+            ICustomVelocity customVelocity,
+            IPointerHandler pointerHandler)
         {
             _ballModel = ballModel;
             _ballView = ballView;
             _customVelocity = customVelocity;
-
+            _pointerHandler = pointerHandler;
+    
             Bind();
         }
 
         public void Dispose()
         {
             _compositeDisposable?.Dispose();
+            _pointerHandler.PointerUp -= OnPointerUp;
         }
 
         private void Bind()
         {
+            _pointerHandler.PointerUp += OnPointerUp;
+            
             _ballModel.Velocity
                 .Subscribe(velocity => _velocity.Value = velocity)
                 .AddTo(_compositeDisposable);
@@ -47,6 +53,9 @@ namespace _Project.Codebase.Core.Ball
             
             _ballView.VelocityRequested += OnVelocityRequested;
         }
+
+        private void OnPointerUp() => 
+            _ballView.SetVelocity(_velocity.Value);
 
         private void OnViewModelVelocityChanged(Vector3 velocity)
         {

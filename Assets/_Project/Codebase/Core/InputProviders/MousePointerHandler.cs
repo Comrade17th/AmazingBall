@@ -1,11 +1,12 @@
 using System;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace _Project.Codebase.Core.InputProviders
 {
-    public class PointerHandler : MonoBehaviour
+    public class MousePointerHandler : IPointerHandler, IPointerDownHandler, IPointerUpHandler
     {
         private IInputProvider _inputProvider;
         
@@ -18,13 +19,20 @@ namespace _Project.Codebase.Core.InputProviders
             _inputProvider = inputProvider;
         }
 
-        private void Update()
+        public void OnPointerDown(PointerEventData eventData)
         {
-            if (_inputProvider.GetDetectionUp()) 
-                PointerUp?.Invoke();
-            
-            if(_inputProvider.GetDetectionDown())
-                PointerDown?.Invoke();
+            PointerDown?.Invoke();
         }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            PointerUp?.Invoke();
+        }
+    }
+
+    public interface IPointerHandler
+    {
+        event Action PointerDown;
+        event Action PointerUp;
     }
 }
