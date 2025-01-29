@@ -31,7 +31,6 @@ namespace _Project.Codebase.Core.Wallet
             BindWalletModel();
             BindCoinCollector();
             BindWalletView();
-            Debug.Log($"wallet VM injected");
         }
 
         public void Dispose()

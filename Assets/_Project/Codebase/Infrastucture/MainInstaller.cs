@@ -11,7 +11,6 @@ namespace _Project.Codebase.Infrastucture
 {
     public class MainInstaller : MonoInstaller
     {
-        //[SerializeField] private GameObject _ballPrefab;
         [SerializeField] private BallView _ballView;
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private WalletView _walletView;
@@ -33,8 +32,6 @@ namespace _Project.Codebase.Infrastucture
             
             BindHitVFXFactory();
             BindCoinVFXFactory();
-
-            Debug.Log($"MainInstaller InstallBindings");
         }
         
         private void BindCoinVFXFactory()
