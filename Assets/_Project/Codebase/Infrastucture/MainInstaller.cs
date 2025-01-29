@@ -1,6 +1,7 @@
 using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.InputProviders;
+using _Project.Codebase.Core.Line;
 using _Project.Codebase.Core.Spawnable;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
@@ -13,12 +14,13 @@ namespace _Project.Codebase.Infrastucture
     {
         [SerializeField] private Ball_View _ballView;
         [SerializeField] private CoinCollector _coinCollector;
+        [SerializeField] private LineView _lineView;
         [SerializeField] private WalletView _walletView;
         [SerializeField] private PointerHandler _pointerHandler;
-        
+
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
-        
+
         public override void InstallBindings()
         {
             Container.BindInstance(Camera.main).AsCached();
@@ -27,6 +29,7 @@ namespace _Project.Codebase.Infrastucture
             BindPointerHandler();
 
             BindBall();
+            BindLine();
 
             BindCoinCollector();
             BindWallet();
@@ -35,6 +38,17 @@ namespace _Project.Codebase.Infrastucture
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        private void BindLine()
+        {
+            Container.Bind<ILineView>().To<LineView>().FromInstance(_lineView).AsCached();
+            
+            Container
+                .Bind<ILineViewModel>()
+                .To<LineViewModel>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindBall()
@@ -67,7 +81,8 @@ namespace _Project.Codebase.Infrastucture
                 .AsCached();
             
             Container
-                .Bind<BallViewModel>()
+                .Bind<IBallViewModel>()
+                .To<BallViewModel>()
                 .AsSingle()
                 .NonLazy();
         }

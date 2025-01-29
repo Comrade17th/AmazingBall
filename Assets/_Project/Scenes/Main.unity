@@ -1010,7 +1010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267af01edab548338e5131c904e99b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineRenderer: {fileID: 1396619952}
 --- !u!1 &1538558206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1090,6 +1089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballView: {fileID: 1849751767}
   _coinCollector: {fileID: 1849751769}
+  _lineView: {fileID: 1396619954}
   _walletView: {fileID: 1587866710}
   _pointerHandler: {fileID: 98389780}
   _hitVFXPrefab: {fileID: -5233561287256728481, guid: 5cbaa91e04ff9de43b95f0f790f35867, type: 3}
