@@ -9,7 +9,13 @@ namespace _Project.Codebase.Core.InputProviders
         private IInputProvider _inputProvider; // concrete to keyboard provider
         public event Action PointerDown;
         public event Action PointerUp;
-        
+        public Vector3 GetWorldPosition()
+        {
+            return Vector3.zero;
+        }
+
+        public Vector3 WorldPosition { get; }
+
         private void Update()
         {
             if (_inputProvider.GetDetectionUp()) 

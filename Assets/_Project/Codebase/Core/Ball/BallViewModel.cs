@@ -54,8 +54,11 @@ namespace _Project.Codebase.Core.Ball
             _ballView.VelocityRequested += OnVelocityRequested;
         }
 
-        private void OnPointerUp() => 
-            _ballView.SetVelocity(_velocity.Value);
+        private void OnPointerUp()
+        {
+            _ballModel.Velocity.Value = _customVelocity
+                .GetPushVelocity(_ballView.Position, _pointerHandler.GetWorldPosition());
+        }
 
         private void OnViewModelVelocityChanged(Vector3 velocity)
         {

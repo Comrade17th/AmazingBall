@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -32,11 +31,9 @@ namespace _Project.Codebase.Core.Ball
         private void Update()
         {
             if (_velocity != Vector3.zero)
-            {
                 transform.position += _velocity * Time.deltaTime;
-                VelocityRequested?.Invoke(_lastPosition, _groundTransform.position);
-            }
             
+            VelocityRequested?.Invoke(_lastPosition, _groundTransform.position);
         }
 
         public void SetVelocity(Vector3 velocity)

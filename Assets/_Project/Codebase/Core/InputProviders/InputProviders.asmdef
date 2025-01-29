@@ -1,4 +1,4 @@
 {
   "name": "Input",
-  "references":[ "Interfaces" ]
+  "references":[ "Interfaces", "Debug" ]
 }

@@ -17,32 +17,40 @@ namespace _Project.Codebase.Infrastucture
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private LineView _lineView;
         [SerializeField] private WalletView _walletView;
+        [SerializeField] private MousePointerHandler _mousePointerHandler;
 
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
 
         public override void InstallBindings()
         {
-            Container.BindInstance(Camera.main).AsCached();
-            
+            BindCamera();
             BindInputProvider();
             BindPointerHandler();
-
             BindBall();
             BindLine();
-
             BindCoinCollector();
             BindWallet();
-            
             BindHitVFXFactory();
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
         }
 
+        private void BindCamera()
+        {
+            Container
+                .BindInstance(Camera.main)
+                .AsCached();
+        }
+
         private void BindLine()
         {
-            Container.Bind<ILineView>().To<LineView>().FromInstance(_lineView).AsCached();
+            Container
+                .Bind<ILineView>()
+                .To<LineView>()
+                .FromInstance(_lineView)
+                .AsCached();
             
             Container
                 .Bind<ILineViewModel>()
@@ -148,9 +156,9 @@ namespace _Project.Codebase.Infrastucture
             Container
                 .Bind<IPointerHandler>()
                 .To<MousePointerHandler>()
+                .FromInstance(_mousePointerHandler)
                 .AsSingle()
                 .NonLazy();
-                
         }
     }
 }
