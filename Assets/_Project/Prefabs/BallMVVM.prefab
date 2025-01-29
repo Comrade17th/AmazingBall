@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 1821288774018684602}
   - component: {fileID: 8215573313222994374}
   m_Layer: 0
-  m_Name: Ball
+  m_Name: BallMVVM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
