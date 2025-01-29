@@ -4,7 +4,7 @@ namespace _Project.Codebase.Core.Ball
 {
     public class CustomVelocity : ICustomVelocity
     {
-        private Vector3 _friction = new Vector3(0.5f, 0f, 0.5f);
+        private Vector3 _friction = new Vector3(2f, 0f, 2f);
         private Vector3 _maxVelocityAbs = new Vector3(10, 5, 10);
         
         public Vector3 GetReflectedVelocity(
