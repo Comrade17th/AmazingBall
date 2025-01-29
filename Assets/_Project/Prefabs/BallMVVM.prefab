@@ -171,9 +171,8 @@ GameObject:
   - component: {fileID: 1959695247495907875}
   - component: {fileID: 6406642215006253260}
   - component: {fileID: 2171658089793111219}
-  - component: {fileID: 5257469491148619559}
-  - component: {fileID: 1821288774018684602}
   - component: {fileID: 8215573313222994374}
+  - component: {fileID: 4306410730894983363}
   m_Layer: 0
   m_Name: BallMVVM
   m_TagString: Untagged
@@ -246,36 +245,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5257469491148619559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970130821405976679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d732d0239ebd4307ab868cce0b0e82a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _groundTransform: {fileID: 198481639404312861}
-  _frictionXZ: 0.8
-  _velocity: {x: 0, y: 0, z: 0}
-  _dampening: {x: 0, y: 1, z: 0}
-  _maxVelocityAbs: {x: 10, y: 5, z: 10}
---- !u!114 &1821288774018684602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970130821405976679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c77b6240d24292ad6cc76e51536119, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _physicsBody: {fileID: 5257469491148619559}
 --- !u!114 &8215573313222994374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,3 +257,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0bd90c665447dfb70237b3fbcc98fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4306410730894983363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4970130821405976679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9e5ca67cc74479b293760e73f869f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundTransform: {fileID: 198481639404312861}

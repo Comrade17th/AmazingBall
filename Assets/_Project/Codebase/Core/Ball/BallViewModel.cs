@@ -28,7 +28,7 @@ namespace _Project.Codebase.Core.Ball
             
             _velocity.Subscribe(velocity => OnViewModelVelocityChanged(velocity));
             
-            _ballView.VeloctityRequested += OnVelocityRequested;
+            _ballView.VelocityRequested += OnVelocityRequested;
         }
 
         private void OnViewModelVelocityChanged(Vector3 velocity)

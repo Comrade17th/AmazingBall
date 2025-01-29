@@ -10,14 +10,14 @@ namespace _Project.Codebase.Core
     {
         [SerializeField] private LineRenderer _lineRenderer;
         
-        private BallView _ballView;
+        private IReadOnlyBallTransform ballTransform;
         private IInputProvider _inputProvider;
 
         [Inject]
-        public void Construct(IInputProvider inputProvider, BallView ballView)
+        public void Construct(IInputProvider inputProvider, IReadOnlyBallTransform ballView)
         {
             _inputProvider = inputProvider;
-            _ballView = ballView;
+            ballTransform = ballView;
         }
 
         private void Update()
@@ -31,12 +31,12 @@ namespace _Project.Codebase.Core
                 GeometryDebug.DrawSphere(pointerPosition, Color.red, radius: 0.2f, seconds: 0.05f);
                 
                 _lineRenderer.SetPosition(lineEndIndex, pointerPosition);
-                _lineRenderer.SetPosition(lineStartIndex, _ballView.transform.position);
+                _lineRenderer.SetPosition(lineStartIndex, ballTransform.Position);
             }
             else
             {
-                _lineRenderer.SetPosition(lineEndIndex, _ballView.transform.position);
-                _lineRenderer.SetPosition(lineStartIndex, _ballView.transform.position);
+                _lineRenderer.SetPosition(lineEndIndex, ballTransform.Position);
+                _lineRenderer.SetPosition(lineStartIndex, ballTransform.Position);
             }
         }
     }

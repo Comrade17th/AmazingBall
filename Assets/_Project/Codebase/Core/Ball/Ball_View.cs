@@ -17,9 +17,13 @@ namespace _Project.Codebase.Core.Ball
         
         private ReactiveProperty<bool> _isGrounded = new(false);
         private Vector3 _velocity;
-        
+
+        public event Action<Vector3, Vector3> VelocityRequested;
         public IReadOnlyReactiveProperty<bool> IsGrounded => _isGrounded;
-        public event Action<Vector3, Vector3> VeloctityRequested;
+
+        public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
+        public Vector3 Position { get => transform.position; set => transform.position = value; }
+
 
         private void Start()
         {
@@ -31,35 +35,17 @@ namespace _Project.Codebase.Core.Ball
             if (_velocity != Vector3.zero)
             {
                 transform.position += _velocity * Time.deltaTime;
-                VeloctityRequested?.Invoke(_lastPosition, _groundTransform.position);
+                VelocityRequested?.Invoke(_lastPosition, _groundTransform.position);
                     
             }
             
         }
 
-        // private void OnCollisionEnter(Collision collision)
-        // {
-        //     var velocity = _velocity.Value;
-        //     
-        //     var contacts = new List<ContactPoint>();
-        //     collision.GetContacts(contacts);
-        //     
-        //     ContactPoint contact = contacts[0];
-        //     var reflectedVelocity = Vector3.Reflect(velocity, contact.normal);
-        //     
-        //     velocity = reflectedVelocity;
-        //     velocity -= _dampening;
-        //     DirectionChanged?.Invoke(_velocity);
-        //     ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, velocity));
-        //
-        //     CancelVelocityYAccumulation();
-        // }
-
         public void SetVelocity(Vector3 velocity)
         {
             _velocity = velocity;
         }
-        
+
         private void CheckIsGrounded()
         {
             if(Physics.Raycast(
@@ -76,10 +62,25 @@ namespace _Project.Codebase.Core.Ball
         }
     }
 
-    public interface IBallView
+    public interface IBallView : IReadOnlyBallView, IBallTransform
     {
-        event Action<Vector3, Vector3> VeloctityRequested;
-        
         void SetVelocity(Vector3 velocity);
+    }
+
+    public interface IReadOnlyBallView : IReadOnlyBallTransform
+    {
+        event Action<Vector3, Vector3> VelocityRequested;
+    }
+
+    public interface IBallTransform : IReadOnlyBallTransform
+    {
+        new Quaternion Rotation { get; set; }
+        new Vector3 Position { get; set; }
+    }
+
+    public interface IReadOnlyBallTransform
+    {
+        Quaternion Rotation { get; }
+        Vector3 Position { get; }
     }
 }

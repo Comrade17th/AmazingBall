@@ -11,7 +11,7 @@ namespace _Project.Codebase.Infrastucture
 {
     public class MainInstaller : MonoInstaller
     {
-        [SerializeField] private BallView _ballView;
+        [SerializeField] private Ball_View _ballView;
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private WalletView _walletView;
         [SerializeField] private PointerHandler _pointerHandler;
@@ -25,15 +25,51 @@ namespace _Project.Codebase.Infrastucture
             
             BindInputProvider();
             BindPointerHandler();
-            BindBallView();
-            BindPhysicsBody();
+
+            BindBall();
+
             BindCoinCollector();
             BindWallet();
             
             BindHitVFXFactory();
             BindCoinVFXFactory();
         }
-        
+
+        private void BindBall()
+        {
+            Ball_View ballView = _ballView.GetComponent<Ball_View>();
+            
+            Container
+                .Bind<Ball_View>()
+                .FromInstance(ballView);
+            
+            Container
+                .Bind<IReadOnlyBallTransform>()
+                .To<Ball_View>()
+                .FromInstance(ballView);
+            
+            Container
+                .Bind<ICustomVelocity>()
+                .To<CustomVelocity>()
+                .AsSingle();
+            
+            Container
+                .Bind<IBallModel>()
+                .To<BallModel>()
+                .AsSingle();
+            
+            Container
+                .Bind<IBallView>()
+                .To<Ball_View>()
+                .FromInstance(ballView)
+                .AsCached();
+            
+            Container
+                .Bind<BallViewModel>()
+                .AsSingle()
+                .NonLazy();
+        }
+
         private void BindCoinVFXFactory()
         {
             Container
@@ -81,17 +117,7 @@ namespace _Project.Codebase.Infrastucture
                 .AsSingle()
                 .NonLazy();
         }
-
-        private void BindPhysicsBody()
-        {
-            PhysicsBody physicsBody = _ballView.GetComponent<PhysicsBody>();
-
-            Container
-                .Bind<PhysicsBody>()
-                .FromInstance(physicsBody)
-                .AsSingle();
-        }
-
+        
         private void BindInputProvider()
         {
             Container
@@ -106,15 +132,6 @@ namespace _Project.Codebase.Infrastucture
                 .Bind<PointerHandler>()
                 .FromInstance(_pointerHandler)
                 .AsSingle();
-        }
-
-        private void BindBallView()
-        {
-            Container
-                .Bind<BallView>()
-                .FromInstance(_ballView)
-                .AsSingle()
-                .NonLazy();
         }
     }
 }
