@@ -33,6 +33,8 @@ namespace _Project.Codebase.Infrastucture
             
             BindHitVFXFactory();
             BindCoinVFXFactory();
+            
+            Debug.Log($"MainInstaller installer version: {Application.version}");
         }
 
         private void BindBall()

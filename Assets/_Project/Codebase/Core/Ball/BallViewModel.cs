@@ -33,7 +33,7 @@ namespace _Project.Codebase.Core.Ball
 
         private void OnViewModelVelocityChanged(Vector3 velocity)
         {
-            _ballModel.Velocity.Value = velocity; /// some shit???
+            _ballModel.Velocity.Value = velocity;
             _ballView.SetVelocity(_velocity.Value);
         }
 

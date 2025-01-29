@@ -11,7 +11,7 @@ namespace _Project.Codebase.Infrastucture
         
         public override void InstallBindings()
         {
-            Debug.Log($"BootstrapInstaller InstallBindings");
+            Debug.Log("BootstrapInstaller InstallBindings");
             //Container.Bind<ZenjectSceneLoader>().AsSingle();
 
             Container.Bind<SceneProvider>()
