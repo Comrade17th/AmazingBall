@@ -12,22 +12,22 @@ namespace _Project.Codebase.Core.Ball
         [SerializeField] MeshRenderer _meshRenderer;
         
         private Color _defaultColor;
-        private PhysicsBody _physicsBody;
+        // private PhysicsBody _physicsBody;
         private CancellationTokenSource _cancellationTokenSource;
 
         [Inject]
-        private void Construct(PhysicsBody physicsBody)
-        {
-            _physicsBody = physicsBody;
-            _physicsBody.ObjectHit += OnObjectHit;
-        }
-
-        private void OnDestroy()
-        {
-            _physicsBody.ObjectHit -= OnObjectHit;
-
-            AbortTask();
-        }
+        // private void Construct(PhysicsBody physicsBody)
+        // {
+        //     _physicsBody = physicsBody;
+        //     _physicsBody.ObjectHit += OnObjectHit;
+        // }
+        //
+        // private void OnDestroy()
+        // {
+        //     _physicsBody.ObjectHit -= OnObjectHit;
+        //
+        //     AbortTask();
+        // }
 
         private void Awake() => 
             _defaultColor = _meshRenderer.material.color;

@@ -4,29 +4,29 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Ball
 {
-    public class BallHitEffectView : MonoBehaviour
+    public class BallHitEffectView : MonoBehaviour, IHitEffectView
     {
-        [SerializeField] ParticleSystem _hitEffect;
-        
         private HitEffectFactory _factory;
-        private PhysicsBody _physicsBody;
 
         [Inject]
-        private void Construct(PhysicsBody physicsBody, HitEffectFactory factory)
+        private void Construct(HitEffectFactory factory)
         {
             _factory = factory;
-            _physicsBody = physicsBody;
-            _physicsBody.ObjectHit += OnObjectHit;
         }
 
-        private void OnDestroy()
+        public void CreateEffect(Vector3 at)
         {
-            _physicsBody.ObjectHit -= OnObjectHit;
+            _factory.Create(at);
         }
+    }
 
-        private void OnObjectHit(HitInfo hitInfo)
-        {
-            _factory.Create(hitInfo.Point);
-        }
+    public interface IHitEffectView : IEffectView
+    {
+        
+    }
+
+    public interface IEffectView
+    {
+        void CreateEffect(Vector3 at);
     }
 }

@@ -12,16 +12,16 @@ namespace _Project.Codebase.Core.Ball
         [SerializeField] private Transform _meshParent;
         [SerializeField] private Vector3 _compressedScale = new Vector3(1, 1, 0.33f);
 
-        private PhysicsBody _physicsBody;
+        //private PhysicsBody _physicsBody;
         private Vector3 _defaultScale;
         private CancellationTokenSource _cancellationTokenSource;
 
-        [Inject]
-        private void Construct(PhysicsBody physicsBody)
-        {
-            _physicsBody = physicsBody;
-            _physicsBody.ObjectHit += OnObjectHit;
-        }
+        // [Inject]
+        // private void Construct(PhysicsBody physicsBody)
+        // {
+        //     _physicsBody = physicsBody;
+        //     _physicsBody.ObjectHit += OnObjectHit;
+        // }
 
         private void Awake()
         {
