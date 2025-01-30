@@ -13,7 +13,8 @@ namespace _Project.Codebase.Core.Ball
         private readonly IBallView _ballView;
         private readonly ICustomVelocity _customVelocity;
         private readonly IPointerHandler _pointerHandler;
-        
+        private readonly IBallRotationView _rotationView;
+
         private ReactiveProperty<Vector3> _velocity = new();
 
         public Vector3 GetPosition => _ballView.Position;
@@ -23,13 +24,15 @@ namespace _Project.Codebase.Core.Ball
             IBallModel ballModel,
             IBallView ballView,
             ICustomVelocity customVelocity,
-            IPointerHandler pointerHandler)
+            IPointerHandler pointerHandler,
+            IBallRotationView rotationView )
         {
             _ballModel = ballModel;
             _ballView = ballView;
             _customVelocity = customVelocity;
             _pointerHandler = pointerHandler;
-    
+            _rotationView = rotationView;
+
             Bind();
         }
 
@@ -57,8 +60,10 @@ namespace _Project.Codebase.Core.Ball
 
         private void OnPointerUp()
         {
-            _ballModel.Velocity.Value = _customVelocity
+            Vector3 velocity = _customVelocity
                 .GetPushVelocity(_ballView.Position, _pointerHandler.GetWorldPosition());
+            _ballModel.Velocity.Value = velocity;
+            _rotationView.ChangeDirection(velocity);
         }
 
         private void OnViewModelVelocityChanged(Vector3 velocity)
@@ -67,8 +72,11 @@ namespace _Project.Codebase.Core.Ball
             _ballView.SetVelocity(_velocity.Value);
         }
 
-        private void OnVelocityRequested(bool isGrounded) => 
+        private void OnVelocityRequested(bool isGrounded)
+        {
             _velocity.Value = _customVelocity.GetNewVelocity(_velocity.Value, isGrounded);
+            _rotationView.Rotate(_velocity.Value);
+        }
 
         private void OnObjectHit(HitInfo hitInfo)
         {
@@ -76,6 +84,8 @@ namespace _Project.Codebase.Core.Ball
                 _velocity.Value,
                 hitInfo.Normal,
                 _ballView.IsGrounded);
+            
+            _rotationView.ChangeDirection(velocity);
             _ballModel.Velocity.Value = velocity;
         }
     }

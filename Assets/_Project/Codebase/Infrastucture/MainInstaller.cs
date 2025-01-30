@@ -14,6 +14,7 @@ namespace _Project.Codebase.Infrastucture
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private Ball_View _ballView;
+        [SerializeField] private BallRotationView _ballRotationView;
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private LineView _lineView;
         [SerializeField] private WalletView _walletView;
@@ -87,6 +88,12 @@ namespace _Project.Codebase.Infrastucture
                 .To<Ball_View>()
                 .FromInstance(ballView)
                 .AsCached();
+            
+            Container
+                .Bind<IBallRotationView>()
+                .To<BallRotationView>()
+                .FromInstance(_ballRotationView)
+                .AsSingle();
             
             Container
                 .Bind<IBallViewModel>()

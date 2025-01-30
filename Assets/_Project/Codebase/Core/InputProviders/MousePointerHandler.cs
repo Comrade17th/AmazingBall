@@ -29,8 +29,6 @@ namespace _Project.Codebase.Core.InputProviders
             
             if(_inputProvider.GetDetectionDown())
                 PointerDown?.Invoke();
-            
-            GeometryDebug.DrawSphere(_inputProvider.GetPosition(true), Color.magenta);
         }
 
         public Vector3 GetWorldPosition()

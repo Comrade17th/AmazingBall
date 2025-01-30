@@ -14,8 +14,6 @@ namespace _Project.Codebase.Core.InputProviders
             return Vector3.zero;
         }
 
-        public Vector3 WorldPosition { get; }
-
         private void Update()
         {
             if (_inputProvider.GetDetectionUp()) 
