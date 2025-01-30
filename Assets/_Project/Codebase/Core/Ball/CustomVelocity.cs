@@ -6,11 +6,14 @@ namespace _Project.Codebase.Core.Ball
     {
         private Vector3 _friction = new Vector3(2f, 0f, 2f);
         private Vector3 _maxVelocityAbs = new Vector3(10, 5, 10);
+        private Vector3 _hitDamping = new Vector3(0f, 1f, 0f);
         
-        public Vector3 GetReflectedVelocity(
-            Vector3 currentVelocity,
-            Vector3 contactPointNormal) =>
-            Vector3.Reflect(currentVelocity, contactPointNormal);
+        public Vector3 GetReflectedVelocity(Vector3 currentVelocity, Vector3 contactPointNormal, bool isGrounded)
+        {
+            var velocity = Vector3.Reflect(currentVelocity, contactPointNormal);
+            velocity -= _hitDamping;
+            return CancelVelocityYAccumulation(velocity, isGrounded);
+        }
 
         public Vector3 GetNewVelocity(Vector3 currentVelocity)
         {
@@ -24,6 +27,20 @@ namespace _Project.Codebase.Core.Ball
             Vector3 lineVelocity = endPosition - startPosition;
             var velocity = new Vector3(lineVelocity.x, 0f, lineVelocity.z); 
             return GetClampedVelocity(velocity);
+        }
+        
+        private Vector3 CancelVelocityYAccumulation(Vector3 velocity, bool isGrounded)
+        {
+            float velocityCutBorder = -1.1f;
+    
+            if (isGrounded && 
+                velocity.y < 0 && 
+                velocity.y > velocityCutBorder)
+            {
+                velocity = new Vector3(velocity.x, 0, velocity.z);
+            }
+
+            return velocity;
         }
 
         private Vector3 GetClampedVelocity(Vector3 velocity)
@@ -49,7 +66,7 @@ namespace _Project.Codebase.Core.Ball
 
     public interface ICustomVelocity
     {
-        Vector3 GetReflectedVelocity(Vector3 currentVelocity, Vector3 contactPointNormal);
+        Vector3 GetReflectedVelocity(Vector3 currentVelocity, Vector3 contactPointNormal, bool isGrounded);
         Vector3 GetNewVelocity(Vector3 currentVelocity);
         Vector3 GetPushVelocity(Vector3 startPosition, Vector3 endPosition);
     }

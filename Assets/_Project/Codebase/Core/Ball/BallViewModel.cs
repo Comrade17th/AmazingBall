@@ -52,6 +52,7 @@ namespace _Project.Codebase.Core.Ball
                 .AddTo(_compositeDisposable);
             
             _ballView.VelocityRequested += OnVelocityRequested;
+            _ballView.ObjectHit += OnObjectHit;
         }
 
         private void OnPointerUp()
@@ -69,8 +70,13 @@ namespace _Project.Codebase.Core.Ball
         private void OnVelocityRequested(Vector3 lastPosition, Vector3 currentPosition) => 
             _velocity.Value = _customVelocity.GetNewVelocity(_velocity.Value);
 
-        private void OnObjectHit()
+        private void OnObjectHit(HitInfo hitInfo)
         {
+            Vector3 velocity = _customVelocity.GetReflectedVelocity(
+                _velocity.Value,
+                hitInfo.Normal,
+                _ballView.IsGrounded);
+            _ballModel.Velocity.Value = velocity;
         }
     }
 

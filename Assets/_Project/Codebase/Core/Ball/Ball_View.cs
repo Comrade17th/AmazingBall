@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
@@ -14,10 +15,13 @@ namespace _Project.Codebase.Core.Ball
         
         private Vector3 _lastPosition;
         private Vector3 _velocity;
-        private ReactiveProperty<bool> _isGrounded = new(false);
+        private List<ContactPoint> _contacts = new();
+        
+        private bool _isGrounded = false;
 
         public event Action<Vector3, Vector3> VelocityRequested;
-        public IReadOnlyReactiveProperty<bool> IsGrounded => _isGrounded;
+        public event Action<HitInfo> ObjectHit;
+        public bool IsGrounded => _isGrounded;
 
         public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
         public Vector3 Position { get => transform.position; set => transform.position = value; }
@@ -33,6 +37,7 @@ namespace _Project.Codebase.Core.Ball
             if (_velocity != Vector3.zero)
                 transform.position += _velocity * Time.deltaTime;
             
+            CheckIsGrounded();
             VelocityRequested?.Invoke(_lastPosition, _groundTransform.position);
         }
 
@@ -50,10 +55,17 @@ namespace _Project.Codebase.Core.Ball
                    Mathf.Infinity))
             {
                 if (hit.distance < _groundMinDistance)
-                    _isGrounded.Value = true;
+                    _isGrounded = true;
                 else
-                    _isGrounded.Value = false;
+                    _isGrounded = false;
             }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            collision.GetContacts(_contacts);
+            ContactPoint contact = _contacts[0];
+            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, _velocity));
         }
     }
 
@@ -64,7 +76,9 @@ namespace _Project.Codebase.Core.Ball
 
     public interface IReadOnlyBallView : IReadOnlyBallTransform
     {
+        bool IsGrounded { get; }
         event Action<Vector3, Vector3> VelocityRequested;
+        event Action<HitInfo> ObjectHit;
     }
 
     public interface IBallTransform : IReadOnlyBallTransform
