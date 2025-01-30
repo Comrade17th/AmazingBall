@@ -67,8 +67,8 @@ namespace _Project.Codebase.Core.Ball
             _ballView.SetVelocity(_velocity.Value);
         }
 
-        private void OnVelocityRequested(Vector3 lastPosition, Vector3 currentPosition) => 
-            _velocity.Value = _customVelocity.GetNewVelocity(_velocity.Value);
+        private void OnVelocityRequested(bool isGrounded) => 
+            _velocity.Value = _customVelocity.GetNewVelocity(_velocity.Value, isGrounded);
 
         private void OnObjectHit(HitInfo hitInfo)
         {

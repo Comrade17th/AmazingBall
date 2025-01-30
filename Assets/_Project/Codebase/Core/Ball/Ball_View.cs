@@ -19,7 +19,7 @@ namespace _Project.Codebase.Core.Ball
         
         private bool _isGrounded = false;
 
-        public event Action<Vector3, Vector3> VelocityRequested;
+        public event Action<bool> VelocityRequested;
         public event Action<HitInfo> ObjectHit;
         public bool IsGrounded => _isGrounded;
 
@@ -38,7 +38,7 @@ namespace _Project.Codebase.Core.Ball
                 transform.position += _velocity * Time.deltaTime;
             
             CheckIsGrounded();
-            VelocityRequested?.Invoke(_lastPosition, _groundTransform.position);
+            VelocityRequested?.Invoke(_isGrounded);
         }
 
         public void SetVelocity(Vector3 velocity)
@@ -77,7 +77,7 @@ namespace _Project.Codebase.Core.Ball
     public interface IReadOnlyBallView : IReadOnlyBallTransform
     {
         bool IsGrounded { get; }
-        event Action<Vector3, Vector3> VelocityRequested;
+        event Action<bool> VelocityRequested;
         event Action<HitInfo> ObjectHit;
     }
 
