@@ -6,14 +6,13 @@ using _Project.Codebase.Core.Spawnable;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.Codebase.Infrastucture
 {
     public class MainInstaller : MonoInstaller
     {
-        [SerializeField] private Ball_View _ballView;
+        [SerializeField] private BallView _ballView;
         [SerializeField] private BallRotationView _ballRotationView;
         [SerializeField] private CoinCollector _coinCollector;
         [SerializeField] private LineView _lineView;
@@ -22,6 +21,7 @@ namespace _Project.Codebase.Infrastucture
 
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
+        [SerializeField] private BallColorView _ballColorView;
 
         public override void InstallBindings()
         {
@@ -62,15 +62,15 @@ namespace _Project.Codebase.Infrastucture
 
         private void BindBall()
         {
-            Ball_View ballView = _ballView.GetComponent<Ball_View>();
+            BallView ballView = _ballView.GetComponent<BallView>();
             
             Container
-                .Bind<Ball_View>()
-                .FromInstance(ballView);
+                .Bind<BallView>()
+                .FromInstance(ballView); // ref
             
             Container
                 .Bind<IReadOnlyBallTransform>()
-                .To<Ball_View>()
+                .To<BallView>()
                 .FromInstance(ballView);
             
             Container
@@ -83,23 +83,39 @@ namespace _Project.Codebase.Infrastucture
                 .To<BallModel>()
                 .AsSingle();
             
+            BindBallViews(ballView);
+
+            Container
+                .Bind<IBallViewModel>()
+                .To<BallViewModel>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindBallViews(BallView ballView)
+        {
             Container
                 .Bind<IBallView>()
-                .To<Ball_View>()
+                .To<BallView>()
                 .FromInstance(ballView)
                 .AsCached();
+
+            Container
+                .Bind<IBallColorView>()
+                .To<BallColorView>()
+                .FromInstance(_ballColorView)
+                .AsSingle();
+
+            Container
+                .Bind<IBallColorViewModel>()
+                .To<BallColorViewModel>()
+                .AsSingle();
             
             Container
                 .Bind<IBallRotationView>()
                 .To<BallRotationView>()
                 .FromInstance(_ballRotationView)
                 .AsSingle();
-            
-            Container
-                .Bind<IBallViewModel>()
-                .To<BallViewModel>()
-                .AsSingle()
-                .NonLazy();
         }
 
         private void BindCoinVFXFactory()

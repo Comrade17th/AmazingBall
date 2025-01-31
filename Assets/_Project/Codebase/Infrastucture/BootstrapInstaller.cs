@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace _Project.Codebase.Infrastucture
+namespace _Project.Codebase.Infrastructure
 {
     public class BootstrapInstaller : MonoInstaller
     {

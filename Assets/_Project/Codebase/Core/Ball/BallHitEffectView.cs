@@ -9,15 +9,11 @@ namespace _Project.Codebase.Core.Ball
         private HitEffectFactory _factory;
 
         [Inject]
-        private void Construct(HitEffectFactory factory)
-        {
+        private void Construct(HitEffectFactory factory) =>
             _factory = factory;
-        }
 
-        public void CreateEffect(Vector3 at)
-        {
+        public void CreateEffect(Vector3 at) =>
             _factory.Create(at);
-        }
     }
 
     public interface IHitEffectView : IEffectView

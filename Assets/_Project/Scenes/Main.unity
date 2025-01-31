@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1064,6 +1064,7 @@ MonoBehaviour:
   _mousePointerHandler: {fileID: 798762797}
   _hitVFXPrefab: {fileID: -5233561287256728481, guid: 5cbaa91e04ff9de43b95f0f790f35867, type: 3}
   _coinVFXPrefab: {fileID: 8907426468194539573, guid: fae2f5ce9f3888748a8b3ad300d34503, type: 3}
+  _ballColorView: {fileID: 1573123793}
 --- !u!1 &1573123785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1870707327766779718, guid: df125ca9b78542245a076dd17f702428, type: 3}
@@ -1082,6 +1083,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationCoefficient: 0.5
+--- !u!114 &1573123793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3087874832721456039, guid: df125ca9b78542245a076dd17f702428, type: 3}
+  m_PrefabInstance: {fileID: 1849751765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573123785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba47fb1d7f3a409f89f64eb9f643aa99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1587866706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,12 +1401,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3087874832721456039, guid: df125ca9b78542245a076dd17f702428, type: 3}
+      propertyPath: TimeMultiplier
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4970130821405976679, guid: df125ca9b78542245a076dd17f702428, type: 3}
       propertyPath: m_Name
       value: BallMVVM
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 3087874832721456039, guid: df125ca9b78542245a076dd17f702428, type: 3}
     - {fileID: 2034443128813930099, guid: df125ca9b78542245a076dd17f702428, type: 3}
     - {fileID: 5817527689217604927, guid: df125ca9b78542245a076dd17f702428, type: 3}
     m_RemovedGameObjects: []

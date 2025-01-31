@@ -7,13 +7,12 @@ namespace _Project.Codebase.Core.Ball
 {
     [RequireComponent(typeof(Rigidbody), 
         typeof(Collider))]
-    public class Ball_View : MonoBehaviour, IBallView
+    public class BallView : MonoBehaviour, IBallView
     {
         [SerializeField] private Transform _groundTransform;
         
         private readonly float _groundMinDistance = 0.05f;
-        
-        private Vector3 _lastPosition;
+
         private Vector3 _velocity;
         private List<ContactPoint> _contacts = new();
         
@@ -29,7 +28,6 @@ namespace _Project.Codebase.Core.Ball
 
         private void Start()
         {
-            _lastPosition = _groundTransform.position;
         }
 
         private void Update()

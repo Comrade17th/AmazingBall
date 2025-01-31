@@ -18,7 +18,7 @@ namespace _Project.Codebase.Core
         private Transform _target;
 
         [Inject]
-        private void Construct(Ball_View target)
+        private void Construct(BallView target)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));

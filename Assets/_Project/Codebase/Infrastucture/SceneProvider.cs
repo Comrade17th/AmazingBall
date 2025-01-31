@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace _Project.Codebase.Infrastucture
+namespace _Project.Codebase.Infrastructure
 {
     public class SceneProvider
     {
