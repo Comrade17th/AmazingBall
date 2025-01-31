@@ -20,8 +20,11 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         private readonly IHitEffectView _hitEffectView;
 
         private ReactiveProperty<Vector3> _velocity = new();
+        private ReactiveProperty<string> _speedLabel = new();
 
         public Vector3 GetPosition => _ballView.Position;
+        public IReadOnlyReactiveProperty<Vector3> Velocity => _velocity;
+        public IReadOnlyReactiveProperty<string> SpeedLabel => _speedLabel;
 
         [Inject]
         public BallViewModel(
@@ -58,6 +61,10 @@ namespace _Project.Codebase.Core.Ball.ViewModel
             
             _ballModel.Velocity
                 .Subscribe(velocity => _velocity.Value = velocity)
+                .AddTo(_compositeDisposable);
+
+            _ballModel.SpeedLabel
+                .Subscribe(velocityLabel => _speedLabel.Value = velocityLabel)
                 .AddTo(_compositeDisposable);
             
             _velocity
@@ -106,5 +113,7 @@ namespace _Project.Codebase.Core.Ball.ViewModel
     public interface IBallViewModel
     {
         Vector3 GetPosition { get; }
+        IReadOnlyReactiveProperty<Vector3> Velocity { get; }
+        IReadOnlyReactiveProperty<string> SpeedLabel { get; }
     }
 }

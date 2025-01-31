@@ -23,6 +23,7 @@ namespace _Project.Codebase.Infrastructure
         
         [SerializeField] private LineView _lineView;
         [SerializeField] private WalletView _walletView;
+        [SerializeField] private BallSpeedView _ballSpeedView;
         [SerializeField] private MousePointerHandler _mousePointerHandler;
 
         [SerializeField] private HitVFX _hitVFXPrefab;
@@ -34,12 +35,28 @@ namespace _Project.Codebase.Infrastructure
             BindInputProvider();
             BindPointerHandler();
             BindBall();
+            BindSpeedView();
             BindLine();
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        private void BindSpeedView()
+        {
+            Container
+                .Bind<IBallSpeedView>()
+                .To<BallSpeedView>()
+                .FromInstance(_ballSpeedView)
+                .AsSingle();
+
+            Container
+                .Bind<IBallSpeedViewModel>()
+                .To<BallSpeedViewModel>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindCamera()

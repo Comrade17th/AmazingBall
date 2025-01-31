@@ -5,11 +5,15 @@ namespace _Project.Codebase.Core.Ball
 {
     public class BallModel : IBallModel
     {
-        public ReactiveProperty<Vector3> Velocity { get; set; } = new (new Vector3(1f, 0f, 0f));
+        public ReactiveProperty<Vector3> Velocity { get; set; } = new (new Vector3(0f, 0f, 0f));
+
+        public ReactiveProperty<string> SpeedLabel { get; set; } = new($"Speed:");
     }
 
     public interface IBallModel
     {
         ReactiveProperty<Vector3> Velocity { get; set; }
+
+        ReactiveProperty<string> SpeedLabel { get; set; }
     }
 }
