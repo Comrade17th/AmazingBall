@@ -1,5 +1,6 @@
 using System;
 using _Project.Codebase.Core.Ball;
+using _Project.Codebase.Core.Ball.ViewModel;
 using UnityEngine;
 using Zenject;
 

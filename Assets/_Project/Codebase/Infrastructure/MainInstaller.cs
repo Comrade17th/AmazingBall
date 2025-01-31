@@ -1,5 +1,6 @@
 using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.Ball.View;
+using _Project.Codebase.Core.Ball.ViewModel;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Line;
@@ -195,7 +196,9 @@ namespace _Project.Codebase.Infrastructure
 
         private void BindWallet()
         {
-            Container.Bind<WalletView>()
+            Container
+                .Bind<IWalletView>()
+                .To<WalletView>()
                 .FromInstance(_walletView)
                 .AsSingle();
             

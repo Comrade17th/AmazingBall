@@ -9,7 +9,7 @@ namespace _Project.Codebase.Core.Wallet
     {
         private readonly CompositeDisposable _compositeDisposable = new();
         private readonly WalletModel _walletModel;
-        private readonly WalletView _walletView;
+        private readonly IWalletView _walletView;
         private readonly CoinCollector _coinCollector;
 
         private ReactiveProperty<int> _coins;
@@ -19,7 +19,7 @@ namespace _Project.Codebase.Core.Wallet
         public WalletViewModel(
             WalletModel walletModel,
             CoinCollector coinCollector,
-            WalletView walletView)
+            IWalletView walletView)
         {
             _walletModel = walletModel;
             _coinCollector = coinCollector;
@@ -51,7 +51,7 @@ namespace _Project.Codebase.Core.Wallet
         }
 
         private void OnViewModelChanged(int coinValue, string coinLabel) => 
-            _walletView.RedrawView(coinValue, coinLabel);
+            _walletView.Redraw(coinLabel, coinValue);
 
         private void OnCoinCollected(int coins)
         {

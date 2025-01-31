@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.ViewModel
 {
     public class BallViewModel: IBallViewModel, IDisposable
     {

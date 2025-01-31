@@ -1,17 +1,18 @@
 using UnityEngine;
-using Zenject;
 using TMPro;
-using UniRx;
 
 namespace _Project.Codebase.Core.Wallet
 {
-    public class WalletView : MonoBehaviour
+    public class WalletView : MonoBehaviour, IWalletView
     {
-        [SerializeField] private TextMeshProUGUI _coinsTMPro;
+        [SerializeField] private TextMeshProUGUI _textField;
 
-        public void RedrawView(int coinValue, string coinLabel)
-        {
-            _coinsTMPro.text = $"{coinLabel} {coinValue}";
-        }
+        public void Redraw(string coinLabel, int coinValue) =>
+            _textField.text = $"{coinLabel} {coinValue}";
+    }
+
+    public interface IWalletView
+    {
+        void Redraw(string label, int count);
     }
 }

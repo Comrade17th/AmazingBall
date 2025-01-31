@@ -2,7 +2,7 @@ using _Project.Codebase.Core.Ball.View;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.ViewModel
 {
 	public class BallRotationViewModel : IBallRotationViewModel
 	{
