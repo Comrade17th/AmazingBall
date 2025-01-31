@@ -8,7 +8,7 @@ using _Project.Codebase.Interfaces;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Codebase.Infrastucture
+namespace _Project.Codebase.Infrastructure
 {
     public class MainInstaller : MonoInstaller
     {
@@ -66,7 +66,7 @@ namespace _Project.Codebase.Infrastucture
             
             Container
                 .Bind<BallView>()
-                .FromInstance(ballView); // ref
+                .FromInstance(ballView); 
             
             Container
                 .Bind<IReadOnlyBallTransform>()

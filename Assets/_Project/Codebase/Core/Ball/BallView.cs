@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 
 namespace _Project.Codebase.Core.Ball
@@ -14,9 +13,9 @@ namespace _Project.Codebase.Core.Ball
         private readonly float _groundMinDistance = 0.05f;
 
         private Vector3 _velocity;
-        private List<ContactPoint> _contacts = new();
+        private readonly List<ContactPoint> _contacts = new();
         
-        private bool _isGrounded = false;
+        private bool _isGrounded;
 
         public event Action<bool> VelocityRequested;
         public event Action<HitInfo> ObjectHit;
@@ -25,11 +24,6 @@ namespace _Project.Codebase.Core.Ball
         public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
         public Vector3 Position { get => transform.position; set => transform.position = value; }
 
-
-        private void Start()
-        {
-        }
-
         private void Update()
         {
             if (_velocity != Vector3.zero)
@@ -37,6 +31,13 @@ namespace _Project.Codebase.Core.Ball
             
             CheckIsGrounded();
             VelocityRequested?.Invoke(_isGrounded);
+        }
+        
+        private void OnCollisionEnter(Collision collision)
+        {
+            collision.GetContacts(_contacts);
+            ContactPoint contact = _contacts[0];
+            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, _velocity));
         }
 
         public void SetVelocity(Vector3 velocity)
@@ -57,13 +58,6 @@ namespace _Project.Codebase.Core.Ball
                 else
                     _isGrounded = false;
             }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            collision.GetContacts(_contacts);
-            ContactPoint contact = _contacts[0];
-            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, _velocity));
         }
     }
 
