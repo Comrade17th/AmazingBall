@@ -1058,13 +1058,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballView: {fileID: 1849751767}
   _ballRotationView: {fileID: 1573123789}
+  _ballCompressionView: {fileID: 1573123794}
+  _ballColorView: {fileID: 1573123793}
   _coinCollector: {fileID: 1849751769}
   _lineView: {fileID: 1396619954}
   _walletView: {fileID: 1587866710}
   _mousePointerHandler: {fileID: 798762797}
   _hitVFXPrefab: {fileID: -5233561287256728481, guid: 5cbaa91e04ff9de43b95f0f790f35867, type: 3}
   _coinVFXPrefab: {fileID: 8907426468194539573, guid: fae2f5ce9f3888748a8b3ad300d34503, type: 3}
-  _ballColorView: {fileID: 1573123793}
 --- !u!1 &1573123785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1870707327766779718, guid: df125ca9b78542245a076dd17f702428, type: 3}
@@ -1094,6 +1095,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba47fb1d7f3a409f89f64eb9f643aa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1573123794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573123785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0431b62326b48a0bc6f8103558e9673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshParent: {fileID: 1849751772}
+  _compressedScale: {x: 1, y: 1, z: 0.33}
 --- !u!1 &1587866706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,15 +1424,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: BallMVVM
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2034443128813930099, guid: df125ca9b78542245a076dd17f702428, type: 3}
-    - {fileID: 5817527689217604927, guid: df125ca9b78542245a076dd17f702428, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1870707327766779718, guid: df125ca9b78542245a076dd17f702428, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1573123789}
+    - targetCorrespondingSourceObject: {fileID: 1870707327766779718, guid: df125ca9b78542245a076dd17f702428, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1573123794}
   m_SourcePrefab: {fileID: 100100000, guid: df125ca9b78542245a076dd17f702428, type: 3}
 --- !u!114 &1849751767 stripped
 MonoBehaviour:
@@ -1441,6 +1457,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c0bd90c665447dfb70237b3fbcc98fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1849751772 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1959695247495907875, guid: df125ca9b78542245a076dd17f702428, type: 3}
+  m_PrefabInstance: {fileID: 1849751765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1857743583
 GameObject:
   m_ObjectHideFlags: 0

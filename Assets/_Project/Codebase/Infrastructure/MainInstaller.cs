@@ -13,15 +13,18 @@ namespace _Project.Codebase.Infrastructure
     public class MainInstaller : MonoInstaller
     {
         [SerializeField] private BallView _ballView;
-        [SerializeField] private BallRotationView _ballRotationView;
         [SerializeField] private CoinCollector _coinCollector;
+        
+        [SerializeField] private BallRotationView _ballRotationView;
+        [SerializeField] private BallCompressionView _ballCompressionView;
+        [SerializeField] private BallColorView _ballColorView;
+        
         [SerializeField] private LineView _lineView;
         [SerializeField] private WalletView _walletView;
         [SerializeField] private MousePointerHandler _mousePointerHandler;
 
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
-        [SerializeField] private BallColorView _ballColorView;
 
         public override void InstallBindings()
         {
@@ -100,6 +103,19 @@ namespace _Project.Codebase.Infrastructure
                 .FromInstance(ballView)
                 .AsCached();
 
+            BindColorView();
+
+            Container
+                .Bind<IBallRotationView>()
+                .To<BallRotationView>()
+                .FromInstance(_ballRotationView)
+                .AsSingle();
+
+            BindCompressionView();
+        }
+
+        private void BindColorView()
+        {
             Container
                 .Bind<IBallColorView>()
                 .To<BallColorView>()
@@ -110,11 +126,19 @@ namespace _Project.Codebase.Infrastructure
                 .Bind<IBallColorViewModel>()
                 .To<BallColorViewModel>()
                 .AsSingle();
-            
+        }
+
+        private void BindCompressionView()
+        {
             Container
-                .Bind<IBallRotationView>()
-                .To<BallRotationView>()
-                .FromInstance(_ballRotationView)
+                .Bind<IBallCompressionView>()
+                .To<BallCompressionView>()
+                .FromInstance(_ballCompressionView)
+                .AsSingle();
+
+            Container
+                .Bind<IBallCompressionViewModel>()
+                .To<BallCompressionViewModel>()
                 .AsSingle();
         }
 

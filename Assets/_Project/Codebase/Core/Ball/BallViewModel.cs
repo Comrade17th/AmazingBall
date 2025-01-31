@@ -15,6 +15,7 @@ namespace _Project.Codebase.Core.Ball
         private readonly IPointerHandler _pointerHandler;
         private readonly IBallRotationView _rotationView;
         private readonly IBallColorViewModel _colorViewModel;
+        private readonly IBallCompressionViewModel _compressionViewModel;
 
         private ReactiveProperty<Vector3> _velocity = new();
 
@@ -27,7 +28,8 @@ namespace _Project.Codebase.Core.Ball
             ICustomVelocity customVelocity,
             IPointerHandler pointerHandler,
             IBallRotationView rotationView,
-            IBallColorViewModel colorViewModel)
+            IBallColorViewModel colorViewModel,
+            IBallCompressionViewModel compressionViewModel)
         {
             _ballModel = ballModel;
             _ballView = ballView;
@@ -35,6 +37,7 @@ namespace _Project.Codebase.Core.Ball
             _pointerHandler = pointerHandler;
             _rotationView = rotationView;
             _colorViewModel = colorViewModel;
+            _compressionViewModel = compressionViewModel;
 
             Bind();
         }
@@ -91,6 +94,7 @@ namespace _Project.Codebase.Core.Ball
             _rotationView.ChangeDirection(velocity);
             _ballModel.Velocity.Value = velocity;
             _colorViewModel.CompressAsync();
+            _compressionViewModel.CompressAsync();
         }
     }
 

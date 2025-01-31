@@ -43,8 +43,6 @@ GameObject:
   - component: {fileID: 7645557051133193155}
   - component: {fileID: 6946210106609824106}
   - component: {fileID: 3087874832721456039}
-  - component: {fileID: 2034443128813930099}
-  - component: {fileID: 5817527689217604927}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -132,34 +130,6 @@ MonoBehaviour:
   TimeMultiplier: 20
   _compressedColor: {r: 1, g: 0, b: 0, a: 1}
   _meshRenderer: {fileID: 6946210106609824106}
---- !u!114 &2034443128813930099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870707327766779718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed536a2258694899987562d4d395b92f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _meshParent: {fileID: 8366371836609825430}
-  _compressedScale: {x: 1, y: 1, z: 0.33}
---- !u!114 &5817527689217604927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1870707327766779718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc6dff654624d038c6703523a3db67e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _meshParent: {fileID: 8366371836609825430}
-  _rotationCoefficient: 0.5
 --- !u!1 &4970130821405976679
 GameObject:
   m_ObjectHideFlags: 0

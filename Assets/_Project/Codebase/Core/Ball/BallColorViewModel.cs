@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -5,7 +6,7 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Ball
 {
-	public class BallColorViewModel : IBallColorViewModel
+	public class BallColorViewModel : IBallColorViewModel, IDisposable
 	{
 		private readonly IBallColorView _ballColorView;
 		private readonly MeshRenderer _meshRenderer;
@@ -31,6 +32,12 @@ namespace _Project.Codebase.Core.Ball
             
 			_cancellationTokenSource = new CancellationTokenSource();
 			Task compressTask = CompressColorAsync(_cancellationTokenSource);
+		}
+		
+		public void Dispose()
+		{
+			AbortTask();
+			_cancellationTokenSource?.Dispose();
 		}
 		
 		private async Task CompressColorAsync(CancellationTokenSource tokenSource)
