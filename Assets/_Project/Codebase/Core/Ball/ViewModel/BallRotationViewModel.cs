@@ -1,4 +1,5 @@
 using _Project.Codebase.Core.Ball.View;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,9 @@ namespace _Project.Codebase.Core.Ball.ViewModel
 		
 		private float RotationCoefficient => _rotationView.RotationCoefficient;
 		private Transform Transform => _rotationView.Transform;
+		private ReactiveProperty<Quaternion> _rotation = new();
+		
+		public IReadOnlyReactiveProperty<Quaternion> Rotation => _rotation;
 		
 		[Inject]
 		public BallRotationViewModel(IBallRotationView rotationView)
@@ -37,6 +41,8 @@ namespace _Project.Codebase.Core.Ball.ViewModel
 				velocity.x, 
 				Transform.rotation.y,
 				velocity.z));
+
+			_rotation.Value = _rotationView.Transform.rotation;
 		}
 	}
 
@@ -44,5 +50,7 @@ namespace _Project.Codebase.Core.Ball.ViewModel
 	{
 		void Rotate(Vector3 velocity);
 		void ChangeDirection(Vector3 velocity);
+
+		IReadOnlyReactiveProperty<Quaternion> Rotation { get; }
 	}
 }

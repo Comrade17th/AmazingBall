@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace _Project.Codebase.Core.Ball.View
