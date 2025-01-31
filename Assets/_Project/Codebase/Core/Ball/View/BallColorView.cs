@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.View
 {
     [RequireComponent(typeof(MeshRenderer))]
     public class BallColorView : MonoBehaviour, IBallColorView

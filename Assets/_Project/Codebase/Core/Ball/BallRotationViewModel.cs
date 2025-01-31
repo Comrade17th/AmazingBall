@@ -1,4 +1,6 @@
+using _Project.Codebase.Core.Ball.View;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Codebase.Core.Ball
 {
@@ -9,7 +11,7 @@ namespace _Project.Codebase.Core.Ball
 		private float RotationCoefficient => _rotationView.RotationCoefficient;
 		private Transform Transform => _rotationView.Transform;
 		
-
+		[Inject]
 		public BallRotationViewModel(IBallRotationView rotationView)
 		{
 			_rotationView = rotationView;
@@ -31,7 +33,6 @@ namespace _Project.Codebase.Core.Ball
 		public void ChangeDirection(Vector3 velocity)
 		{
 			//if(velocity.y == 0f) 
-			Debug.Log(velocity);
 			Transform.rotation = Quaternion.LookRotation(new Vector3(
 				velocity.x, 
 				Transform.rotation.y,

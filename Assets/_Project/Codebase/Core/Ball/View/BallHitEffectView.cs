@@ -2,14 +2,14 @@ using _Project.Codebase.Core.Factories;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.View
 {
-    public class BallHitEffectView : MonoBehaviour, IHitEffectView
+    public class BallHitEffectView : IHitEffectView
     {
         private HitEffectFactory _factory;
 
         [Inject]
-        private void Construct(HitEffectFactory factory) =>
+        public BallHitEffectView(HitEffectFactory factory) =>
             _factory = factory;
 
         public void CreateEffect(Vector3 at) =>

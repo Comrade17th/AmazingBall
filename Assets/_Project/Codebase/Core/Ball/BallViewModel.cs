@@ -1,4 +1,5 @@
 using System;
+using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.InputProviders;
 using UniRx;
 using UnityEngine;
@@ -13,9 +14,10 @@ namespace _Project.Codebase.Core.Ball
         private readonly IBallView _ballView;
         private readonly ICustomVelocity _customVelocity;
         private readonly IPointerHandler _pointerHandler;
-        private readonly IBallRotationViewModel _rotationView;
+        private readonly IBallRotationViewModel _rotationViewModel;
         private readonly IBallColorViewModel _colorViewModel;
         private readonly IBallCompressionViewModel _compressionViewModel;
+        private readonly IHitEffectView _hitEffectView;
 
         private ReactiveProperty<Vector3> _velocity = new();
 
@@ -29,15 +31,17 @@ namespace _Project.Codebase.Core.Ball
             IPointerHandler pointerHandler,
             IBallRotationViewModel rotationView,
             IBallColorViewModel colorViewModel,
-            IBallCompressionViewModel compressionViewModel)
+            IBallCompressionViewModel compressionViewModel,
+            IHitEffectView hitEffectView)
         {
             _ballModel = ballModel;
             _ballView = ballView;
             _customVelocity = customVelocity;
             _pointerHandler = pointerHandler;
-            _rotationView = rotationView;
+            _rotationViewModel = rotationView;
             _colorViewModel = colorViewModel;
             _compressionViewModel = compressionViewModel;
+            _hitEffectView = hitEffectView;
 
             Bind();
         }
@@ -69,7 +73,7 @@ namespace _Project.Codebase.Core.Ball
             Vector3 velocity = _customVelocity
                 .GetPushVelocity(_ballView.Position, _pointerHandler.GetWorldPosition());
             _ballModel.Velocity.Value = velocity;
-            _rotationView.ChangeDirection(velocity);
+            _rotationViewModel.ChangeDirection(velocity);
         }
 
         private void OnViewModelVelocityChanged(Vector3 velocity)
@@ -81,7 +85,7 @@ namespace _Project.Codebase.Core.Ball
         private void OnVelocityRequested(bool isGrounded)
         {
             _velocity.Value = _customVelocity.GetNewVelocity(_velocity.Value, isGrounded);
-            _rotationView.Rotate(_velocity.Value);
+            _rotationViewModel.Rotate(_velocity.Value);
         }
 
         private void OnObjectHit(HitInfo hitInfo)
@@ -91,10 +95,11 @@ namespace _Project.Codebase.Core.Ball
                 hitInfo.Normal,
                 _ballView.IsGrounded);
             
-            _rotationView.ChangeDirection(velocity);
+            _rotationViewModel.ChangeDirection(velocity);
             _ballModel.Velocity.Value = velocity;
             _colorViewModel.CompressAsync();
             _compressionViewModel.CompressAsync();
+            _hitEffectView.CreateEffect(hitInfo.Point);
         }
     }
 

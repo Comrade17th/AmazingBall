@@ -1,4 +1,5 @@
 using _Project.Codebase.Core.Ball;
+using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Line;
@@ -35,7 +36,6 @@ namespace _Project.Codebase.Infrastructure
             BindLine();
             BindCoinCollector();
             BindWallet();
-            BindHitVFXFactory();
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
@@ -103,9 +103,20 @@ namespace _Project.Codebase.Infrastructure
                 .FromInstance(ballView)
                 .AsCached();
 
+            BindHitEffectView();
             BindColorView();
             BindRotationView();
             BindCompressionView();
+        }
+
+        private void BindHitEffectView()
+        {
+            BindHitVFXFactory();
+
+            Container
+                .Bind<IHitEffectView>()
+                .To<BallHitEffectView>()
+                .AsSingle();
         }
 
         private void BindRotationView()

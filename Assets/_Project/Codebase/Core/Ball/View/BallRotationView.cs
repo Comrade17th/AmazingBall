@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.Serialization;
-using Zenject;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.View
 {
     public class BallRotationView : MonoBehaviour, IBallRotationView
     {
