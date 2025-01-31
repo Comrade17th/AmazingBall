@@ -13,7 +13,7 @@ namespace _Project.Codebase.Core.Ball
         private readonly IBallView _ballView;
         private readonly ICustomVelocity _customVelocity;
         private readonly IPointerHandler _pointerHandler;
-        private readonly IBallRotationView _rotationView;
+        private readonly IBallRotationViewModel _rotationView;
         private readonly IBallColorViewModel _colorViewModel;
         private readonly IBallCompressionViewModel _compressionViewModel;
 
@@ -27,7 +27,7 @@ namespace _Project.Codebase.Core.Ball
             IBallView ballView,
             ICustomVelocity customVelocity,
             IPointerHandler pointerHandler,
-            IBallRotationView rotationView,
+            IBallRotationViewModel rotationView,
             IBallColorViewModel colorViewModel,
             IBallCompressionViewModel compressionViewModel)
         {

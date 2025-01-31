@@ -104,14 +104,22 @@ namespace _Project.Codebase.Infrastructure
                 .AsCached();
 
             BindColorView();
+            BindRotationView();
+            BindCompressionView();
+        }
 
+        private void BindRotationView()
+        {
             Container
                 .Bind<IBallRotationView>()
                 .To<BallRotationView>()
                 .FromInstance(_ballRotationView)
                 .AsSingle();
 
-            BindCompressionView();
+            Container
+                .Bind<IBallRotationViewModel>()
+                .To<BallRotationViewModel>()
+                .AsSingle();
         }
 
         private void BindColorView()
