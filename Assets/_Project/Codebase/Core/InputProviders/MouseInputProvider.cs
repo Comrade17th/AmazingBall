@@ -15,20 +15,14 @@ namespace _Project.Codebase.Core.InputProviders
             _camera = camera;
         }
 
-        public bool GetDetectionUp()
-        {
-            return Input.GetKeyUp(_keyCode);
-        }
+        public bool GetDetectionUp() => 
+            Input.GetKeyUp(_keyCode);
 
-        public bool GetDetectionDown()
-        {
-            return Input.GetKeyDown(_keyCode);
-        }
+        public bool GetDetectionDown() => 
+            Input.GetKeyDown(_keyCode);
 
-        public bool GetDetection()
-        {
-            return Input.GetKey(_keyCode);
-        }
+        public bool GetDetection() => 
+            Input.GetKey(_keyCode);
 
         public Vector3 GetPosition(bool cameraToScreenWorldPoint = false)
         {

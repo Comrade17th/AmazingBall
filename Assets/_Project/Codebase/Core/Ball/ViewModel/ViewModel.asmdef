@@ -1,0 +1,4 @@
+{
+  "name": "ViewModel",
+  "references":[ "GUID:0247ffd461104239a7ea4311cb0f657d", "GUID:560b04d1a97f54a4e82edc0cbbb69285", "GUID:c987c670c61d4c7383e38d8009c294fd", "GUID:d50d25292ae44c389bdc062df7620237" ]
+}

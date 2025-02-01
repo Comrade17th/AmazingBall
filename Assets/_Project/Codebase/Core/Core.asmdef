@@ -1,4 +1,4 @@
 {
   "name": "Core",
-  "references":[ "GUID:d50d25292ae44c389bdc062df7620237", "Debug", "Ball", "Interfaces", "UniRx" ]
+  "references":[ "GUID:d50d25292ae44c389bdc062df7620237", "Debug", "Ball", "Interfaces", "UniRx", "GUID:0247ffd461104239a7ea4311cb0f657d" ]
 }
