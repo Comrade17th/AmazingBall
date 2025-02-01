@@ -21,10 +21,12 @@ namespace _Project.Codebase.Core.Ball.ViewModel
 
         private ReactiveProperty<Vector3> _velocity = new();
         private ReactiveProperty<string> _speedLabel = new();
+        private ReactiveProperty<string> _angleLabel = new();
 
         public Vector3 GetPosition => _ballView.Position;
         public IReadOnlyReactiveProperty<Vector3> Velocity => _velocity;
         public IReadOnlyReactiveProperty<string> SpeedLabel => _speedLabel;
+        public IReadOnlyReactiveProperty<string> AngleLabel => _angleLabel;
 
         [Inject]
         public BallViewModel(
@@ -59,20 +61,41 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         {
             _pointerHandler.PointerUp += OnPointerUp;
             
-            _ballModel.Velocity
-                .Subscribe(velocity => _velocity.Value = velocity)
-                .AddTo(_compositeDisposable);
-
-            _ballModel.SpeedLabel
-                .Subscribe(velocityLabel => _speedLabel.Value = velocityLabel)
-                .AddTo(_compositeDisposable);
-            
-            _velocity
-                .Subscribe(OnViewModelVelocityChanged)
-                .AddTo(_compositeDisposable);
+            BindVelocityModel();
+            BindSpeedLabel();
+            BindAngleLabel();
+            BindVelocity();
             
             _ballView.VelocityRequested += OnVelocityRequested;
             _ballView.ObjectHit += OnObjectHit;
+        }
+
+        private void BindAngleLabel()
+        {
+            _ballModel.AngleLabel
+                .Subscribe(label => _angleLabel.Value = label)
+                .AddTo(_compositeDisposable);
+        }
+
+        private void BindVelocity()
+        {
+            _velocity
+                .Subscribe(OnViewModelVelocityChanged)
+                .AddTo(_compositeDisposable);
+        }
+
+        private void BindSpeedLabel()
+        {
+            _ballModel.SpeedLabel
+                .Subscribe(velocityLabel => _speedLabel.Value = velocityLabel)
+                .AddTo(_compositeDisposable);
+        }
+
+        private void BindVelocityModel()
+        {
+            _ballModel.Velocity
+                .Subscribe(velocity => _velocity.Value = velocity)
+                .AddTo(_compositeDisposable);
         }
 
         private void OnPointerUp()
@@ -115,5 +138,6 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         Vector3 GetPosition { get; }
         IReadOnlyReactiveProperty<Vector3> Velocity { get; }
         IReadOnlyReactiveProperty<string> SpeedLabel { get; }
+        IReadOnlyReactiveProperty<string> AngleLabel { get; }
     }
 }
