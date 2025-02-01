@@ -60,10 +60,11 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 
 		private void OnTakeDamageRequested(int damage)
 		{
-			if (damage <= 0)
+			if (damage < 0)
 				throw new ArgumentOutOfRangeException(nameof(damage));
-			
-			throw new NotImplementedException();
+
+			damage = Math.Clamp(damage, 0, _current.Value);
+			_model.Current.Value -= damage;
 		}
 
 		private void OnViewModelChanged(string label, int current, int max)

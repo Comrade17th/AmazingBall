@@ -5,6 +5,9 @@ namespace _Project.Codebase.Core.Health.BallHealth
 {
 	public class BallHealthModel: HealthModel, IBallHealthModel
 	{
-		public ReactiveProperty<int> Max { get; set; } = new(10);
+		public new ReactiveProperty<int> Max { get; set; } = new(10);
+		public new ReactiveProperty<int> Current { get; set; } = new(10);
+		public ReactiveProperty<string> Label { get; set; } = new("Health");
+		
 	}
 }

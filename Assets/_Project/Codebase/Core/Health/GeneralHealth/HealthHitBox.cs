@@ -9,7 +9,7 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 		private readonly ReactiveProperty<int> _takeDamageRequested = new();
 
 		public IReadOnlyReactiveProperty<int> TakeDamageRequested => _takeDamageRequested;
-
+		
 		public void TakeDamage(int damage)
 		{
 			_takeDamageRequested.Value = damage;
