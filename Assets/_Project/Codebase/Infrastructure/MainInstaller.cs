@@ -2,6 +2,7 @@ using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.Ball.ViewModel;
 using _Project.Codebase.Core.Factories;
+using _Project.Codebase.Core.Health.BallHealth;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Line;
 using _Project.Codebase.Core.Spawnable;
@@ -14,19 +15,29 @@ namespace _Project.Codebase.Infrastructure
 {
     public class MainInstaller : MonoInstaller
     {
+        [Header("Ball attached")]
         [SerializeField] private BallView _ballView;
         [SerializeField] private CoinCollector _coinCollector;
+        [SerializeField] private BallHealthHitBox _ballHealthHitBox;
         
+        [Header("Ball's mesh attached")]
         [SerializeField] private BallRotationView _ballRotationView;
         [SerializeField] private BallCompressionView _ballCompressionView;
         [SerializeField] private BallColorView _ballColorView;
         
-        [SerializeField] private LineView _lineView;
+        [Header("GUI")]
         [SerializeField] private WalletView _walletView;
         [SerializeField] private BallSpeedView _ballSpeedView;
         [SerializeField] private BallAngleView _angleView;
+        [SerializeField] private BallHealthView _ballHealthView;
+        
+        [Header("Inputs")]
         [SerializeField] private MousePointerHandler _mousePointerHandler;
-
+        
+        [Header("Over world")]
+        [SerializeField] private LineView _lineView;
+        
+        [Header("Prefabs")]
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
 
@@ -39,11 +50,52 @@ namespace _Project.Codebase.Infrastructure
             BindSpeedView();
             BindAngelView();
             BindLine();
+
+            BindBallHealthModel();
+            BindBallHealthView();
+            BindBallHealthHitBox();
+            BindBallHealthViewModel();
+            
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        private void BindBallHealthViewModel()
+        {
+            Container
+                .Bind<IBallHealthViewModel>()
+                .To<BallHealthViewModel>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindBallHealthHitBox()
+        {
+            Container
+                .Bind<IBallHealthHitBox>()
+                .To<BallHealthHitBox>()
+                .FromInstance(_ballHealthHitBox)
+                .AsSingle();
+        }
+
+        private void BindBallHealthView()
+        {
+            Container
+                .Bind<IBallHealthView>()
+                .To<BallHealthView>()
+                .FromInstance(_ballHealthView)
+                .AsSingle();
+        }
+
+        private void BindBallHealthModel()
+        {
+            Container
+                .Bind<IBallHealthModel>()
+                .To<BallHealthModel>()
+                .AsSingle();
         }
 
         private void BindAngelView()
