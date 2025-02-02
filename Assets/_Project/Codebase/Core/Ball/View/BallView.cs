@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _Project.Codebase.Core.Ball.View;
 using UnityEngine;
 
 namespace _Project.Codebase.Core.Ball
@@ -36,8 +37,8 @@ namespace _Project.Codebase.Core.Ball
         private void OnCollisionEnter(Collision collision)
         {
             collision.GetContacts(_contacts);
-            ContactPoint contact = _contacts[0];
-            ObjectHit?.Invoke( new HitInfo(contact.point, contact.normal, _velocity));
+            ContactPoint contactPoint = _contacts[0];
+            ObjectHit?.Invoke( new HitInfo(contactPoint, _velocity, transform));
         }
 
         public void SetVelocity(Vector3 velocity)

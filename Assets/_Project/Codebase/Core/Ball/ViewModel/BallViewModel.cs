@@ -24,9 +24,12 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         private ReactiveProperty<string> _angleLabel = new();
 
         public Vector3 GetPosition => _ballView.Position;
+        
         public IReadOnlyReactiveProperty<Vector3> Velocity => _velocity;
         public IReadOnlyReactiveProperty<string> SpeedLabel => _speedLabel;
         public IReadOnlyReactiveProperty<string> AngleLabel => _angleLabel;
+
+        public event Action<HitInfo> ObjectHit;
 
         [Inject]
         public BallViewModel(
@@ -120,16 +123,17 @@ namespace _Project.Codebase.Core.Ball.ViewModel
 
         private void OnObjectHit(HitInfo hitInfo)
         {
+            ObjectHit?.Invoke(hitInfo);
             Vector3 velocity = _customVelocity.GetReflectedVelocity(
                 _velocity.Value,
-                hitInfo.Normal,
+                hitInfo.ContactPoint.normal,
                 _ballView.IsGrounded);
             
             _rotationViewModel.ChangeDirection(velocity);
             _ballModel.Velocity.Value = velocity;
             _colorViewModel.CompressAsync();
             _compressionViewModel.CompressAsync();
-            _hitEffectView.CreateEffect(hitInfo.Point);
+            _hitEffectView.CreateEffect(hitInfo.ContactPoint.point);
         }
     }
 
@@ -139,5 +143,7 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         IReadOnlyReactiveProperty<Vector3> Velocity { get; }
         IReadOnlyReactiveProperty<string> SpeedLabel { get; }
         IReadOnlyReactiveProperty<string> AngleLabel { get; }
+
+        event Action<HitInfo> ObjectHit;
     }
 }

@@ -9,7 +9,7 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 	{
 		public event Action<int> TakeDamageRequested;
 
-		public void TakeDamage(int damage)
+		public virtual void TakeDamage(int damage)
 		{
 			TakeDamageRequested?.Invoke(damage);
 		}

@@ -1,3 +1,4 @@
 {
-  "name": "Debug"
+  "name": "Debug",
+  "references":[ "GUID:0247ffd461104239a7ea4311cb0f657d" ]
 }

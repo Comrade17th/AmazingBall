@@ -1,18 +1,18 @@
 using UnityEngine;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.View
 {
     public struct HitInfo
     {
-        public readonly Vector3 Point;
-        public readonly Vector3 Normal;
+        public readonly Transform ThisTransform;
+        public readonly ContactPoint ContactPoint;
         public readonly Vector3 Velocity;
 
-        public HitInfo(Vector3 point, Vector3 normal, Vector3 velocity)
+        public HitInfo(ContactPoint point, Vector3 velocity, Transform thisTransform)
         {
-            Point = point;
-            Normal = normal;
+            ContactPoint = point;
             Velocity = velocity;
+            ThisTransform = thisTransform;
         }
     }
 }

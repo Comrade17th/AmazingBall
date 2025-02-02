@@ -1,3 +1,4 @@
+using _Project.Codebase.Core.Attacker.BallAttacker;
 using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.Ball.ViewModel;
@@ -50,17 +51,37 @@ namespace _Project.Codebase.Infrastructure
             BindSpeedView();
             BindAngelView();
             BindLine();
+            BindBallHealth();
 
-            BindBallHealthModel();
-            BindBallHealthView();
-            BindBallHealthHitBox();
-            BindBallHealthViewModel();
+            Container
+                .Bind<IBallAttackerModel>()
+                .To<BallAttackerModel>()
+                .AsSingle();
             
+            Container
+                .Bind<IBallAttackRool>()
+                .To<BallAttackRool>()
+                .AsSingle();
+            
+            Container
+                .Bind<IBallAttackerViewModel>()
+                .To<BallAttackerViewModel>()
+                .AsSingle()
+                .NonLazy();
+
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        private void BindBallHealth()
+        {
+            BindBallHealthModel();
+            BindBallHealthView();
+            BindBallHealthHitBox();
+            BindBallHealthViewModel();
         }
 
         private void BindBallHealthViewModel()
