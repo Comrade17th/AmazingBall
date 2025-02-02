@@ -20,7 +20,6 @@ namespace _Project.Codebase.CustomEditor
 			if (GUILayout.Button(TakeDamageButton))
 			{
 				hitBox.TakeDamage(_editorDamage);
-				Debug.Log($"button clicked damage: {_editorDamage}");
 			}
 		}
 	}

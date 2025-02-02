@@ -1,5 +1,6 @@
 using System;
 using UniRx;
+using UnityEngine;
 
 namespace _Project.Codebase.Core.Health.GeneralHealth
 {
@@ -13,6 +14,8 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 		private ReactiveProperty<string> _label = new();
 		private ReactiveProperty<int> _max = new();
 		private ReactiveProperty<int> _current = new();
+		
+		public event Action HealthZero;
 
 		public HealthViewModel(IHealthModel model, IHealthView view, IHealthHitBox hitBox)
 		{
@@ -26,6 +29,7 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 		public void Dispose()
 		{
 			_compositeDisposable?.Dispose();
+			_hitBox.TakeDamageRequested -= OnTakeDamageRequested;
 		}
 
 		private void Bind()
@@ -53,9 +57,7 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 			_max.Subscribe(max => OnViewModelChanged(_label.Value, _current.Value, max))
 				.AddTo(_compositeDisposable);
 
-			_hitBox.TakeDamageRequested
-				.Subscribe(OnTakeDamageRequested)
-				.AddTo(_compositeDisposable);
+			_hitBox.TakeDamageRequested += OnTakeDamageRequested;
 		}
 
 		private void OnTakeDamageRequested(int damage)
@@ -65,6 +67,12 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 
 			damage = Math.Clamp(damage, 0, _current.Value);
 			_model.Current.Value -= damage;
+
+			if (_model.Current.Value == 0)
+			{
+				Debug.Log($"died");
+				HealthZero?.Invoke();
+			}
 		}
 
 		private void OnViewModelChanged(string label, int current, int max)
