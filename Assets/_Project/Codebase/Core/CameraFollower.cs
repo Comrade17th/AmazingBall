@@ -1,6 +1,7 @@
 using System;
 using _Project.Codebase.Core.Ball;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 using Zenject;
 
@@ -24,6 +25,11 @@ namespace _Project.Codebase.Core
                 throw new ArgumentNullException(nameof(target));
             
             _target = target.transform;
+        }
+
+        private void Awake()
+        {
+            Assert.IsNotNull(_target);
         }
 
         void LateUpdate() // https://stackoverflow.com/questions/10752435/how-do-i-make-a-camera-follow-an-object-in-unity3d-c#answers 

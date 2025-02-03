@@ -7,7 +7,7 @@ namespace _Project.Codebase.Core.Health.BallHealth
 	{
 		public new ReactiveProperty<int> Max { get; set; } = new(10);
 		public new ReactiveProperty<int> Current { get; set; } = new(10);
-		public ReactiveProperty<string> Label { get; set; } = new("Health");
+		public new ReactiveProperty<string> Label { get; set; } = new("Health");
 		
 	}
 }

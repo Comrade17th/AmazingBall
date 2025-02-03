@@ -82,7 +82,7 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 			if (max <= 0)
 				throw new ArgumentOutOfRangeException(nameof(max));
 			
-			_view.Redraw(label, current.ToString(), max.ToString());
+			_view.Redraw(label, current, max);
 		}
 	}
 }

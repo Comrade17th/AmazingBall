@@ -4,6 +4,7 @@ using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.Ball.ViewModel;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.Health.BallHealth;
+using _Project.Codebase.Core.Health.EnemyHealth;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Line;
 using _Project.Codebase.Core.Spawnable;
@@ -41,6 +42,10 @@ namespace _Project.Codebase.Infrastructure
         [Header("Prefabs")]
         [SerializeField] private HitVFX _hitVFXPrefab;
         [SerializeField] private CoinVFX _coinVFXPrefab;
+        
+        [Header("Enemy")]
+        [SerializeField] private EnemyHealthBarView _enemyHealthBarView;
+        [SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
 
         public override void InstallBindings()
         {
@@ -52,20 +57,28 @@ namespace _Project.Codebase.Infrastructure
             BindAngelView();
             BindLine();
             BindBallHealth();
+            BindBallAttacker();
 
             Container
-                .Bind<IBallAttackerModel>()
-                .To<BallAttackerModel>()
+                .Bind<IEnemyHealthModel>()
+                .To<EnemyHealthModel>()
                 .AsSingle();
-            
+
             Container
-                .Bind<IBallAttackRool>()
-                .To<BallAttackRool>()
+                .Bind<IEnemyHealthView>()
+                .To<EnemyHealthBarView>()
+                .FromInstance(_enemyHealthBarView)
                 .AsSingle();
-            
+
             Container
-                .Bind<IBallAttackerViewModel>()
-                .To<BallAttackerViewModel>()
+                .Bind<IEnemyHealthHitBox>()
+                .To<EnemyHealthHitBox>()
+                .FromInstance(_enemyHealthHitBox)
+                .AsSingle();
+
+            Container
+                .Bind<IEnemyHealthViewModel>()
+                .To<EnemyHealthViewModel>()
                 .AsSingle()
                 .NonLazy();
 
@@ -74,6 +87,38 @@ namespace _Project.Codebase.Infrastructure
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        private void BindBallAttacker()
+        {
+            BindBallAttackerModel();
+            BindBallAttackRool();
+            BindBallAttackerViewModel();
+        }
+
+        private void BindBallAttackerViewModel()
+        {
+            Container
+                .Bind<IBallAttackerViewModel>()
+                .To<BallAttackerViewModel>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindBallAttackRool()
+        {
+            Container
+                .Bind<IBallAttackRool>()
+                .To<BallAttackRool>()
+                .AsSingle();
+        }
+
+        private void BindBallAttackerModel()
+        {
+            Container
+                .Bind<IBallAttackerModel>()
+                .To<BallAttackerModel>()
+                .AsSingle();
         }
 
         private void BindBallHealth()
@@ -152,7 +197,8 @@ namespace _Project.Codebase.Infrastructure
         private void BindCamera()
         {
             Container
-                .BindInstance(Camera.main)
+                .Bind<Camera>()
+                .FromInstance(Camera.main)
                 .AsCached();
         }
 
