@@ -1,5 +1,6 @@
 using System;
 using _Project.Codebase.Core.Ball;
+using _Project.Codebase.Core.Ball.View;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
@@ -19,12 +20,12 @@ namespace _Project.Codebase.Core
         private Transform _target;
 
         [Inject]
-        private void Construct(BallView target)
+        private void Construct(IBallView target)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
             
-            _target = target.transform;
+            _target = target.Transform;
         }
 
         private void Awake()

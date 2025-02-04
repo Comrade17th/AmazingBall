@@ -24,9 +24,10 @@ namespace _Project.Codebase.Core.Attacker.BallAttacker
 			IBallAttackRool attackRool,
 			IBallAttackerModel ballAttackerModel)
 		{
-			_ballViewModel = ballViewModel;
-			_attackRool = attackRool;
-			_ballAttackerModel = ballAttackerModel;
+			_ballViewModel = ballViewModel ?? throw new ArgumentNullException(nameof(ballViewModel));
+			_attackRool = attackRool ?? throw new ArgumentNullException(nameof(attackRool));
+			_ballAttackerModel = ballAttackerModel ?? throw new ArgumentNullException(nameof(ballAttackerModel));
+			
 			Bind();
 		}
 

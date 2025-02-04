@@ -1,7 +1,9 @@
 using _Project.Codebase.Core.Attacker.BallAttacker;
+using _Project.Codebase.Core.Attacker.EnemyAttacker;
 using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.Ball.ViewModel;
+using _Project.Codebase.Core.Enemies;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.Health.BallHealth;
 using _Project.Codebase.Core.Health.EnemyHealth;
@@ -44,9 +46,10 @@ namespace _Project.Codebase.Infrastructure
         [SerializeField] private CoinVFX _coinVFXPrefab;
         
         [Header("Enemy")]
+        [SerializeField] private EnemyView _enemyView;
         [SerializeField] private EnemyHealthBarView _enemyHealthBarView;
         [SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
-
+        
         public override void InstallBindings()
         {
             BindCamera();
@@ -58,12 +61,41 @@ namespace _Project.Codebase.Infrastructure
             BindLine();
             BindBallHealth();
             BindBallAttacker();
-
-            BindEnemyHealth();
-
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
+            
+            BindEnemyHealth();
+
+            Container
+                .Bind<IEnemyView>()
+                .To<EnemyView>()
+                .FromInstance(_enemyView)
+                .AsSingle();
+
+            Container
+                .Bind<IEnemyViewModel>()
+                .To<EnemyViewModel>()
+                .AsSingle()
+                .NonLazy();
+
+            Container
+                .Bind<IEnemyAttackRool>()
+                .To<EnemyAttackRool>()
+                .AsSingle();
+
+            Container
+                .Bind<IEnemyAttackerModel>()
+                .To<EnemyAttackerModel>()
+                .AsSingle();
+
+            Container
+                .Bind<IEnemyAttackerViewModel>()
+                .To<EnemyAttackerViewModel>()
+                .AsSingle()
+                .NonLazy();
+
+            
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
         }
@@ -243,14 +275,15 @@ namespace _Project.Codebase.Infrastructure
         {
             BallView ballView = _ballView.GetComponent<BallView>();
             
-            Container
-                .Bind<BallView>()
-                .FromInstance(ballView); 
+            // Container
+            //     .Bind<BallView>()
+            //     .FromInstance(ballView); 
             
             Container
-                .Bind<IReadOnlyBallTransform>()
+                .Bind<IBallView>()
                 .To<BallView>()
-                .FromInstance(ballView);
+                .FromInstance(ballView)
+                .AsSingle();
             
             Container
                 .Bind<ICustomVelocity>()
@@ -273,12 +306,6 @@ namespace _Project.Codebase.Infrastructure
 
         private void BindBallViews(BallView ballView)
         {
-            Container
-                .Bind<IBallView>()
-                .To<BallView>()
-                .FromInstance(ballView)
-                .AsCached();
-
             BindHitEffectView();
             BindColorView();
             BindRotationView();

@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 5168698448599747817}
   - component: {fileID: 50602305393118365}
   - component: {fileID: 5030931761992247391}
+  - component: {fileID: 3432510713685791932}
   m_Layer: 0
   m_Name: Hedgehog (enemy)
   m_TagString: Untagged
@@ -320,6 +321,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fe8ce819a5e497cbf42e248ee8edb41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3432510713685791932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2069395484563083701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d99a07a21c8431eaf14b389827c0bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2572346130855829207

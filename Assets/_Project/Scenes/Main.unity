@@ -1160,6 +1160,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe8ce819a5e497cbf42e248ee8edb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1011706044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3432510713685791932, guid: 65b00eea4f9a64b0c8f47a68a9d2bbde, type: 3}
+  m_PrefabInstance: {fileID: 4707497869251191583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d99a07a21c8431eaf14b389827c0bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1135414171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,6 +1673,7 @@ MonoBehaviour:
   _lineView: {fileID: 1396619954}
   _hitVFXPrefab: {fileID: -5233561287256728481, guid: 5cbaa91e04ff9de43b95f0f790f35867, type: 3}
   _coinVFXPrefab: {fileID: 8907426468194539573, guid: fae2f5ce9f3888748a8b3ad300d34503, type: 3}
+  _enemyView: {fileID: 1011706044}
   _enemyHealthBarView: {fileID: 393649849}
   _enemyHealthHitBox: {fileID: 1011706043}
 --- !u!114 &1573123789 stripped

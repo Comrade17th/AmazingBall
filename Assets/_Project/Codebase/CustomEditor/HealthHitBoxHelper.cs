@@ -18,9 +18,7 @@ namespace _Project.Codebase.CustomEditor
 			_editorDamage = EditorGUILayout.IntField("Damage", _editorDamage);
 			
 			if (GUILayout.Button(TakeDamageButton))
-			{
 				hitBox.TakeDamage(_editorDamage);
-			}
 		}
 	}
 }

@@ -23,7 +23,9 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         private ReactiveProperty<string> _speedLabel = new();
         private ReactiveProperty<string> _angleLabel = new();
 
-        public Vector3 GetPosition => _ballView.Position;
+        public Transform Transform => _ballView.Transform;
+
+        public Vector3 GetPosition => _ballView.Transform.position;
         
         public IReadOnlyReactiveProperty<Vector3> Velocity => _velocity;
         public IReadOnlyReactiveProperty<string> SpeedLabel => _speedLabel;
@@ -104,7 +106,7 @@ namespace _Project.Codebase.Core.Ball.ViewModel
         private void OnPointerUp()
         {
             Vector3 velocity = _customVelocity
-                .GetPushVelocity(_ballView.Position, _pointerHandler.GetWorldPosition());
+                .GetPushVelocity(_ballView.Transform.position, _pointerHandler.GetWorldPosition());
             _ballModel.Velocity.Value = velocity;
             _rotationViewModel.ChangeDirection(velocity);
         }
@@ -139,6 +141,7 @@ namespace _Project.Codebase.Core.Ball.ViewModel
 
     public interface IBallViewModel
     {
+        Transform Transform { get; }
         Vector3 GetPosition { get; }
         IReadOnlyReactiveProperty<Vector3> Velocity { get; }
         IReadOnlyReactiveProperty<string> SpeedLabel { get; }

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using _Project.Codebase.Core.Ball.View;
 using UnityEngine;
 
-namespace _Project.Codebase.Core.Ball
+namespace _Project.Codebase.Core.Ball.View
 {
     [RequireComponent(typeof(Rigidbody), 
         typeof(Collider))]
@@ -22,8 +21,7 @@ namespace _Project.Codebase.Core.Ball
         public event Action<HitInfo> ObjectHit;
         public bool IsGrounded => _isGrounded;
 
-        public Quaternion Rotation { get => transform.rotation; set => transform.rotation = value; }
-        public Vector3 Position { get => transform.position; set => transform.position = value; }
+        public Transform Transform => transform;
 
         private void Update()
         {
@@ -62,27 +60,16 @@ namespace _Project.Codebase.Core.Ball
         }
     }
 
-    public interface IBallView : IReadOnlyBallView, IBallTransform
+    public interface IBallView : IBallTransform
     {
         void SetVelocity(Vector3 velocity);
-    }
-
-    public interface IReadOnlyBallView : IReadOnlyBallTransform
-    {
         bool IsGrounded { get; }
         event Action<bool> VelocityRequested;
         event Action<HitInfo> ObjectHit;
     }
 
-    public interface IBallTransform : IReadOnlyBallTransform
+    public interface IBallTransform 
     {
-        new Quaternion Rotation { get; set; }
-        new Vector3 Position { get; set; }
-    }
-
-    public interface IReadOnlyBallTransform
-    {
-        Quaternion Rotation { get; }
-        Vector3 Position { get; }
+        Transform Transform { get; }
     }
 }

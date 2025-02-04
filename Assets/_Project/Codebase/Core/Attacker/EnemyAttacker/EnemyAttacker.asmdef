@@ -1,4 +1,22 @@
 {
-  "name": "EnemyAttacker",
-  "references":[ "GUID:c63d6fe28ea5474a975f65a9a9899cdf" ]
+    "name": "EnemyAttacker",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c63d6fe28ea5474a975f65a9a9899cdf",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:4f08b18a8ab749ad9d20431bb53b1ac2",
+        "GUID:bc0f8253b488481b9082ad9acb53f9d0",
+        "GUID:0247ffd461104239a7ea4311cb0f657d",
+        "GUID:c3bf9ba2d91645908790ce6c7e94a4c3",
+        "GUID:745183a829914bdc931b07712c5dbfa9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
