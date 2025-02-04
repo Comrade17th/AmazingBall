@@ -59,34 +59,56 @@ namespace _Project.Codebase.Infrastructure
             BindBallHealth();
             BindBallAttacker();
 
-            Container
-                .Bind<IEnemyHealthModel>()
-                .To<EnemyHealthModel>()
-                .AsSingle();
-
-            Container
-                .Bind<IEnemyHealthView>()
-                .To<EnemyHealthBarView>()
-                .FromInstance(_enemyHealthBarView)
-                .AsSingle();
-
-            Container
-                .Bind<IEnemyHealthHitBox>()
-                .To<EnemyHealthHitBox>()
-                .FromInstance(_enemyHealthHitBox)
-                .AsSingle();
-
-            Container
-                .Bind<IEnemyHealthViewModel>()
-                .To<EnemyHealthViewModel>()
-                .AsSingle()
-                .NonLazy();
+            BindEnemyHealth();
 
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        private void BindEnemyHealth()
+        {
+            BindEnemyHealthModel();
+            BindEnemyHealthBarView();
+            BindEnemyHealthHitBox();
+            BindEnemyHealthViewModel();
+        }
+
+        private void BindEnemyHealthViewModel()
+        {
+            Container
+                .Bind<IEnemyHealthViewModel>()
+                .To<EnemyHealthViewModel>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindEnemyHealthHitBox()
+        {
+            Container
+                .Bind<IEnemyHealthHitBox>()
+                .To<EnemyHealthHitBox>()
+                .FromInstance(_enemyHealthHitBox)
+                .AsSingle();
+        }
+
+        private void BindEnemyHealthBarView()
+        {
+            Container
+                .Bind<IEnemyHealthView>()
+                .To<EnemyHealthBarView>()
+                .FromInstance(_enemyHealthBarView)
+                .AsSingle();
+        }
+
+        private void BindEnemyHealthModel()
+        {
+            Container
+                .Bind<IEnemyHealthModel>()
+                .To<EnemyHealthModel>()
+                .AsSingle();
         }
 
         private void BindBallAttacker()

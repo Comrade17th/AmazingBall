@@ -22,9 +22,4 @@ namespace _Project.Codebase.Core.Attacker.BallAttacker
 			        angle >= RightAngle - angleRange);
 		}
 	}
-
-	public interface IBallAttackRool
-	{
-		bool CanAttack(HitInfo hitInfo, float angleRange);
-	}
 }

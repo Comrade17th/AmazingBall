@@ -1,6 +1,6 @@
 using UniRx;
 
-namespace _Project.Codebase.Core.Attacker.BallAttacker
+namespace _Project.Codebase.Core.Attacker.GeneralAttacker
 {
 	public interface IAttackerModel
 	{

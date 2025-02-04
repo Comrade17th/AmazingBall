@@ -1,3 +1,4 @@
 {
-  "name": "EnemyAttacker"
+  "name": "EnemyAttacker",
+  "references":[ "GUID:c63d6fe28ea5474a975f65a9a9899cdf" ]
 }

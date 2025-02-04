@@ -1,7 +1,7 @@
 using _Project.Codebase.Core.Health.BallHealth;
 using UnityEngine;
 
-namespace _Project.Codebase.Core.Enemies
+namespace _Project.Codebase.Core.Traps
 {
 	public class Spikes: MonoBehaviour
 	{
