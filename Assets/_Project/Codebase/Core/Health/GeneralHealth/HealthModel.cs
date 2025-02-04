@@ -9,5 +9,12 @@ namespace _Project.Codebase.Core.Health.GeneralHealth
 		public ReactiveProperty<int> Current { get; set; }
 
 		public ReactiveProperty<string> Label { get; set; }
+
+		public HealthModel(int max = 1, int current = 1, string label = "")
+		{
+			Max = new(max);
+			Current = new(current);
+			Label = new(label);
+		}
 	}
 }
