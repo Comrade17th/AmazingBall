@@ -12,6 +12,12 @@ namespace _Project.Codebase.Core
 		[SerializeField] private bool _edgeEnabled = true;
 		[SerializeField] private bool _equatorEnabled = true;
 		[SerializeField] private bool _floorEnabled = true;
+
+		public Vector3 Center => transform.position;
+
+		public Vector3 EquatorSize => new Vector3(transform.localScale.x,
+			0,
+			transform.localScale.z);
 		
 		private void OnDrawGizmos()
 		{
@@ -33,10 +39,7 @@ namespace _Project.Codebase.Core
 					transform.position.x,
 					transform.position.y - transform.localScale.y / 2,
 					transform.position.z), 
-				new Vector3(
-					transform.localScale.x,
-					0,
-					transform.localScale.z));
+				EquatorSize);
 		}
 
 		private void DrawEquator()
@@ -44,10 +47,7 @@ namespace _Project.Codebase.Core
 			Gizmos.color = equatorColor;
 			Gizmos.DrawWireCube(
 				transform.position, 
-				new Vector3(
-					transform.localScale.x,
-					0,
-					transform.localScale.z));
+				EquatorSize);
 		}
 
 		private void DrawWireUpEdges()
