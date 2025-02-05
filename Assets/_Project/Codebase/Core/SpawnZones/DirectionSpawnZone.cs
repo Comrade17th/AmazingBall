@@ -6,14 +6,10 @@ namespace _Project.Codebase.Core.SpawnZones
 	{
 		[SerializeField] private Color _color = Color.red;
 		
-		[Range(0, 10)] [SerializeField] private float _lineLenght = 1f;
-		[Range(-1, 1)] [SerializeField] private float _directionX;
-		[Range(-1, 1)] [SerializeField] private float _directionZ;
-		
-		private float _directionY = 0;
+		[Range(0.25f, 1.5f)] [SerializeField] private float _lineLenght = 1f;
 
 		public Vector3 Position => transform.position;
-		public Vector3 Direction => new Vector3(_directionX, _directionY, _directionZ).normalized;
+		public Vector3 Direction => transform.forward;
 
 		private void OnDrawGizmos()
 		{

@@ -10,6 +10,7 @@ using _Project.Codebase.Core.Health.EnemyHealth;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Line;
 using _Project.Codebase.Core.Spawnable;
+using _Project.Codebase.Core.SpawnZones;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
@@ -51,6 +52,7 @@ namespace _Project.Codebase.Infrastructure
         [SerializeField] private EnemyHealthBarView _enemyHealthBarView;
         [SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
         [SerializeField] private EnemyMoverView _enemyMoverView;
+        [SerializeField] private DirectionSpawnZone _enemyDirectionSpawnZone;
 
         public override void InstallBindings()
         {
@@ -78,15 +80,24 @@ namespace _Project.Codebase.Infrastructure
                 .To<EnemyMoverView>()
                 .FromInstance(_enemyMoverView)
                 .AsSingle();
+
+            Container
+                .Bind<IEnemyMoverModel>()
+                .To<EnemyMoverModel>()
+                .AsSingle();
+
+            Container
+                .Bind<IDirectionSpawnZone>()
+                .To<DirectionSpawnZone>()
+                .FromInstance(_enemyDirectionSpawnZone)
+                .AsSingle();
             
             Container
-                .Bind<IEnemyViewModel>()
-                .To<EnemyViewModel>()
+                .Bind<IEnemyMoverViewModel>()
+                .To<EnemyMoverViewModel>()
                 .AsSingle()
                 .NonLazy();
-                
-
-
+            
             Debug.Log($"MainInstaller installer version: {Application.version}");
         }
 
@@ -110,6 +121,7 @@ namespace _Project.Codebase.Infrastructure
             Assert.IsNotNull(_enemyHealthBarView);
             Assert.IsNotNull(_enemyHealthHitBox);
             Assert.IsNotNull(_enemyMoverView);
+            Assert.IsNotNull(_enemyDirectionSpawnZone);
         }
 
         private void BindEnemyAttacker()

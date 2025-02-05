@@ -51,13 +51,19 @@ namespace _Project.Codebase.Core.Enemies
 			_view.ObjectHit += OnObjectHit;
 		}
 
-		private void Init() =>
+		private void Init()
+		{
 			_model.Direction.Value = _directionSpawnZone.Direction;
+			_view.SetPosition(_directionSpawnZone.Position);
+		}
 
 		private void OnObjectHit(Collision other)
 		{
 			if (other.gameObject.TryGetComponent(out IBallHealthHitBox ball) == false)
+			{ 
 				_model.Direction.Value = Vector3.Reflect(Direction.Value, other.GetContact(0).normal);
+				_view.Transform.LookAt(_view.Transform.position + Direction.Value);
+			}
 		}
 
 		private void OnNewPositionRequested(Vector3 position)

@@ -7,7 +7,9 @@ namespace _Project.Codebase.Core.Enemies
 	public class EnemyMoverView : MonoBehaviour, IEnemyMoverView
 	{
 		private Vector3 _position;
-		
+
+		public Transform Transform => transform;
+
 		public event Action<Vector3> NewPositionRequested;
 		public event Action<Collision> ObjectHit;
 

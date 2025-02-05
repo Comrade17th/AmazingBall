@@ -29,11 +29,4 @@ namespace _Project.Codebase.Core.Enemies
 		private void OnObjectHit(Collision other) =>
 			ObjectHit?.Invoke(other);
 	}
-
-	public interface IEnemyViewModel
-	{
-		public Transform Transform { get; }
-
-		public event Action<Collision> ObjectHit;
-	}
 }

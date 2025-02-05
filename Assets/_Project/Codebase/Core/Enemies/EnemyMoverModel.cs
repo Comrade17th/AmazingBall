@@ -9,7 +9,7 @@ namespace _Project.Codebase.Core.Enemies
 
 		public ReactiveProperty<Vector3> Direction { get; set; }
 
-		public EnemyMoverModel(float speed = 10)
+		public EnemyMoverModel(float speed = 1)
 		{
 			Speed = new(speed);
 			Direction = new(Vector3.zero);
