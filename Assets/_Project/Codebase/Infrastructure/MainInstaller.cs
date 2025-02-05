@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _Project.Codebase.Core.Attacker.BallAttacker;
 using _Project.Codebase.Core.Attacker.EnemyAttacker;
 using _Project.Codebase.Core.Ball;
@@ -19,7 +20,7 @@ using Zenject;
 
 namespace _Project.Codebase.Infrastructure
 {
-    public class MainInstaller : MonoInstaller
+    public class MainInstaller : MonoInstaller, IInitializable
     {
         [Header("Ball attached")]
         [SerializeField] private BallView _ballView;
@@ -53,11 +54,13 @@ namespace _Project.Codebase.Infrastructure
         [SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
         [SerializeField] private EnemyMoverView _enemyMoverView;
         [SerializeField] private DirectionSpawnZone _enemyDirectionSpawnZone;
+        [SerializeField] private List<EnemyDirectionSpawnZone> _enemyDirectionSpawnZones;
 
         public override void InstallBindings()
         {
             AssertNotNullFields();
-
+            BindMainInstallerInterfaces();
+            
             BindCamera();
             BindInputProvider();
             BindPointerHandler();
@@ -78,13 +81,13 @@ namespace _Project.Codebase.Infrastructure
             Container
                 .Bind<IEnemyMoverView>()
                 .To<EnemyMoverView>()
-                .FromInstance(_enemyMoverView)
-                .AsSingle();
+                .FromInstance(_enemyMoverView);
+                //.AsSingle();
 
-            Container
-                .Bind<IEnemyMoverModel>()
-                .To<EnemyMoverModel>()
-                .AsSingle();
+                Container
+                    .Bind<IEnemyMoverModel>()
+                    .To<EnemyMoverModel>();
+                //.AsSingle();
 
             Container
                 .Bind<IDirectionSpawnZone>()
@@ -95,10 +98,39 @@ namespace _Project.Codebase.Infrastructure
             Container
                 .Bind<IEnemyMoverViewModel>()
                 .To<EnemyMoverViewModel>()
-                .AsSingle()
+                //.AsSingle()
                 .NonLazy();
+
+            Container
+                .Bind<IEnemyFactory>()
+                .To<EnemyFactory>()
+                .AsSingle();
+
+            // Container
+            //     .Bind<IEnemySpawner>()
+            //     .To<EnemySpawner>()
+            //     .AsSingle();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
+
+        public void Initialize()
+        {
+            IEnemyFactory enemyFactory = Container.Resolve<IEnemyFactory>();
+            enemyFactory.Load();
+            
+            foreach (IEnemyDirectionSpawnZone enemySpawnZone in _enemyDirectionSpawnZones)
+            {
+                enemyFactory.Create(enemySpawnZone);
+            }
+        }
+
+        private void BindMainInstallerInterfaces()
+        {
+            Container
+                .BindInterfacesTo<MainInstaller>()
+                .FromInstance(this)
+                .AsSingle();
         }
 
         private void AssertNotNullFields()
@@ -117,11 +149,16 @@ namespace _Project.Codebase.Infrastructure
             Assert.IsNotNull(_lineView);
             Assert.IsNotNull(_hitVFXPrefab);
             Assert.IsNotNull(_coinVFXPrefab);
+            
             Assert.IsNotNull(_enemyView);
             Assert.IsNotNull(_enemyHealthBarView);
             Assert.IsNotNull(_enemyHealthHitBox);
             Assert.IsNotNull(_enemyMoverView);
             Assert.IsNotNull(_enemyDirectionSpawnZone);
+            
+            Assert.IsNotNull(_enemyDirectionSpawnZones);
+            Assert.IsTrue(_enemyDirectionSpawnZones.Count > 0
+                , "_enemyDirectionSpawnZones is empty ");
         }
 
         private void BindEnemyAttacker()
@@ -158,8 +195,8 @@ namespace _Project.Codebase.Infrastructure
         {
             Container
                 .Bind<IEnemyAttackRool>()
-                .To<EnemyAttackRool>()
-                .AsSingle();
+                .To<EnemyAttackRool>();
+            //.AsSingle();
         }
 
         private void BindEnemyViewModel()
@@ -167,7 +204,7 @@ namespace _Project.Codebase.Infrastructure
             Container
                 .Bind<IEnemyViewModel>()
                 .To<EnemyViewModel>()
-                .AsSingle()
+                //.AsSingle()
                 .NonLazy();
         }
 

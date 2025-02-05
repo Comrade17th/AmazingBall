@@ -8,6 +8,7 @@ namespace _Project.Codebase.Core.SpawnZones
 		
 		[Range(0.25f, 1.5f)] [SerializeField] private float _lineLenght = 1f;
 
+		public Transform Transform => transform;
 		public Vector3 Position => transform.position;
 		public Vector3 Direction => transform.forward;
 
@@ -32,6 +33,7 @@ namespace _Project.Codebase.Core.SpawnZones
 
 	public interface ISpawnZone
 	{
+		Transform Transform { get; }
 		Vector3 Position { get; }
 	}
 }

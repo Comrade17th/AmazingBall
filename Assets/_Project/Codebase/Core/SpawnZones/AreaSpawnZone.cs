@@ -12,6 +12,7 @@ namespace _Project.Codebase.Core.SpawnZones
 		[SerializeField] private bool _equatorEnabled = true;
 		[SerializeField] private bool _floorEnabled = true;
 
+		public Transform Transform => transform;
 		public Vector3 Position => transform.position;
 		public Vector3 EquatorSize => new Vector3(transform.localScale.x,
 			0,

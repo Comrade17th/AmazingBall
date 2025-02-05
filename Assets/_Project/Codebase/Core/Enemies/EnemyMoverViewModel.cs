@@ -55,6 +55,7 @@ namespace _Project.Codebase.Core.Enemies
 		{
 			_model.Direction.Value = _directionSpawnZone.Direction;
 			_view.SetPosition(_directionSpawnZone.Position);
+			_view.Transform.LookAt(_view.Transform.position + Direction.Value);
 		}
 
 		private void OnObjectHit(Collision other)
