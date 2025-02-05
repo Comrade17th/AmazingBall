@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
 
-namespace _Project.Codebase.Core
+namespace _Project.Codebase.Core.SpawnZones
 {
-	public class SpawnZone : MonoBehaviour
+	public class AreaSpawnZone : MonoBehaviour, IAreaSpawnZone
 	{
 		[SerializeField] private Color edgeColor = Color.red;
 		[SerializeField] private Color equatorColor = Color.blue;
@@ -13,8 +12,7 @@ namespace _Project.Codebase.Core
 		[SerializeField] private bool _equatorEnabled = true;
 		[SerializeField] private bool _floorEnabled = true;
 
-		public Vector3 Center => transform.position;
-
+		public Vector3 Position => transform.position;
 		public Vector3 EquatorSize => new Vector3(transform.localScale.x,
 			0,
 			transform.localScale.z);
@@ -55,5 +53,10 @@ namespace _Project.Codebase.Core
 			Gizmos.color = edgeColor;
 			Gizmos.DrawWireCube(transform.position, transform.localScale);
 		}
+	}
+
+	public interface IAreaSpawnZone : ISpawnZone
+	{
+		Vector3 EquatorSize { get; }
 	}
 }
