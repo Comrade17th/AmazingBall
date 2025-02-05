@@ -34,9 +34,9 @@ namespace _Project.Codebase.Core.SpawnZones
 			Gizmos.color = floorColor;
 			Gizmos.DrawCube(
 				new Vector3(
-					transform.position.x,
-					transform.position.y - transform.localScale.y / 2,
-					transform.position.z), 
+					Position.x,
+					Position.y - transform.localScale.y / 2,
+					Position.z), 
 				EquatorSize);
 		}
 

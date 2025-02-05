@@ -13,6 +13,7 @@ using _Project.Codebase.Core.Spawnable;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Zenject;
 
 namespace _Project.Codebase.Infrastructure
@@ -49,9 +50,12 @@ namespace _Project.Codebase.Infrastructure
         [SerializeField] private EnemyView _enemyView;
         [SerializeField] private EnemyHealthBarView _enemyHealthBarView;
         [SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
-        
+        [SerializeField] private EnemyMoverView _enemyMoverView;
+
         public override void InstallBindings()
         {
+            AssertNotNullFields();
+
             BindCamera();
             BindInputProvider();
             BindPointerHandler();
@@ -66,38 +70,102 @@ namespace _Project.Codebase.Infrastructure
             BindCoinVFXFactory();
             
             BindEnemyHealth();
+            BindEnemyMVVM();
+            BindEnemyAttacker();
 
             Container
-                .Bind<IEnemyView>()
-                .To<EnemyView>()
-                .FromInstance(_enemyView)
+                .Bind<IEnemyMoverView>()
+                .To<EnemyMoverView>()
+                .FromInstance(_enemyMoverView)
                 .AsSingle();
-
+            
             Container
                 .Bind<IEnemyViewModel>()
                 .To<EnemyViewModel>()
                 .AsSingle()
                 .NonLazy();
+                
 
-            Container
-                .Bind<IEnemyAttackRool>()
-                .To<EnemyAttackRool>()
-                .AsSingle();
 
-            Container
-                .Bind<IEnemyAttackerModel>()
-                .To<EnemyAttackerModel>()
-                .AsSingle();
+            Debug.Log($"MainInstaller installer version: {Application.version}");
+        }
 
+        private void AssertNotNullFields()
+        {
+            Assert.IsNotNull(_ballView);
+            Assert.IsNotNull(_coinCollector);
+            Assert.IsNotNull(_ballHealthHitBox);
+            Assert.IsNotNull(_ballRotationView);
+            Assert.IsNotNull(_ballCompressionView);
+            Assert.IsNotNull(_ballColorView);
+            Assert.IsNotNull(_walletView);
+            Assert.IsNotNull(_ballSpeedView);
+            Assert.IsNotNull(_angleView);
+            Assert.IsNotNull(_ballHealthView);
+            Assert.IsNotNull(_mousePointerHandler);
+            Assert.IsNotNull(_lineView);
+            Assert.IsNotNull(_hitVFXPrefab);
+            Assert.IsNotNull(_coinVFXPrefab);
+            Assert.IsNotNull(_enemyView);
+            Assert.IsNotNull(_enemyHealthBarView);
+            Assert.IsNotNull(_enemyHealthHitBox);
+            Assert.IsNotNull(_enemyMoverView);
+        }
+
+        private void BindEnemyAttacker()
+        {
+            BindEnemyAttackRool();
+            BindEnemyAttackerModel();
+            BindEnemyAttackeViewModel();
+        }
+
+        private void BindEnemyMVVM()
+        {
+            BindEnemyView();
+            BindEnemyViewModel();
+        }
+
+        private void BindEnemyAttackeViewModel()
+        {
             Container
                 .Bind<IEnemyAttackerViewModel>()
                 .To<EnemyAttackerViewModel>()
                 .AsSingle()
                 .NonLazy();
+        }
 
-            
-            
-            Debug.Log($"MainInstaller installer version: {Application.version}");
+        private void BindEnemyAttackerModel()
+        {
+            Container
+                .Bind<IEnemyAttackerModel>()
+                .To<EnemyAttackerModel>()
+                .AsSingle();
+        }
+
+        private void BindEnemyAttackRool()
+        {
+            Container
+                .Bind<IEnemyAttackRool>()
+                .To<EnemyAttackRool>()
+                .AsSingle();
+        }
+
+        private void BindEnemyViewModel()
+        {
+            Container
+                .Bind<IEnemyViewModel>()
+                .To<EnemyViewModel>()
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindEnemyView()
+        {
+            Container
+                .Bind<IEnemyView>()
+                .To<EnemyView>()
+                .FromInstance(_enemyView)
+                .AsSingle();
         }
 
         private void BindEnemyHealth()
@@ -274,10 +342,6 @@ namespace _Project.Codebase.Infrastructure
         private void BindBall()
         {
             BallView ballView = _ballView.GetComponent<BallView>();
-            
-            // Container
-            //     .Bind<BallView>()
-            //     .FromInstance(ballView); 
             
             Container
                 .Bind<IBallView>()
