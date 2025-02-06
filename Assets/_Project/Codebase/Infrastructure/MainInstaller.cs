@@ -1,17 +1,14 @@
 using System.Collections.Generic;
 using _Project.Codebase.Core.Attacker.BallAttacker;
-using _Project.Codebase.Core.Attacker.EnemyAttacker;
 using _Project.Codebase.Core.Ball;
 using _Project.Codebase.Core.Ball.View;
 using _Project.Codebase.Core.Ball.ViewModel;
 using _Project.Codebase.Core.Enemies;
 using _Project.Codebase.Core.Factories;
 using _Project.Codebase.Core.Health.BallHealth;
-using _Project.Codebase.Core.Health.EnemyHealth;
 using _Project.Codebase.Core.InputProviders;
 using _Project.Codebase.Core.Line;
 using _Project.Codebase.Core.Spawnable;
-using _Project.Codebase.Core.SpawnZones;
 using _Project.Codebase.Core.Wallet;
 using _Project.Codebase.Interfaces;
 using UnityEngine;
@@ -49,17 +46,13 @@ namespace _Project.Codebase.Infrastructure
         [SerializeField] private CoinVFX _coinVFXPrefab;
         
         [Header("Enemy")]
-        [SerializeField] private EnemyView _enemyView;
-        [SerializeField] private EnemyHealthBarView _enemyHealthBarView;
-        [SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
-        [SerializeField] private EnemyMoverView _enemyMoverView;
-        [SerializeField] private DirectionSpawnZone _enemyDirectionSpawnZone;
         [SerializeField] private List<EnemyDirectionSpawnZone> _enemyDirectionSpawnZones;
 
         public override void InstallBindings()
         {
             AssertNotNullFields();
             BindMainInstallerInterfaces();
+            
             
             BindCamera();
             BindInputProvider();
@@ -73,55 +66,22 @@ namespace _Project.Codebase.Infrastructure
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
-            
-            BindEnemyHealth();
-            BindEnemyMVVM();
-            BindEnemyAttacker();
 
-            Container
-                .Bind<IEnemyMoverView>()
-                .To<EnemyMoverView>()
-                .FromInstance(_enemyMoverView);
-                //.AsSingle();
-
-                Container
-                    .Bind<IEnemyMoverModel>()
-                    .To<EnemyMoverModel>();
-                //.AsSingle();
-
-            Container
-                .Bind<IDirectionSpawnZone>()
-                .To<DirectionSpawnZone>()
-                .FromInstance(_enemyDirectionSpawnZone)
-                .AsSingle();
-            
-            Container
-                .Bind<IEnemyMoverViewModel>()
-                .To<EnemyMoverViewModel>()
-                //.AsSingle()
-                .NonLazy();
-
-            Container
-                .Bind<IEnemyFactory>()
-                .To<EnemyFactory>()
-                .AsSingle();
-
-            // Container
-            //     .Bind<IEnemySpawner>()
-            //     .To<EnemySpawner>()
-            //     .AsSingle();
+            Object shipPrefab;
+            Container.BindFactory<EnemyView, EnemyView.Factory>().FromSubContainerResolve();//.ByNewContextPrefab<EnemyInstaller>(shipPrefab);
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
         }
 
         public void Initialize()
         {
-            IEnemyFactory enemyFactory = Container.Resolve<IEnemyFactory>();
-            enemyFactory.Load();
+            var enemyFactory = Container.Resolve<EnemyView.Factory>();
             
-            foreach (IEnemyDirectionSpawnZone enemySpawnZone in _enemyDirectionSpawnZones)
+            foreach (IEnemyDirectionSpawnZone zone in _enemyDirectionSpawnZones)
             {
-                enemyFactory.Create(enemySpawnZone);
+                var enemy = enemyFactory.Create();
+                enemy.Transform.position = zone.Position;
+                enemy.Transform.LookAt(enemy.transform.position + zone.Direction);
             }
         }
 
@@ -131,6 +91,8 @@ namespace _Project.Codebase.Infrastructure
                 .BindInterfacesTo<MainInstaller>()
                 .FromInstance(this)
                 .AsSingle();
+            
+            Container.BindInterfacesTo<EnemyInstaller>().AsSingle();
         }
 
         private void AssertNotNullFields()
@@ -150,114 +112,9 @@ namespace _Project.Codebase.Infrastructure
             Assert.IsNotNull(_hitVFXPrefab);
             Assert.IsNotNull(_coinVFXPrefab);
             
-            Assert.IsNotNull(_enemyView);
-            Assert.IsNotNull(_enemyHealthBarView);
-            Assert.IsNotNull(_enemyHealthHitBox);
-            Assert.IsNotNull(_enemyMoverView);
-            Assert.IsNotNull(_enemyDirectionSpawnZone);
-            
             Assert.IsNotNull(_enemyDirectionSpawnZones);
             Assert.IsTrue(_enemyDirectionSpawnZones.Count > 0
                 , "_enemyDirectionSpawnZones is empty ");
-        }
-
-        private void BindEnemyAttacker()
-        {
-            BindEnemyAttackRool();
-            BindEnemyAttackerModel();
-            BindEnemyAttackeViewModel();
-        }
-
-        private void BindEnemyMVVM()
-        {
-            BindEnemyView();
-            BindEnemyViewModel();
-        }
-
-        private void BindEnemyAttackeViewModel()
-        {
-            Container
-                .Bind<IEnemyAttackerViewModel>()
-                .To<EnemyAttackerViewModel>()
-                .AsSingle()
-                .NonLazy();
-        }
-
-        private void BindEnemyAttackerModel()
-        {
-            Container
-                .Bind<IEnemyAttackerModel>()
-                .To<EnemyAttackerModel>()
-                .AsSingle();
-        }
-
-        private void BindEnemyAttackRool()
-        {
-            Container
-                .Bind<IEnemyAttackRool>()
-                .To<EnemyAttackRool>();
-            //.AsSingle();
-        }
-
-        private void BindEnemyViewModel()
-        {
-            Container
-                .Bind<IEnemyViewModel>()
-                .To<EnemyViewModel>()
-                //.AsSingle()
-                .NonLazy();
-        }
-
-        private void BindEnemyView()
-        {
-            Container
-                .Bind<IEnemyView>()
-                .To<EnemyView>()
-                .FromInstance(_enemyView)
-                .AsSingle();
-        }
-
-        private void BindEnemyHealth()
-        {
-            BindEnemyHealthModel();
-            BindEnemyHealthBarView();
-            BindEnemyHealthHitBox();
-            BindEnemyHealthViewModel();
-        }
-
-        private void BindEnemyHealthViewModel()
-        {
-            Container
-                .Bind<IEnemyHealthViewModel>()
-                .To<EnemyHealthViewModel>()
-                .AsSingle()
-                .NonLazy();
-        }
-
-        private void BindEnemyHealthHitBox()
-        {
-            Container
-                .Bind<IEnemyHealthHitBox>()
-                .To<EnemyHealthHitBox>()
-                .FromInstance(_enemyHealthHitBox)
-                .AsSingle();
-        }
-
-        private void BindEnemyHealthBarView()
-        {
-            Container
-                .Bind<IEnemyHealthView>()
-                .To<EnemyHealthBarView>()
-                .FromInstance(_enemyHealthBarView)
-                .AsSingle();
-        }
-
-        private void BindEnemyHealthModel()
-        {
-            Container
-                .Bind<IEnemyHealthModel>()
-                .To<EnemyHealthModel>()
-                .AsSingle();
         }
 
         private void BindBallAttacker()

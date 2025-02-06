@@ -20,6 +20,11 @@ namespace _Project.Codebase.Core.SpawnZones
 		
 		private void OnDrawGizmos()
 		{
+			DrawFrame();
+		}
+
+		private void DrawFrame()
+		{
 			if(_edgeEnabled)
 				DrawWireUpEdges();
 

@@ -10,8 +10,8 @@ namespace _Project.Codebase.Core.Enemies
 		
 		private readonly DiContainer _diContainer;
 		
-		private Object _hedgehog;
-		private Object _hedgehogStaying;
+		private EnemyView _hedgehog;
+		private EnemyView _hedgehogStaying;
 
 		public EnemyFactory(DiContainer diContainer)
 		{
@@ -20,8 +20,8 @@ namespace _Project.Codebase.Core.Enemies
 
 		public void Load()
 		{
-			_hedgehog = Resources.Load(HedgehogEnemyPath);
-			_hedgehogStaying = Resources.Load(HedgehogStayingEnemyPath);
+			_hedgehog = Resources.Load<EnemyView>(HedgehogEnemyPath);
+			_hedgehogStaying = Resources.Load<EnemyView>(HedgehogStayingEnemyPath);
 		}
 
 		public void Create(IEnemyDirectionSpawnZone zone)

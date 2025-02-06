@@ -7,12 +7,11 @@ using Zenject;
 
 namespace _Project.Codebase.Core.Enemies
 {
-	public class EnemyMoverViewModel : IEnemyMoverViewModel, IDisposable
+	public class EnemyMoverViewModel : IEnemyMoverViewModel, IDisposable//, IInitializable
 	{
 		private readonly CompositeDisposable _compositeDisposable = new();
 		private readonly IEnemyMoverView _view;
 		private readonly IEnemyMoverModel _model;
-		private readonly IDirectionSpawnZone _directionSpawnZone;
 
 		private ReactiveProperty<float> Speed = new();
 		private ReactiveProperty<Vector3> Direction = new();
@@ -20,16 +19,18 @@ namespace _Project.Codebase.Core.Enemies
 		[Inject]
 		public EnemyMoverViewModel(
 			IEnemyMoverView view,
-			IEnemyMoverModel model,
-			IDirectionSpawnZone directionSpawnZone)
+			IEnemyMoverModel model)
 		{
 			_view = view ?? throw new ArgumentNullException(nameof(view));
 			_model = model ?? throw new ArgumentNullException(nameof(model));
-			_directionSpawnZone = directionSpawnZone ?? throw new ArgumentNullException(nameof(directionSpawnZone));
 
 			Bind();
-			Init();
 		}
+		
+		// public void Initialize()
+		// {
+		// 	Init();
+		// }
 		
 		public void Dispose()
 		{
@@ -51,12 +52,12 @@ namespace _Project.Codebase.Core.Enemies
 			_view.ObjectHit += OnObjectHit;
 		}
 
-		private void Init()
-		{
-			_model.Direction.Value = _directionSpawnZone.Direction;
-			_view.SetPosition(_directionSpawnZone.Position);
-			_view.Transform.LookAt(_view.Transform.position + Direction.Value);
-		}
+		// private void Init(IDirectionSpawnZone directionSpawnZone)
+		// {
+		// 	_model.Direction.Value = directionSpawnZone.Direction;
+		// 	_view.SetPosition(directionSpawnZone.Position);
+		// 	_view.Transform.LookAt(_view.Transform.position + Direction.Value);
+		// }
 
 		private void OnObjectHit(Collision other)
 		{

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace _Project.Codebase.Core.Enemies
 {
@@ -12,5 +13,10 @@ namespace _Project.Codebase.Core.Enemies
 
 		 private void OnCollisionEnter(Collision other) =>
 			 ObjectHit?.Invoke(other);
+
+		 public class Factory : PlaceholderFactory<EnemyView>
+		 {
+			 
+		 }
 	}
 }
