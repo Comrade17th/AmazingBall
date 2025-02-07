@@ -47,6 +47,7 @@ namespace _Project.Codebase.Infrastructure
         
         [Header("Enemy")]
         [SerializeField] private List<EnemyDirectionSpawnZone> _enemyDirectionSpawnZones;
+        [SerializeField] private EnemyView _enemyPrefab;
 
         public override void InstallBindings()
         {
@@ -66,23 +67,28 @@ namespace _Project.Codebase.Infrastructure
             BindCoinCollector();
             BindWallet();
             BindCoinVFXFactory();
-
-            Object shipPrefab;
-            Container.BindFactory<EnemyView, EnemyView.Factory>().FromSubContainerResolve();//.ByNewContextPrefab<EnemyInstaller>(shipPrefab);
+            
+            Container.BindFactory<EnemyView, EnemyView.Factory>()
+                .FromComponentInNewPrefab(_enemyPrefab)
+                .AsSingle();
             
             Debug.Log($"MainInstaller installer version: {Application.version}");
         }
 
         public void Initialize()
         {
+            Debug.Log($"start spawning");
             var enemyFactory = Container.Resolve<EnemyView.Factory>();
             
             foreach (IEnemyDirectionSpawnZone zone in _enemyDirectionSpawnZones)
             {
+                Debug.Log($"spawning");
                 var enemy = enemyFactory.Create();
                 enemy.Transform.position = zone.Position;
                 enemy.Transform.LookAt(enemy.transform.position + zone.Direction);
             }
+            
+            Debug.Log($"spawned");
         }
 
         private void BindMainInstallerInterfaces()

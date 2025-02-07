@@ -14,7 +14,6 @@ namespace _Project.Codebase.Infrastructure
 		[SerializeField] private EnemyHealthBarView _enemyHealthBarView;
 		[SerializeField] private EnemyHealthHitBox _enemyHealthHitBox;
 		[SerializeField] private EnemyMoverView _enemyMoverView;
-		//[SerializeField] private DirectionSpawnZone _enemyDirectionSpawnZone;
 		
 		public override void InstallBindings()
 		{
@@ -27,19 +26,13 @@ namespace _Project.Codebase.Infrastructure
 			Container
 				.Bind<IEnemyMoverView>()
 				.To<EnemyMoverView>()
-				.FromInstance(_enemyMoverView)
+				.FromComponentInNewPrefab(_enemyMoverView)
 				.AsSingle();
 
 			Container
 				.Bind<IEnemyMoverModel>()
 				.To<EnemyMoverModel>()
 				.AsSingle();
-
-			// Container
-			// 	.Bind<IDirectionSpawnZone>()
-			// 	.To<DirectionSpawnZone>()
-			// 	.FromInstance(_enemyDirectionSpawnZone)
-			// 	.AsSingle();
             
 			Container
 				.Bind<IEnemyMoverViewModel>()
@@ -59,7 +52,6 @@ namespace _Project.Codebase.Infrastructure
 			Assert.IsNotNull(_enemyHealthBarView);
 			Assert.IsNotNull(_enemyHealthHitBox);
 			Assert.IsNotNull(_enemyMoverView);
-			//Assert.IsNotNull(_enemyDirectionSpawnZone);
 		}
 
 		private void BindEnemyHealth()
@@ -84,7 +76,7 @@ namespace _Project.Codebase.Infrastructure
 			Container
 				.Bind<IEnemyHealthHitBox>()
 				.To<EnemyHealthHitBox>()
-				.FromInstance(_enemyHealthHitBox)
+				.FromComponentInNewPrefab(_enemyHealthHitBox)
 				.AsSingle();
 		}
 
@@ -93,7 +85,7 @@ namespace _Project.Codebase.Infrastructure
 			Container
 				.Bind<IEnemyHealthView>()
 				.To<EnemyHealthBarView>()
-				.FromInstance(_enemyHealthBarView)
+				.FromComponentInNewPrefab(_enemyHealthBarView)
 				.AsSingle();
 		}
 
@@ -125,7 +117,7 @@ namespace _Project.Codebase.Infrastructure
 			Container
 				.Bind<IEnemyView>()
 				.To<EnemyView>()
-				.FromInstance(_enemyView)
+				.FromComponentInNewPrefab(_enemyView)
 				.AsSingle();
 		}
 		
